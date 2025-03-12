@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:hive/hive.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/test_model.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import '../services/connection_state.dart';
+import '../providers/bluetooth_provider.dart';
 
 Map<String, String> unidadeMedida = {
   "0": "g/L",
@@ -20,27 +21,32 @@ Map<String, String> unidadeMedida = {
 String? ultimoComandoRecebido;
 
 class BluetoothManager {
+  final Ref ref;
+  BluetoothManager(this.ref);
+
   BluetoothDevice? _connectedDevice;
   BluetoothCharacteristic? _writableCharacteristic;
   BluetoothCharacteristic? _notifiableCharacteristic;
-  StreamSubscription<List<int>>? _notificationSubscription; // ✅ Armazena a assinatura
+  StreamSubscription<List<int>>? _notificationSubscription;
 
+  /// 🔹 Retorna o dispositivo atualmente conectado
   BluetoothDevice? get connectedDevice => _connectedDevice;
+
+  /// 🔹 Retorna a característica de escrita BLE
   BluetoothCharacteristic? get writableCharacteristic => _writableCharacteristic;
+
+  /// 🔹 Retorna a característica de notificação BLE
   BluetoothCharacteristic? get notifiableCharacteristic => _notifiableCharacteristic;
 
+  /// 🔹 Conectar a um dispositivo BLE e atualizar o estado global
   Future<bool> connectToDevice(BluetoothDevice device) async {
     try {
       print("🔗 Tentando conectar ao dispositivo: ${device.name} (${device.remoteId})");
       await device.connect(autoConnect: false);
       _connectedDevice = device;
-      
+
       print("✅ Conectado! Descobrindo serviços...");
       await discoverCharacteristics(device);
-
-      ConnectionStateManager.connectedDevice = device;
-      ConnectionStateManager.isConnected = true;
-      ConnectionStateManager.startMonitoringConnection(); // ✅ Inicia o monitoramento automático
 
       return true;
     } catch (e) {
@@ -49,6 +55,7 @@ class BluetoothManager {
     }
   }
 
+  /// 🔹 Descobrir características BLE e armazená-las no provider
   Future<void> discoverCharacteristics(BluetoothDevice device) async {
     List<BluetoothService> services = await device.discoverServices();
 
@@ -62,22 +69,36 @@ class BluetoothManager {
         if (characteristic.properties.notify) {
           _notifiableCharacteristic = characteristic;
           print("📩 Característica de notificação detectada!");
-
-          // ✅ Remove listener anterior antes de criar um novo
-          _notificationSubscription?.cancel();
-          _notificationSubscription = characteristic.value.listen((value) {
-            if (value.isNotEmpty) {
-              processReceivedData(value);
-            }
-          });
-
-          await characteristic.setNotifyValue(true);
+          await _activateNotifications(characteristic);
         }
       }
     }
+
+    // 🔹 Atualiza as características no estado global
+    ref.read(bluetoothProvider.notifier).setCharacteristics(
+      writable: _writableCharacteristic,
+      notifiable: _notifiableCharacteristic,
+    );
   }
 
-  // ✅ Método para restaurar características ao voltar para a tela
+  /// 🔹 Ativar notificações BLE corretamente
+  Future<void> _activateNotifications(BluetoothCharacteristic characteristic) async {
+    _notificationSubscription?.cancel();
+    _notificationSubscription = characteristic.value.listen((value) {
+      if (value.isNotEmpty) {
+        processReceivedData(value);
+      }
+    });
+
+    try {
+      await characteristic.setNotifyValue(true);
+      print("✅ Notificações BLE ativadas!");
+    } catch (e) {
+      print("❌ Erro ao ativar notificações: $e");
+    }
+  }
+
+  /// 🔹 Restaurar características BLE ao reabrir a conexão
   Future<void> restoreCharacteristics() async {
     if (_connectedDevice != null) {
       print("♻️ Restaurando características BLE...");
@@ -85,6 +106,7 @@ class BluetoothManager {
     }
   }
 
+  /// 🔹 Processar dados recebidos e armazenar no Hive
   void processReceivedData(List<int> rawData) {
     if (rawData.length < 20) return;
 
@@ -133,6 +155,7 @@ class BluetoothManager {
     print("✅ Teste salvo no histórico: $statusTeste - $resultado $unidade");
   }
 
+  /// 🔹 Enviar comando BLE ao dispositivo
   Future<void> sendCommand(String command, String data, int battery) async {
     if (_writableCharacteristic == null) {
       print("❌ Característica de escrita não encontrada!");
@@ -150,6 +173,7 @@ class BluetoothManager {
     }
   }
 
+  /// 🔹 Criar pacote de dados BLE
   List<int> createPacket(String command, String data, int battery) {
     int stx = 0x02;
     int etx = 0x03;
@@ -180,11 +204,12 @@ class BluetoothManager {
   Future<void> disconnectDevice() async {
     if (_connectedDevice != null) {
       print("🔌 Desconectando dispositivo...");
-      _notificationSubscription?.cancel(); // ✅ Cancela o listener ao desconectar
+      _notificationSubscription?.cancel();
       await _connectedDevice?.disconnect();
       _connectedDevice = null;
       _writableCharacteristic = null;
       _notifiableCharacteristic = null;
+
       print("✅ Dispositivo desconectado!");
     }
   }

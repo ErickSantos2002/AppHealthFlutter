@@ -1,8 +1,8 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/bluetooth_scan_service.dart';
-import '../services/bluetooth_manager.dart';
-import '../services/connection_state.dart';
+import '../providers/bluetooth_provider.dart';
 
 Map<String, String> commandTranslations = {
   "T01": "Contagem de uso após calibração",
@@ -22,16 +22,15 @@ Map<String, String> commandTranslations = {
   "B20": "Comando recebido",
 };
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
   final BluetoothScanService scanService = BluetoothScanService();
-  final BluetoothManager bluetoothManager = BluetoothManager();
   bool isScanning = false;
   String command = "";
   String data = "";
@@ -40,40 +39,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _checkDeviceState();
   }
 
-  Future<void> _checkDeviceState() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    bool stillConnected = await ConnectionStateManager.checkDeviceConnection();
-    
-    if (!stillConnected && mounted) {
-      setState(() {
-        ConnectionStateManager.isConnected = false;
-        ConnectionStateManager.connectedDevice = null;
-      });
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("⚠️ Dispositivo desconectado!"), backgroundColor: Colors.red),
-      );
-    } else {
-      await bluetoothManager.restoreCharacteristics();
-      _restartNotifications();
-    }
-  }
-
-  void _restartNotifications() {
-    if (ConnectionStateManager.connectedDevice != null) {
-      bluetoothManager.notifiableCharacteristic?.value.listen((value) {
-        if (value.isNotEmpty && mounted) {
-          final processedData = processReceivedData(value);
-          setState(() {
-            command = processedData["command"];
-            data = processedData["data"];
-            batteryLevel = processedData["battery"];
-          });
-        }
-      });
-    }
+  /// 🔹 Inicia a escuta de notificações BLE
+  void _startNotifications() {
+    final bluetoothState = ref.read(bluetoothProvider);
+    bluetoothState.notifiableCharacteristic?.value.listen((value) {
+      if (value.isNotEmpty && mounted) {
+        final processedData = processReceivedData(value);
+        setState(() {
+          command = processedData["command"];
+          data = processedData["data"];
+          batteryLevel = processedData["battery"];
+        });
+      }
+    });
   }
 
   void toggleScan() {
@@ -88,18 +68,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> connectToDevice(BluetoothDevice device) async {
+    final bluetoothManager = ref.read(bluetoothProvider.notifier);
     bool success = await bluetoothManager.connectToDevice(device);
-    if (success && mounted) {
-      setState(() {
-        ConnectionStateManager.isConnected = true;
-        ConnectionStateManager.connectedDevice = device;
-      });
 
+    if (success && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("✅ Conectado a ${device.name}"), backgroundColor: Colors.blue),
       );
-
-      _restartNotifications();
+      _startNotifications(); // 🔹 Inicia escuta de notificações BLE
+        ref.read(bluetoothProvider.notifier).connectToDevice(device).then((success) {
+        if (success) {
+          print("✅ Dispositivo conectado com sucesso!");
+          // 🔹 Agora notificamos a tela de informações para buscar os dados
+          ref.read(bluetoothProvider.notifier).fetchDeviceInfo();
+        }
+      });
     }
   }
 
@@ -124,11 +107,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bluetoothState = ref.watch(bluetoothProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text("Bluetooth BLE App")),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: ConnectionStateManager.isConnected ? _buildConnectedUI() : _buildScanUI(),
+        child: bluetoothState.isConnected ? _buildConnectedUI() : _buildScanUI(),
       ),
     );
   }
@@ -184,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
         const Text("📡 Conectado ao Dispositivo", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         const SizedBox(height: 20),
 
-        _infoCard("🔹 Resposta", command), // ✅ Alterado de "Comando" para "Resposta"
+        _infoCard("🔹 Resposta", command),
         _infoCard("📊 Dados", data),
         _infoCard("🔋 Bateria", "$batteryLevel%"),
 
@@ -192,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         ElevatedButton.icon(
           onPressed: () {
-            bluetoothManager.sendCommand("A20", "TEST,START", batteryLevel);
+            ref.read(bluetoothProvider.notifier).sendCommand("A20", "TEST,START", batteryLevel);
           },
           icon: const Icon(Icons.play_arrow),
           label: const Text("Iniciar Teste"),
@@ -202,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         ElevatedButton.icon(
           onPressed: () {
-            bluetoothManager.sendCommand("A22", "SOFT,RESET", batteryLevel);
+            ref.read(bluetoothProvider.notifier).sendCommand("A22", "SOFT,RESET", batteryLevel);
           },
           icon: const Icon(Icons.restart_alt),
           label: const Text("Reiniciar Dispositivo"),
@@ -212,10 +197,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
         ElevatedButton.icon(
           onPressed: () {
-            bluetoothManager.disconnectDevice();
+            ref.read(bluetoothProvider.notifier).disconnect();
             setState(() {
-              ConnectionStateManager.isConnected = false;
-              ConnectionStateManager.connectedDevice = null;
               command = "";
               data = "";
               batteryLevel = 0;

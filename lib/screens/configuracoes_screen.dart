@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import '../theme_provider.dart'; // ✅ Importando ThemeProvider
+import '../theme_provider.dart'; // ✅ Importando o novo provider
 
-class ConfiguracoesScreen extends StatefulWidget {
+class ConfiguracoesScreen extends ConsumerStatefulWidget {
   const ConfiguracoesScreen({super.key});
 
   @override
-  State<ConfiguracoesScreen> createState() => _ConfiguracoesScreenState();
+  ConsumerState<ConfiguracoesScreen> createState() => _ConfiguracoesScreenState();
 }
 
-class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
+class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
   bool notificacoesAtivadas = true;
-  String idiomaSelecionado = "Português"; // Apenas placeholder
-  String versaoApp = "1.0.0"; // Placeholder, será atualizado dinamicamente
+  String idiomaSelecionado = "Português"; 
+  String versaoApp = "1.0.0"; 
 
   @override
   void initState() {
@@ -23,7 +23,6 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
     _obterVersaoApp();
   }
 
-  // ✅ Obtém a versão do aplicativo dinamicamente
   Future<void> _obterVersaoApp() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     setState(() {
@@ -31,7 +30,6 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
     });
   }
 
-  // ✅ Confirmação para limpar histórico
   Future<void> _confirmarLimparHistorico() async {
     bool? confirmar = await showDialog(
       context: context,
@@ -63,14 +61,13 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
     }
   }
 
-  // ✅ Exporta os dados do aplicativo (Simula o compartilhamento de um arquivo)
   Future<void> _exportarDados() async {
     Share.share("Exportação de dados em breve disponível!", subject: "Exportação de Dados");
   }
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeMode = ref.watch(themeProvider).themeMode; // ✅ Agora usando Riverpod!
 
     return Scaffold(
       appBar: AppBar(title: const Text("Configurações")),
@@ -78,7 +75,6 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
         children: [
           const SizedBox(height: 10),
 
-          // 🔹 Configurações Gerais
           _buildSectionTitle("Configurações Gerais"),
           _buildSwitchTile(
             title: "Notificações",
@@ -95,14 +91,13 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
             title: "Modo Escuro",
             subtitle: "Alternar entre tema claro e escuro",
             icon: Icons.dark_mode,
-            value: themeProvider.themeMode == ThemeMode.dark,
-            onChanged: (value) {
-              themeProvider.toggleTheme(value);
+            value: themeMode == ThemeMode.dark, // ✅ Corrigido
+            onChanged: (_) {
+              ref.read(themeProvider.notifier).toggleTheme(); // ✅ Agora usa Riverpod
             },
           ),
           _buildDropdownTile(),
 
-          // 🔹 Configurações de Dados
           _buildSectionTitle("Configurações de Dados"),
           _buildButtonTile(
             title: "Exportar Dados",
@@ -118,7 +113,6 @@ class _ConfiguracoesScreenState extends State<ConfiguracoesScreen> {
             isDestructive: true,
           ),
 
-          // 🔹 Sobre o Aplicativo
           _buildSectionTitle("Sobre o Aplicativo"),
           _buildInfoTile("Versão do App", versaoApp, Icons.info),
           _buildButtonTile(
