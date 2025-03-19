@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart'; // ✅ Riverpod
-import '../providers/bluetooth_provider.dart'; // ✅ Bluetooth Provider
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/bluetooth_provider.dart';
 import 'dart:async';
 
 class InformacoesDispositivoScreen extends ConsumerStatefulWidget {
@@ -15,13 +15,29 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
   String contagemUso = "Carregando...";
   String ultimaCalibracao = "Carregando...";
   StreamSubscription<List<int>>? _bluetoothSubscription;
+  bool _conexaoRestaurada = false;
+  bool avisoCalibracaoExibido = false;
+  bool avisoUsoExibido = false;
 
   @override
-  void initState() {
-    super.initState();
-    _restaurarConexao();
+  Widget build(BuildContext context) {
+    final bluetoothState = ref.watch(bluetoothProvider);
+    if (!bluetoothState.isConnected) {
+      avisoCalibracaoExibido = false;
+      avisoUsoExibido = false;
+    }
+
+    if (bluetoothState.isConnected && !_conexaoRestaurada) {
+      print("🔄 [InformacoesDispositivoScreen] Bluetooth conectado! Chamando _restaurarConexao()...");
+      _conexaoRestaurada = true;
+      Future.microtask(() => _restaurarConexao());
+    }
+
+    return Scaffold(
+      appBar: AppBar(title: const Text("Informações do Dispositivo")),
+      body: bluetoothState.isConnected ? _buildDeviceInfo() : _buildNoDeviceConnected(),
+    );
   }
-  
 
   @override
   void dispose() {
@@ -29,65 +45,123 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
     super.dispose();
   }
 
-  /// 🔹 Aguarda a inicialização correta antes de enviar comandos
   Future<void> _restaurarConexao() async {
     final bluetoothNotifier = ref.read(bluetoothProvider.notifier);
     final bluetoothState = ref.read(bluetoothProvider);
 
-    if (bluetoothState.isConnected) {
-      print("♻️ Restaurando conexão BLE...");
-      await bluetoothNotifier.restoreCharacteristics();
-      await Future.delayed(const Duration(seconds: 1));
+    print("♻️ [InformacoesDispositivoScreen] Restaurando conexão BLE...");
 
-      if (bluetoothState.writableCharacteristic == null) {
-        print("❌ Característica de escrita ainda não disponível após restauração!");
-      } else {
-        print("✅ Característica de escrita confirmada: ${bluetoothState.writableCharacteristic!.uuid}");
-      }
-
-      _iniciarListener();
-      _obterInformacoesDispositivo();
+    if (!bluetoothState.isConnected) {
+      print("❌ [InformacoesDispositivoScreen] Dispositivo não está conectado!");
+      return;
     }
+
+    print("🔎 [InformacoesDispositivoScreen] Descobrindo características BLE...");
+    await bluetoothNotifier.restoreCharacteristics();
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (bluetoothState.notifiableCharacteristic == null) {
+      print("❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!");
+      return;
+    }
+
+    print("🔍 [InformacoesDispositivoScreen] Característica de notificação confirmada: ${bluetoothState.notifiableCharacteristic!.uuid}");
+
+    await bluetoothState.notifiableCharacteristic!.setNotifyValue(true);
+    print("✅ [InformacoesDispositivoScreen] Notificações BLE ativadas!");
+
+    print("🔄 [InformacoesDispositivoScreen] Chamando _iniciarListener()...");
+    _iniciarListener();
+    _obterInformacoesDispositivo();
   }
 
-  /// 🔹 Escuta notificações BLE corretamente (evita múltiplos listeners)
   void _iniciarListener() {
-    final bluetoothState = ref.read(bluetoothProvider);
-    _bluetoothSubscription?.cancel();
+    void _verificarAvisos() {
+      try {
+        // Verificação de calibração
+        DateTime hoje = DateTime.now();
+        DateTime? dataCalibracao;
 
-    _bluetoothSubscription = bluetoothState.notifiableCharacteristic?.value.listen((value) {
+        if (ultimaCalibracao.isNotEmpty && ultimaCalibracao.contains(".")) {
+          List<String> partes = ultimaCalibracao.split(".");
+          if (partes.length == 3) {
+            int ano = int.tryParse(partes[0]) ?? 0;
+            int mes = int.tryParse(partes[1]) ?? 0;
+            int dia = int.tryParse(partes[2]) ?? 0;
+            dataCalibracao = DateTime(ano, mes, dia);
+          }
+        }
+
+        bool calibracaoAtrasada = dataCalibracao != null && hoje.difference(dataCalibracao).inDays > 365;
+
+        // Verificação da contagem de uso
+        int usoAtual = int.tryParse(contagemUso.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+        bool usoExcedido = usoAtual > 100;
+
+        if ((calibracaoAtrasada && !avisoCalibracaoExibido) || (usoExcedido && !avisoUsoExibido)) {
+          String mensagem = "";
+
+          if (calibracaoAtrasada && !avisoCalibracaoExibido) {
+            mensagem += "⚠️ A calibração do aparelho está atrasada! Realize uma nova calibração.\n\n";
+            avisoCalibracaoExibido = true;
+          }
+          if (usoExcedido && !avisoUsoExibido) {
+            mensagem += "⚠️ O limite de 1000 testes foi atingido! Recomenda-se uma calibração.\n";
+            avisoUsoExibido = true;
+          }
+
+          Future.delayed(Duration.zero, () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text("⚠️ Atenção"),
+                  content: Text(mensagem.trim()),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text("OK"),
+                    ),
+                  ],
+                );
+              },
+            );
+          });
+        }
+      } catch (e) {
+        print("Erro ao verificar avisos: $e");
+      }
+    }
+    final bluetoothState = ref.read(bluetoothProvider);
+
+    print("🔄 [InformacoesDispositivoScreen] Tentando iniciar listener BLE...");
+
+    if (bluetoothState.notifiableCharacteristic == null) {
+      print("❌ [InformacoesDispositivoScreen] Característica de notificação não encontrada!");
+      return;
+    }
+
+    print("✅ [InformacoesDispositivoScreen] Característica BLE disponível: ${bluetoothState.notifiableCharacteristic!.uuid}");
+
+    _bluetoothSubscription?.cancel();
+    _bluetoothSubscription = bluetoothState.notifiableCharacteristic!.value.listen((value) {
+      print("📡 [InformacoesDispositivoScreen] Listener ativo! Recebendo notificações BLE...");
+
       if (value.isNotEmpty && mounted) {
         final processedData = processReceivedData(value);
-
-        print("📩 Dados recebidos: ${processedData["command"]} -> ${processedData["data"]}");
+        print("📩 [InformacoesDispositivoScreen] Dados recebidos: ${processedData["command"]} -> ${processedData["data"]}");
 
         setState(() {
-          if (processedData["command"] == "B01") {
-            versaoFirmware = processedData["data"];
-            print("✅ Firmware atualizado: $versaoFirmware");
-          } else if (processedData["command"] == "B03") {
-            contagemUso = "${processedData["data"]} testes";
-            print("✅ Contagem de Uso atualizada: $contagemUso");
-          } else if (processedData["command"] == "B04") {
-            ultimaCalibracao = processedData["data"];
-            print("✅ Última Calibração atualizada: $ultimaCalibracao");
-          }
+          if (processedData["command"] == "B01") versaoFirmware = processedData["data"];
+          if (processedData["command"] == "B03") contagemUso = "${processedData["data"]} testes";
+          if (processedData["command"] == "B04") ultimaCalibracao = processedData["data"];
+
+          _verificarAvisos(); // 🔹 Chama a função para verificar os avisos
         });
       }
     });
-  }
 
-  void _atualizarEstado() {
-    final bluetoothState = ref.read(bluetoothProvider);
-
-    if (mounted) {
-      setState(() {});
-
-      if (bluetoothState.isConnected) {
-        print("✅ Dispositivo conectado, buscando informações...");
-        _obterInformacoesDispositivo();
-      }
-    }
+    print("🎯 [InformacoesDispositivoScreen] Listener BLE iniciado com sucesso!");
   }
 
   /// 🔹 Aguarda a característica de escrita antes de enviar os comandos
@@ -95,54 +169,63 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
     final bluetoothNotifier = ref.read(bluetoothProvider.notifier);
     final bluetoothState = ref.read(bluetoothProvider);
 
-    if (bluetoothState.isConnected && bluetoothState.connectedDevice != null) {
-      print("⌛ Aguardando característica de escrita...");
-      await Future.delayed(const Duration(seconds: 1));
-
-      if (bluetoothState.writableCharacteristic == null) {
-        print("❌ Característica de escrita ainda não disponível! Tentando novamente...");
-        await _restaurarConexao();
-        return;
-      }
-      final batteryLevel = bluetoothState.writableCharacteristic != null ? bluetoothState.writableCharacteristic!.properties.read ? 100 : 0 : 0;
-
+    if (bluetoothState.isConnected && bluetoothState.writableCharacteristic != null) {
       print("📤 Enviando comandos para obter informações...");
-      bluetoothNotifier.sendCommand("A01", "INFORMATION", batteryLevel); // Versão do Firmware
-      bluetoothNotifier.sendCommand("A03", "0", batteryLevel); // Contagem de Uso
-      bluetoothNotifier.sendCommand("A04", "0", batteryLevel); // Última Calibração
+      bluetoothNotifier.sendCommand("A01", "INFORMATION", 100);
+      await Future.delayed(const Duration(milliseconds: 500));
+      bluetoothNotifier.sendCommand("A03", "0", 100);
+      await Future.delayed(const Duration(milliseconds: 500));
+      bluetoothNotifier.sendCommand("A04", "0", 100);
+    } else {
+      print("❌ Dispositivo não está conectado ou característica de escrita indisponível!");
     }
   }
 
-  /// 🔹 Função corrigida para processar os dados corretamente
+  /// 🔹 Processa os dados recebidos do Bluetooth
   Map<String, dynamic> processReceivedData(List<int> rawData) {
-    if (rawData.length < 20) {
+    print("📩 Pacote recebido (bruto): ${rawData.map((e) => e.toRadixString(16)).join(" ")}");
+
+    if (rawData.length < 5) {
+      print("⚠️ Pacote muito curto para ser válido! Tamanho: ${rawData.length}");
       return {"command": "Erro", "data": "Pacote inválido", "battery": 0};
     }
 
     String commandCode = String.fromCharCodes(rawData.sublist(1, 4)).trim();
     String receivedData = String.fromCharCodes(rawData.sublist(4, 17)).replaceAll("#", "").trim();
-    int battery = rawData[17];
 
-    // ✅ Verifica se o comando recebido é esperado (B01, B03, B04)
-    if (commandCode == "B01" || commandCode == "B03" || commandCode == "B04") {
-      print("✅ Resposta recebida: $commandCode - $receivedData");
+    // Substituir vírgulas por pontos para números
+    if (receivedData.contains(",")) {
+      receivedData = receivedData.replaceAll(",", ".");
     }
+
+    print("✅ Dados processados corretamente: Comando: $commandCode | Dados: $receivedData");
 
     return {
       "command": commandCode,
       "data": receivedData.isNotEmpty ? receivedData : "Indisponível",
-      "battery": battery,
+      "battery": rawData.length > 5 ? rawData[4] : 0,
     };
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final bluetoothState = ref.watch(bluetoothProvider);
+  String _formatarData(String data) {
+    if (RegExp(r'^\d{4}\.\d{2}\.\d{2}$').hasMatch(data)) {
+      List<String> dateParts = data.split(".");
+      return "${dateParts[2]}/${dateParts[1]}/${dateParts[0]}"; // Converte para DD/MM/YYYY
+    }
+    return data; // Retorna o valor original se não for uma data válida
+  }
 
-    return Scaffold(
-      appBar: AppBar(title: const Text("Informações do Dispositivo")),
-      body: bluetoothState.isConnected ? _buildDeviceInfo() : _buildNoDeviceConnected(),
-    );
+  String _formatarQuantidadeTestes(String valor) {
+    // Se começar com "0.", removemos essa parte
+    if (valor.startsWith("0.")) {
+      valor = valor.substring(2); // Remove os dois primeiros caracteres "0."
+    }
+
+    // Remove zeros à esquerda, garantindo que um número como "000141" vire "141"
+    valor = valor.replaceFirst(RegExp(r'^0+'), '');
+
+    // Retorna o valor formatado
+    return valor.isNotEmpty ? valor : "0"; // Se ficar vazio após a remoção, retorna "0"
   }
 
   Widget _buildDeviceInfo() {
@@ -152,8 +235,8 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildInfoCard(Icons.device_hub, "Versão do Firmware", versaoFirmware),
-          _buildInfoCard(Icons.bar_chart, "Contagem de Uso", contagemUso),
-          _buildInfoCard(Icons.date_range, "Última Calibração", ultimaCalibracao),
+          _buildInfoCard(Icons.bar_chart, "Contagem de Uso", _formatarQuantidadeTestes(contagemUso)),
+          _buildInfoCard(Icons.date_range, "Última Calibração", _formatarData(ultimaCalibracao)),
           const SizedBox(height: 20),
           Center(
             child: ElevatedButton.icon(
@@ -191,13 +274,19 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
   }
 
   Widget _buildInfoCard(IconData icon, String title, String value) {
+    // Se for um número, formatar com 2 casas decimais
+    String formattedValue = value;
+    if (RegExp(r'^\d+(\.\d+)?$').hasMatch(value)) {
+      formattedValue = double.parse(value).toStringAsFixed(2);
+    }
+
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: ListTile(
         leading: Icon(icon, color: Colors.blue),
         title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(value, style: const TextStyle(fontSize: 16)),
+        subtitle: Text(formattedValue, style: const TextStyle(fontSize: 16)),
       ),
     );
   }

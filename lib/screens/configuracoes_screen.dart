@@ -4,6 +4,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../theme_provider.dart'; // ✅ Importando o novo provider
+import '../providers/configuracoes_provider.dart'; // ✅ Importando as configurações
 
 class ConfiguracoesScreen extends ConsumerStatefulWidget {
   const ConfiguracoesScreen({super.key});
@@ -85,6 +86,15 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
               setState(() {
                 notificacoesAtivadas = value;
               });
+            },
+          ),
+          _buildSwitchTile(
+            title: "Exibir Status de Calibração",
+            subtitle: "Mostrar ou ocultar o status da calibração no histórico",
+            icon: Icons.assignment_turned_in,
+            value: ref.watch(configuracoesProvider).exibirStatusCalibracao,
+            onChanged: (value) {
+              ref.read(configuracoesProvider.notifier).alterarExibirStatusCalibracao(value);
             },
           ),
           _buildSwitchTile(

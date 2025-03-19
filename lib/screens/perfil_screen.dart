@@ -1,126 +1,215 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../providers/auth_provider.dart'; // ✅ Gerenciador de autenticação
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:cpf_cnpj_validator/cpf_validator.dart';
+import '../models/funcionario_model.dart';
 
-class PerfilScreen extends StatelessWidget {
+class PerfilScreen extends StatefulWidget {
   const PerfilScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final authProvider = Provider.of<AuthProvider>(context);
+  State<PerfilScreen> createState() => _PerfilScreenState();
+}
 
-    return Scaffold(
-      appBar: AppBar(title: const Text("Perfil")),
-      body: authProvider.isLoggedIn ? _buildLoggedInUI(context, authProvider) : _buildLoggedOutUI(context, authProvider),
+class _PerfilScreenState extends State<PerfilScreen> {
+  late Box<FuncionarioModel> funcionariosBox;
+  TextEditingController searchController = TextEditingController();
+  String searchQuery = "";
+
+  @override
+  void initState() {
+    super.initState();
+    funcionariosBox = Hive.box<FuncionarioModel>('funcionarios');
+  }
+
+  void _adicionarFuncionario({FuncionarioModel? funcionario, int? index}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        String nome = funcionario?.nome ?? "";
+        String cargo = funcionario?.cargo ?? "";
+        String cpf = funcionario?.cpf ?? "";
+        String matricula = funcionario?.matricula ?? "";
+        
+        final cpfController = TextEditingController(text: cpf);
+        final matriculaController = TextEditingController(text: matricula);
+        
+        return AlertDialog(
+          title: Text(funcionario == null ? "Adicionar Funcionário" : "Editar Funcionário"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                decoration: const InputDecoration(labelText: "Nome"),
+                onChanged: (value) => nome = value,
+                controller: TextEditingController(text: nome),
+              ),
+              TextField(
+                decoration: const InputDecoration(labelText: "Cargo (Opcional)"),
+                onChanged: (value) => cargo = value,
+                controller: TextEditingController(text: cargo),
+              ),
+              TextField(
+                controller: cpfController,
+                decoration: const InputDecoration(labelText: "CPF"),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  String formattedCpf = CPFValidator.format(value);
+                  cpfController.value = TextEditingValue(
+                    text: formattedCpf,
+                    selection: TextSelection.collapsed(offset: formattedCpf.length),
+                  );
+                  cpf = formattedCpf;
+                },
+              ),
+              TextField(
+                controller: matriculaController,
+                decoration: const InputDecoration(labelText: "Matrícula"),
+                keyboardType: TextInputType.text,
+                onChanged: (value) => matricula = value,
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("Cancelar"),
+            ),
+            TextButton(
+              onPressed: () {
+                if (nome.isEmpty || (cpf.isEmpty && matricula.isEmpty)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("É obrigatório preencher pelo menos CPF ou Matrícula.")),
+                  );
+                  return;
+                }
+                if (cpf.isNotEmpty && !CPFValidator.isValid(cpf)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("CPF inválido!")),
+                  );
+                  return;
+                }
+                for (var f in funcionariosBox.values) {
+                  if (f.cpf == cpf && cpf.isNotEmpty && f != funcionario) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("CPF já cadastrado!")),
+                    );
+                    return;
+                  }
+                  if (f.matricula == matricula && matricula.isNotEmpty && f != funcionario) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Matrícula já cadastrada!")),
+                    );
+                    return;
+                  }
+                }
+                final novoFuncionario = FuncionarioModel(nome: nome, cargo: cargo, cpf: cpf, matricula: matricula);
+                if (funcionario == null) {
+                  funcionariosBox.add(novoFuncionario);
+                } else {
+                  funcionariosBox.putAt(index!, novoFuncionario);
+                }
+                setState(() {});
+                Navigator.pop(context);
+              },
+              child: Text(funcionario == null ? "Adicionar" : "Salvar"),
+            ),
+          ],
+        );
+      },
     );
   }
 
-  // ✅ Tela para usuários NÃO logados
-  Widget _buildLoggedOutUI(BuildContext context, AuthProvider authProvider) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.person_outline, size: 100, color: Colors.grey),
-          const SizedBox(height: 20),
-          const Text("Você não está logado.", style: TextStyle(fontSize: 18)),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: () {
-              // ✅ Simula um login e atualiza a tela
-              authProvider.login("Usuário Exemplo", "email@example.com", phone: "12345-6789");
-            },
-            child: const Text("Fazer Login"),
+  void _removerFuncionario(int index) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Confirmar Exclusão"),
+        content: const Text("Tem certeza que deseja excluir este funcionário?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Cancelar"),
           ),
-          const SizedBox(height: 10),
-          const Text("Você pode continuar sem login, mas terá menos funcionalidades."),
+          TextButton(
+            onPressed: () {
+              funcionariosBox.deleteAt(index);
+              setState(() {});
+              Navigator.pop(context);
+            },
+            child: const Text("Excluir", style: TextStyle(color: Colors.red)),
+          ),
         ],
       ),
     );
   }
 
-  // ✅ Tela para usuários LOGADOS
-  Widget _buildLoggedInUI(BuildContext context, AuthProvider authProvider) {
-    return ListView(
-      padding: const EdgeInsets.all(16.0),
-      children: [
-        // 🔹 Imagem de Perfil
-        Center(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.blueAccent,
-                child: const Icon(Icons.person, size: 50, color: Colors.white),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Funcionários"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () => _adicionarFuncionario(),
+          ),
+        ],
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(50),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: searchController,
+              decoration: const InputDecoration(
+                hintText: "Buscar funcionário...",
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(),
               ),
-              const SizedBox(height: 10),
-              Text(authProvider.userName, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              Text(authProvider.userEmail, style: const TextStyle(color: Colors.grey)),
-            ],
+              onChanged: (value) {
+                setState(() {
+                  searchQuery = value.toLowerCase();
+                });
+              },
+            ),
           ),
         ),
-        const SizedBox(height: 20),
-
-        // 🔹 Dados do Usuário
-        _buildInfoTile("Nome", authProvider.userName, Icons.person),
-        _buildInfoTile("E-mail", authProvider.userEmail, Icons.email),
-        _buildInfoTile("Telefone", authProvider.userPhone ?? "Não informado", Icons.phone),
-
-        const SizedBox(height: 20),
-
-        // 🔹 Opções
-        _buildButtonTile(
-          title: "Editar Perfil",
-          subtitle: "Alterar nome e telefone",
-          icon: Icons.edit,
-          onTap: () {
-            // Adicionar funcionalidade de edição no futuro
-          },
-        ),
-        _buildButtonTile(
-          title: "Alterar Senha",
-          subtitle: "Modificar senha de acesso",
-          icon: Icons.lock,
-          onTap: () {
-            // Adicionar funcionalidade no futuro
-          },
-        ),
-        _buildButtonTile(
-          title: "Sair da Conta",
-          subtitle: "Desconectar-se do aplicativo",
-          icon: Icons.logout,
-          onTap: () {
-            authProvider.logout();
-          },
-          isDestructive: true,
-        ),
-      ],
-    );
-  }
-
-  // ✅ Widget para exibir informações do usuário
-  Widget _buildInfoTile(String title, String value, IconData icon) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.blueAccent),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text(value),
-    );
-  }
-
-  // ✅ Widget para botões de ação
-  Widget _buildButtonTile({
-    required String title,
-    required String subtitle,
-    required IconData icon,
-    required VoidCallback onTap,
-    bool isDestructive = false,
-  }) {
-    return ListTile(
-      leading: Icon(icon, color: isDestructive ? Colors.red : Colors.blueAccent),
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: Text(subtitle),
-      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      onTap: onTap,
+      ),
+      body: ValueListenableBuilder(
+        valueListenable: funcionariosBox.listenable(),
+        builder: (context, Box<FuncionarioModel> box, _) {
+          var funcionarios = box.values.where((f) =>
+            f.nome.toLowerCase().contains(searchQuery) ||
+            f.cpf.contains(searchQuery) ||
+            f.matricula.contains(searchQuery) || f.cargo.toLowerCase().contains(searchQuery)
+          ).toList();
+          funcionarios.sort((a, b) => a.nome.compareTo(b.nome));
+          return funcionarios.isEmpty
+              ? const Center(child: Text("Nenhum funcionário cadastrado."))
+              : ListView.builder(
+                  itemCount: funcionarios.length,
+                  itemBuilder: (context, index) {
+                    final funcionario = funcionarios[index];
+                    return ListTile(
+                      title: Text(funcionario.nome),
+                      subtitle: Text("Cargo: ${funcionario.cargo.isNotEmpty ? funcionario.cargo : 'Não informado'} | CPF: ${funcionario.cpf} | Matrícula: ${funcionario.matricula}"),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.edit),
+                            onPressed: () => _adicionarFuncionario(funcionario: funcionario, index: index),
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete, color: Colors.red),
+                            onPressed: () => _removerFuncionario(index),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+        },
+      ),
     );
   }
 }

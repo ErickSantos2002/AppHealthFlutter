@@ -5,15 +5,19 @@ import 'screens/main_screen.dart';
 import 'screens/perfil_screen.dart';
 import 'screens/login_screen.dart';
 import 'models/test_model.dart';
+import 'models/funcionario_model.dart';
 import 'theme_provider.dart';
-import 'providers/auth_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   await Hive.initFlutter();
+  //await Hive.deleteBoxFromDisk('testes');
+  //await Hive.deleteBoxFromDisk('funcionarios');
   Hive.registerAdapter(TestModelAdapter());
   await Hive.openBox<TestModel>('testes');
+  Hive.registerAdapter(FuncionarioModelAdapter());
+  await Hive.openBox<FuncionarioModel>('funcionarios');
 
   runApp(
     ProviderScope( // ✅ Agora o Riverpod gerencia os providers

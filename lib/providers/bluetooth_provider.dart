@@ -1,7 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import '../services/bluetooth_manager.dart';
-import '../screens/informacoes_dispositivo_screen.dart';
 
 /// 🔹 Estado global para gerenciar a conexão Bluetooth
 class BluetoothState {
@@ -55,10 +54,24 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     BluetoothCharacteristic? writable,
     BluetoothCharacteristic? notifiable,
   }) {
-    state = state.copyWith(
-      writableCharacteristic: writable,
-      notifiableCharacteristic: notifiable,
-    );
+    if (notifiable != null && notifiable != state.notifiableCharacteristic) {
+      print("🔄 [bluetoothProvider] Atualizando característica de notificação global: ${notifiable.uuid}");
+      state = state.copyWith(notifiableCharacteristic: notifiable);
+    }
+
+    if (writable != null && writable != state.writableCharacteristic) {
+      print("✍️ [bluetoothProvider] Atualizando característica de escrita global: ${writable.uuid}");
+      state = state.copyWith(writableCharacteristic: writable);
+    }
+  }
+
+  Future<void> ensureNotificationsActive() async {
+    if (state.notifiableCharacteristic != null) {
+      await state.notifiableCharacteristic!.setNotifyValue(true);
+      print("🔔 Notificações BLE reativadas!");
+    } else {
+      print("⚠️ Nenhuma característica de notificação encontrada no BluetoothProvider!");
+    }
   }
 
   /// 🔹 Obtém informações do dispositivo após conexão

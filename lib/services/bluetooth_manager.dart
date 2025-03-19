@@ -108,41 +108,51 @@ class BluetoothManager {
 
   /// 🔹 Processar dados recebidos e armazenar no Hive
   void processReceivedData(List<int> rawData) {
-    if (rawData.length < 20) return;
+    if (rawData.length < 5) {
+      print("⚠️ Pacote muito curto para ser válido! Tamanho: ${rawData.length}");
+      return;
+    }
 
     String commandCode = String.fromCharCodes(rawData.sublist(1, 4)).trim();
-    String receivedData = String.fromCharCodes(rawData.sublist(4, 17)).replaceAll("#", "").trim();
-    int battery = rawData[17];
+    String receivedData = String.fromCharCodes(rawData.sublist(4, rawData.length - 2)).replaceAll("#", "").trim();
+    int battery = rawData[rawData.length - 2]; // Captura o nível da bateria corretamente
 
     // ✅ Verifica se o comando já foi salvo para evitar duplicação
     if (commandCode == ultimoComandoRecebido) {
       print("⚠️ Teste duplicado detectado, ignorando...");
       return;
     }
-    ultimoComandoRecebido = commandCode; // ✅ Atualiza o último comando salvo
+    ultimoComandoRecebido = commandCode; // Atualiza o último comando salvo
 
-    // ✅ Tratamento do dado recebido
+    // 🔹 Corrigir separador decimal e remover caracteres indesejados
+    receivedData = receivedData.replaceAll(",", ".").replaceAll(RegExp(r'[^0-9a-zA-Z.\s]'), '');
+
+    // 🔹 Separar os dados recebidos corretamente
     List<String> dataParts = receivedData.split(',');
+
     if (dataParts.length < 4) {
-      print("❌ Dados recebidos inválidos: $receivedData");
-      return;
+      print("⚠️ Dados recebidos possuem menos de 4 partes, mas ainda serão processados: $receivedData");
     }
 
-    // ✅ Interpretação dos valores
-    String statusTeste = dataParts[0] == "1" ? "PASS" : "Normal";
-    String unidade = unidadeMedida[dataParts[1]] ?? "Desconhecido";
-    String resultado = dataParts[2];
+    // 🔹 Interpretar status do teste
+    String statusTeste = (dataParts.isNotEmpty && dataParts[0] == "1") ? "PASS" : "Normal";
 
-    // ✅ Tratamento do resultado (removendo zeros desnecessários)
+    // 🔹 Identificar unidade de medida
+    String unidade = (dataParts.length > 1) ? unidadeMedida[dataParts[1]] ?? "Desconhecido" : "Desconhecido";
+
+    // 🔹 Processar resultado corretamente
+    String resultado = (dataParts.length > 2) ? dataParts[2] : "0.000";
+
     if (resultado.contains(RegExp(r'^\d+$'))) {
       resultado = (int.parse(resultado) / 1000).toStringAsFixed(3);
     }
 
-    String statusCalibracao = dataParts[3] == "0" ? "OK" : "Fora do período de calibração";
+    // 🔹 Verificar status da calibração
+    String statusCalibracao = (dataParts.length > 3 && dataParts[3] == "0") ? "OK" : "Fora do período de calibração";
 
-    // ✅ Criando um modelo para salvar
+    // ✅ Criando um modelo para salvar os dados
     TestModel teste = TestModel(
-      command: statusTeste, 
+      command: statusTeste,
       data: "$resultado $unidade",
       batteryLevel: battery,
       timestamp: DateTime.now(),
