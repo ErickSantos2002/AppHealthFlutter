@@ -17,28 +17,34 @@ class TestModelAdapter extends TypeAdapter<TestModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TestModel(
-      data: fields[0] as String,
+      timestamp: fields[0] as DateTime,
       command: fields[1] as String,
-      batteryLevel: fields[2] as int,
-      timestamp: fields[3] as DateTime,
-      statusCalibracao: fields[4] as String,
+      statusCalibracao: fields[2] as String,
+      batteryLevel: fields[3] as int,
+      funcionarioId: fields[4] as String?,
+      funcionarioNome: fields[5] as String,
+      photoPath: fields[6] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, TestModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
-      ..write(obj.data)
+      ..write(obj.timestamp)
       ..writeByte(1)
       ..write(obj.command)
       ..writeByte(2)
-      ..write(obj.batteryLevel)
+      ..write(obj.statusCalibracao)
       ..writeByte(3)
-      ..write(obj.timestamp)
+      ..write(obj.batteryLevel)
       ..writeByte(4)
-      ..write(obj.statusCalibracao);
+      ..write(obj.funcionarioId)
+      ..writeByte(5)
+      ..write(obj.funcionarioNome)
+      ..writeByte(6)
+      ..write(obj.photoPath);
   }
 
   @override

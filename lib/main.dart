@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   await Hive.initFlutter();
-  //await Hive.deleteBoxFromDisk('testes');
+  await Hive.deleteBoxFromDisk('testes');
   //await Hive.deleteBoxFromDisk('funcionarios');
   Hive.registerAdapter(TestModelAdapter());
   await Hive.openBox<TestModel>('testes');

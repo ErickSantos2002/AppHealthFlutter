@@ -102,7 +102,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     return;
                   }
                 }
-                final novoFuncionario = FuncionarioModel(nome: nome, cargo: cargo, cpf: cpf, matricula: matricula);
+                final novoFuncionario = FuncionarioModel(
+                  id: DateTime.now().millisecondsSinceEpoch.toString(), // 🔹 Gera um ID único baseado no tempo
+                  nome: nome,
+                  cargo: cargo,
+                  cpf: cpf,
+                  matricula: matricula,
+                );
                 if (funcionario == null) {
                   funcionariosBox.add(novoFuncionario);
                 } else {
@@ -177,18 +183,16 @@ class _PerfilScreenState extends State<PerfilScreen> {
       body: ValueListenableBuilder(
         valueListenable: funcionariosBox.listenable(),
         builder: (context, Box<FuncionarioModel> box, _) {
-          var funcionarios = box.values.where((f) =>
-            f.nome.toLowerCase().contains(searchQuery) ||
-            f.cpf.contains(searchQuery) ||
-            f.matricula.contains(searchQuery) || f.cargo.toLowerCase().contains(searchQuery)
-          ).toList();
-          funcionarios.sort((a, b) => a.nome.compareTo(b.nome));
+          List<FuncionarioModel> funcionarios = box.values.toList(); // ✅ Agora é uma lista válida
+
+          funcionarios.sort((a, b) => a.nome.compareTo(b.nome)); // Ordenando por nome
           return funcionarios.isEmpty
               ? const Center(child: Text("Nenhum funcionário cadastrado."))
               : ListView.builder(
                   itemCount: funcionarios.length,
                   itemBuilder: (context, index) {
-                    final funcionario = funcionarios[index];
+                    List<FuncionarioModel> funcionariosList = funcionarios.toList();
+                    final funcionario = funcionariosList[index];
                     return ListTile(
                       title: Text(funcionario.nome),
                       subtitle: Text("Cargo: ${funcionario.cargo.isNotEmpty ? funcionario.cargo : 'Não informado'} | CPF: ${funcionario.cpf} | Matrícula: ${funcionario.matricula}"),

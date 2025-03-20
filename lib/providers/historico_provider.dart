@@ -117,6 +117,17 @@ class HistoricoNotifier extends StateNotifier<HistoricoState> {
 
     state = state.copyWith(testesFavoritos: favoritos);
   }
+
+  /// 📌 Adiciona um novo teste ao banco de dados e atualiza o histórico
+  Future<void> adicionarTeste(TestModel novoTeste) async {
+    _testesBox = await Hive.openBox<TestModel>('testes');
+
+    // 🔹 Salvamos o teste no banco
+    await _testesBox.put(novoTeste.timestamp.toString(), novoTeste);
+
+    // 🔹 Recarregar os testes para atualizar a interface
+    await carregarTestes();
+  }
 }
 
 /// 🔹 Criando o provider global do histórico

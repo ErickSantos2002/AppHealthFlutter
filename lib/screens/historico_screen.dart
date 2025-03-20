@@ -19,38 +19,70 @@ class HistoricoScreen extends ConsumerStatefulWidget {
 }
 
 class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
+  bool mostrandoDetalhes = false;
+  TestModel? testeSelecionado;
+
+  void _mostrarDetalhes(TestModel teste) {
+    setState(() {
+      testeSelecionado = teste;
+      mostrandoDetalhes = true;
+    });
+  }
+
+  void _voltarParaHistorico() {
+    setState(() {
+      testeSelecionado = null;
+      mostrandoDetalhes = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2, // Duas abas: Testes e Gráficos
+      length: 2, // Duas abas: Testes e Favoritos
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Histórico de Testes"),
-          bottom: const TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.list), text: "Histórico"),
-              Tab(icon: Icon(Icons.star), text: "Favoritos"), // ✅ Alterado para Favoritos
-            ],
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.download),
-              onPressed: () => _exportarCSV(),
-              tooltip: "Exportar Testes",
-            ),
-          ],
+          title: Text(mostrandoDetalhes ? "Detalhes do Teste" : "Histórico de Testes"),
+          leading: mostrandoDetalhes
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: _voltarParaHistorico,
+                )
+              : null,
+          bottom: mostrandoDetalhes
+              ? null
+              : const TabBar(
+                  tabs: [
+                    Tab(icon: Icon(Icons.list), text: "Histórico"),
+                    Tab(icon: Icon(Icons.star), text: "Favoritos"),
+                  ],
+                ),
+          actions: !mostrandoDetalhes
+              ? [
+                  IconButton(
+                    icon: const Icon(Icons.download),
+                    onPressed: () => _exportarCSV(),
+                    tooltip: "Exportar Testes",
+                  ),
+                ]
+              : null,
         ),
-        body: TabBarView(
-          children: [
-            _buildTestesTab(),
-            _buildFavoritosTab(), // ✅ Agora exibe os favoritos
-          ],
-        ),
+        body: mostrandoDetalhes ? _buildDetalhesView() : _buildHistoricoView(),
       ),
     );
   }
 
-  // ✅ Aba dos Testes com lista e filtros
+  /// 🔹 Tela principal do histórico
+  Widget _buildHistoricoView() {
+    return TabBarView(
+      children: [
+        _buildTestesTab(),
+        _buildFavoritosTab(),
+      ],
+    );
+  }
+
+  /// 🔹 Aba dos Testes com lista e filtros
   Widget _buildTestesTab() {
     final historicoState = ref.watch(historicoProvider);
     List<TestModel> testesFiltrados = historicoState.testesFiltrados;
@@ -58,8 +90,8 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
 
     return Column(
       children: [
-        _buildFiltros(), // Filtros no topo
-        _buildGraficoBarras(testesPorDia), // Gráfico de barras
+        _buildFiltros(),
+        _buildGraficoBarras(testesPorDia),
         Expanded(
           child: testesFiltrados.isEmpty
               ? const Center(child: Text("Nenhum teste armazenado.", style: TextStyle(fontSize: 16)))
@@ -68,7 +100,12 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
                   separatorBuilder: (_, __) => const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     final TestModel teste = testesFiltrados[index];
-                    return TestCard(teste: teste); // ✅ Agora usamos TestCard
+                    return ListTile(
+                      title: Text("Resultado: ${teste.command}"),
+                      subtitle: Text("Data: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(teste.timestamp)}"),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: () => _mostrarDetalhes(teste),
+                    );
                   },
                 ),
         ),
@@ -76,7 +113,7 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
     );
   }
 
-  // ✅ Aba dos Gráficos (Agora guia de favoritos)
+  /// 🔹 Aba dos Favoritos
   Widget _buildFavoritosTab() {
     final historicoState = ref.watch(historicoProvider);
     List<TestModel> favoritos = historicoState.testesFavoritos;
@@ -86,9 +123,42 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
         : ListView.builder(
             itemCount: favoritos.length,
             itemBuilder: (context, index) {
-              return TestCard(teste: favoritos[index]);
+              return ListTile(
+                title: Text("Resultado: ${favoritos[index].command}"),
+                subtitle: Text("Data: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(favoritos[index].timestamp)}"),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () => _mostrarDetalhes(favoritos[index]),
+              );
             },
           );
+  }
+
+  /// 🔹 Tela de detalhes do teste
+  Widget _buildDetalhesView() {
+    if (testeSelecionado == null) return const Center(child: Text("Erro ao carregar detalhes"));
+
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (testeSelecionado!.photoPath != null && File(testeSelecionado!.photoPath!).existsSync())
+            Image.file(
+              File(testeSelecionado!.photoPath!),
+              height: 250,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            )
+          else
+            const Text("Nenhuma foto disponível", style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic)),
+
+          const SizedBox(height: 10),
+          Text("Data: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(testeSelecionado!.timestamp)}"),
+          Text("Funcionário: ${testeSelecionado!.funcionarioNome ?? "Visitante"}"),
+          Text("Resultado: ${testeSelecionado!.command}"),
+        ],
+      ),
+    );
   }
 
   // ✅ UI para os filtros
@@ -276,7 +346,7 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
 
     for (var teste in testes) {
       linhas.add(
-        "${_formatDateTime(teste.timestamp)}, ${teste.data}, ${teste.command}${exibirCalibracao ? ', ${teste.statusCalibracao}' : ''}",
+        "${_formatDateTime(teste.timestamp)}, ${teste.command}${exibirCalibracao ? ', ${teste.statusCalibracao}' : ''}",
       );
     }
 

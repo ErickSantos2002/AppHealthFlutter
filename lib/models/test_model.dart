@@ -5,41 +5,50 @@ part 'test_model.g.dart'; // Gera o adaptador automaticamente
 @HiveType(typeId: 0)
 class TestModel extends HiveObject {
   @HiveField(0)
-  final String data;
+  final DateTime timestamp; // 📌 Data e Hora do Teste
 
   @HiveField(1)
-  final String command;
+  final String command; // 📌 Resultado do Teste (Ex: "PASS", "FALHA")
 
   @HiveField(2)
-  final int batteryLevel;
+  final String statusCalibracao; // 📌 Status da Calibração
 
   @HiveField(3)
-  final DateTime timestamp;
+  final int batteryLevel; // 📌 Nível de Bateria no Momento do Teste
 
-  @HiveField(4) // ✅ Adicionando um novo campo no Hive
-  final String statusCalibracao;
+  @HiveField(4)
+  final String? funcionarioId; // 📌 ID do Funcionário (null para Visitante)
 
-  @HiveField(5) // 🔹 Adicionando o ID do funcionário
-  final String? funcionarioId; 
+  @HiveField(5)
+  final String funcionarioNome; // 📌 Nome do Funcionário ou "Visitante"
 
-  TestModel({
-    required this.timestamp,
-    required this.data,
-    required this.command,
-    required this.batteryLevel,
-    required this.statusCalibracao,
-    this.funcionarioId, // 🔹 Campo opcional para funcionário
-  });
+  @HiveField(6)
+  final String? photoPath; // 📌 Caminho da Foto Tirada
 
-  // Método para atualizar funcionário no teste
-  TestModel copyWith({String? funcionarioId}) {
+    TestModel({
+      required this.timestamp,
+      required this.command,
+      required this.statusCalibracao,
+      required this.batteryLevel,
+      this.funcionarioId,
+      required this.funcionarioNome,
+      this.photoPath,
+    });
+
+  // 📌 Método para atualizar campos específicos
+  TestModel copyWith({
+    String? funcionarioId,
+    String? funcionarioNome,
+    String? photoPath,
+  }) {
     return TestModel(
       timestamp: timestamp,
-      data: data,
       command: command,
-      batteryLevel: batteryLevel,
       statusCalibracao: statusCalibracao,
+      batteryLevel: batteryLevel,
       funcionarioId: funcionarioId ?? this.funcionarioId,
+      funcionarioNome: funcionarioNome ?? this.funcionarioNome,
+      photoPath: photoPath ?? this.photoPath,
     );
   }
 }

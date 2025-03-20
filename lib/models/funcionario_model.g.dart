@@ -17,24 +17,27 @@ class FuncionarioModelAdapter extends TypeAdapter<FuncionarioModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return FuncionarioModel(
-      nome: fields[0] as String,
-      cargo: fields[1] as String,
-      cpf: fields[2] as String,
-      matricula: fields[3] as String,
+      id: fields[0] as String,
+      nome: fields[1] as String,
+      cargo: fields[2] as String,
+      cpf: fields[3] as String?,
+      matricula: fields[4] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, FuncionarioModel obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.nome)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.cargo)
+      ..write(obj.nome)
       ..writeByte(2)
-      ..write(obj.cpf)
+      ..write(obj.cargo)
       ..writeByte(3)
+      ..write(obj.cpf)
+      ..writeByte(4)
       ..write(obj.matricula);
   }
 

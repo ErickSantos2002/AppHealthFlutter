@@ -1,8 +1,13 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/funcionario_provider.dart';
 import '../services/bluetooth_scan_service.dart';
 import '../providers/bluetooth_provider.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:camera/camera.dart';
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 
 Map<String, String> commandTranslations = {
   "T01": "Contagem de uso após calibração",
@@ -35,16 +40,42 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   String command = "";
   String data = "";
   int batteryLevel = 0;
+  bool isCapturingPhoto = false; // 🔹 Novo estado para controle da câmera
+  CameraController? cameraController;
+  List<CameraDescription>? cameras;
+  bool isFlashOn = false;
+  bool isFrontCamera = true;
+  int soproProgress = 0; // 🔹 Progresso do sopro (0 a 100)
+  bool podeIniciarTeste = true; // 🔹 Só permite iniciar um novo teste após T12
 
   @override
   void initState() {
     super.initState();
+    _initCamera();
+  }
+
+  Future<void> _initCamera() async {
+    cameras = await availableCameras();
+    _setupCamera();
+  }
+
+  void _setupCamera() {
+    if (cameras != null && cameras!.isNotEmpty) {
+      cameraController = CameraController(
+        isFrontCamera ? cameras!.first : cameras!.last,
+        ResolutionPreset.medium,
+        enableAudio: false,
+      );
+      cameraController!.initialize().then((_) {
+        if (mounted) setState(() {});
+      });
+    }
   }
 
   /// 🔹 Inicia a escuta de notificações BLE
   void _startNotifications() {
-    final bluetoothState = ref.read(bluetoothProvider);
-    bluetoothState.notifiableCharacteristic?.value.listen((value) {
+    final bluetoothState = ref.watch(bluetoothProvider);
+    bluetoothState.notifiableCharacteristic?.value.listen((value) async {
       if (value.isNotEmpty && mounted) {
         final processedData = processReceivedData(value);
         setState(() {
@@ -52,6 +83,47 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           data = processedData["data"];
           batteryLevel = processedData["battery"];
         });
+
+        // 🔹 Atualiza a barra de progresso com base no valor do sopro (T07)
+        if (command == "Assoprando") {
+          int progress = int.tryParse(data) ?? 0;
+          setState(() {
+            soproProgress = progress;
+          });
+        }
+
+        // 🔹 Se o sopro for insuficiente (T08), fecha a câmera sem tirar a foto
+        if (command == "Sopro insuficiente") {
+          setState(() {
+            isCapturingPhoto = false;
+          });
+          return;
+        }
+
+        // 🔹 Se o comando for "(T20): Desligado" ou "(T04): Desligado", fecha a câmera sem tirar a foto
+        if (command == "Desligando" || command == "Desligado") {
+          setState(() {
+            isCapturingPhoto = false;
+          });
+          return;
+        }
+
+        // 🔹 Se o comando for "T10: Analisando", captura a foto automaticamente
+        if (command == "Analisando" && isCapturingPhoto) {
+          _tirarFoto();
+        }
+
+        // 🔹 Se o comando for "T12: Modo de espera", permite iniciar outro teste
+        if (command == "Modo de espera") {
+          setState(() {
+            podeIniciarTeste = true;
+          });
+        } else {
+          // 🔹 Se a última notificação NÃO for T12, bloqueia o botão de iniciar teste
+          setState(() {
+            podeIniciarTeste = false;
+          });
+        }
       }
     });
   }
@@ -86,6 +158,51 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
   }
 
+  Future<void> _iniciarTeste() async {
+    if (!podeIniciarTeste) return; // 🔹 Impede iniciar teste se não estiver no estado correto
+
+    // 🔹 Envia o comando primeiro
+    ref.read(bluetoothProvider.notifier).sendCommand("A20", "TEST,START", batteryLevel);
+
+    // 🔹 Ativa a câmera dentro da tela HomeScreen
+    setState(() {
+      isCapturingPhoto = true;
+      soproProgress = 0; // 🔹 Reseta a barra de progresso
+    });
+  }
+
+  Future<void> _tirarFoto() async {
+    if (cameraController != null && cameraController!.value.isInitialized) {
+      final XFile foto = await cameraController!.takePicture();
+
+      // 🔹 Salvar a foto localmente
+      final Directory directory = await getApplicationDocumentsDirectory();
+      final String caminhoFoto = "${directory.path}/foto_teste_${DateTime.now().millisecondsSinceEpoch}.jpg";
+      await File(foto.path).copy(caminhoFoto);
+
+      print("📸 Foto automática salva em: $caminhoFoto");
+
+      // 🔹 Desativa a câmera após capturar a foto
+      setState(() {
+        isCapturingPhoto = false;
+      });
+    }
+  }
+
+  void toggleCamera() {
+    setState(() {
+      isFrontCamera = !isFrontCamera;
+      _setupCamera();
+    });
+  }
+
+  void toggleFlash() {
+    setState(() {
+      isFlashOn = !isFlashOn;
+      cameraController?.setFlashMode(isFlashOn ? FlashMode.torch : FlashMode.off);
+    });
+  }
+
   Map<String, dynamic> processReceivedData(List<int> rawData) {
     if (rawData.length < 20) {
       return {"command": "Erro", "data": "Pacote inválido", "battery": 0};
@@ -113,8 +230,62 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(title: const Text("Bluetooth BLE App")),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: bluetoothState.isConnected ? _buildConnectedUI() : _buildScanUI(),
+        child: bluetoothState.isConnected
+            ? isCapturingPhoto
+                ? _buildCameraView() // 🔹 Exibir câmera quando está capturando
+                : _buildConnectedUI()
+            : _buildScanUI(),
       ),
+    );
+  }
+
+   Widget _buildCameraView() {
+    return Column(
+      children: [
+        Expanded(
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              if (cameraController != null && cameraController!.value.isInitialized)
+                CameraPreview(cameraController!),
+
+              Positioned(
+                top: 20,
+                right: 20,
+                child: IconButton(
+                  icon: Icon(isFlashOn ? Icons.flash_on : Icons.flash_off, color: Colors.white),
+                  onPressed: toggleFlash,
+                ),
+              ),
+
+              Positioned(
+                bottom: 20,
+                left: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.switch_camera, color: Colors.white),
+                  onPressed: toggleCamera,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // 🔹 Barra de progresso do sopro
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              Text("Força do Sopro: $soproProgress%", style: const TextStyle(fontSize: 16)),
+              LinearProgressIndicator(
+                value: soproProgress / 100,
+                backgroundColor: Colors.grey[300],
+                color: soproProgress == 100 ? Colors.green : Colors.blue,
+                minHeight: 10,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -163,10 +334,37 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Widget _buildConnectedUI() {
+    final funcionarios = ref.watch(funcionarioProvider);
+    final selectedFuncionarioId = ref.watch(bluetoothProvider).selectedFuncionarioId;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         const Text("📡 Conectado ao Dispositivo", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 20),
+
+        // 🔹 Dropdown para selecionar funcionário
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: DropdownButton<String>(
+            value: selectedFuncionarioId,
+            hint: const Text("Selecionar Funcionário"),
+            isExpanded: true,
+            items: [
+              const DropdownMenuItem(value: null, child: Text("Visitante")), // 🔹 Opção de visitante
+              ...funcionarios.map((funcionario) {
+                return DropdownMenuItem(
+                  value: funcionario.id,
+                  child: Text(funcionario.nome),
+                );
+              }).toList(),
+            ],
+            onChanged: (funcionarioId) {
+              ref.read(bluetoothProvider.notifier).selecionarFuncionario(funcionarioId!);
+            },
+          ),
+        ),
+
         const SizedBox(height: 20),
 
         _infoCard("🔹 Resposta", command),
@@ -176,9 +374,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         const SizedBox(height: 30),
 
         ElevatedButton.icon(
-          onPressed: () {
-            ref.read(bluetoothProvider.notifier).sendCommand("A20", "TEST,START", batteryLevel);
-          },
+          onPressed: () => _iniciarTeste(),
           icon: const Icon(Icons.play_arrow),
           label: const Text("Iniciar Teste"),
         ),
@@ -207,7 +403,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           icon: const Icon(Icons.close),
           label: const Text("Desconectar"),
           style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-        ),
+        )
       ],
     );
   }
