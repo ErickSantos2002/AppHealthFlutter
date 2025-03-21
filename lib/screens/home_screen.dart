@@ -2,6 +2,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/funcionario_provider.dart';
+import '../models/funcionario_model.dart';
 import '../services/bluetooth_scan_service.dart';
 import '../providers/bluetooth_provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -161,6 +162,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Future<void> _iniciarTeste() async {
     if (!podeIniciarTeste) return; // 🔹 Impede iniciar teste se não estiver no estado correto
 
+    ref.read(bluetoothProvider.notifier).iniciarNovoTeste(); // 🔹 Reseta a verificação de duplicados
+
     // 🔹 Envia o comando primeiro
     ref.read(bluetoothProvider.notifier).sendCommand("A20", "TEST,START", batteryLevel);
 
@@ -181,6 +184,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       await File(foto.path).copy(caminhoFoto);
 
       print("📸 Foto automática salva em: $caminhoFoto");
+
+      // 🔹 Atualizar o provider para associar a foto ao próximo teste
+      ref.read(bluetoothProvider.notifier).capturarFoto(caminhoFoto);
 
       // 🔹 Desativa a câmera após capturar a foto
       setState(() {
@@ -343,27 +349,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         const Text("📡 Conectado ao Dispositivo", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         const SizedBox(height: 20),
 
-        // 🔹 Dropdown para selecionar funcionário
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: DropdownButton<String>(
-            value: selectedFuncionarioId,
-            hint: const Text("Selecionar Funcionário"),
-            isExpanded: true,
-            items: [
-              const DropdownMenuItem(value: null, child: Text("Visitante")), // 🔹 Opção de visitante
-              ...funcionarios.map((funcionario) {
-                return DropdownMenuItem(
-                  value: funcionario.id,
-                  child: Text(funcionario.nome),
-                );
-              }).toList(),
-            ],
-            onChanged: (funcionarioId) {
-              ref.read(bluetoothProvider.notifier).selecionarFuncionario(funcionarioId!);
-            },
-          ),
-        ),
+        _buildFuncionarioSelector(funcionarios, selectedFuncionarioId),
 
         const SizedBox(height: 20),
 
@@ -423,6 +409,90 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildFuncionarioSelector(List funcionarios, String? selectedFuncionarioId) {
+    final nomeFuncionario = funcionarios.firstWhere(
+      (funcionario) => funcionario.id == selectedFuncionarioId,
+      orElse: () => FuncionarioModel(id: "visitante", nome: "Visitante"),
+    ).nome;
+
+    return ListTile(
+      title: const Text("Funcionário Selecionado"),
+      subtitle: Text(selectedFuncionarioId == null ? "Visitante" : nomeFuncionario),
+      trailing: const Icon(Icons.arrow_drop_down),
+      onTap: () {
+        ref.read(funcionarioProvider.notifier).carregarFuncionarios(); // 🔹 Força atualização
+        _mostrarSelecaoFuncionario(ref.watch(funcionarioProvider)); // 🔹 Chama a lista atualizada
+      },
+    );
+  }
+
+  void _mostrarSelecaoFuncionario(List funcionarios) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // 🔹 Isso permite ajustar a altura do modal dinamicamente
+      builder: (context) {
+        TextEditingController filtroController = TextEditingController();
+        List funcionariosFiltrados = funcionarios;
+
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom, // 🔹 Ajusta para o teclado
+          ),
+          child: SingleChildScrollView( // 🔹 Evita que o teclado esconda os itens
+            child: StatefulBuilder(
+              builder: (context, setState) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: filtroController,
+                      decoration: const InputDecoration(
+                        labelText: "Buscar Funcionário",
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                      onChanged: (query) {
+                        setState(() {
+                          funcionariosFiltrados = funcionarios.where(
+                            (f) => f.nome.toLowerCase().contains(query.toLowerCase()),
+                          ).toList();
+                        });
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      height: 300,
+                      child: ListView(
+                        shrinkWrap: true,
+                        children: [
+                          ListTile(
+                            title: const Text("Visitante"),
+                            onTap: () {
+                              ref.read(bluetoothProvider.notifier).selecionarFuncionario("visitante");
+                              Navigator.pop(context);
+                            },
+                          ),
+                          ...funcionariosFiltrados.map((funcionario) {
+                            return ListTile(
+                              title: Text(funcionario.nome),
+                              onTap: () {
+                                ref.read(bluetoothProvider.notifier).selecionarFuncionario(funcionario.id);
+                                Navigator.pop(context);
+                              },
+                            );
+                          }).toList(),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

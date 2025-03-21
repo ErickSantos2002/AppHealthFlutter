@@ -25,6 +25,9 @@ class TestModel extends HiveObject {
   @HiveField(6)
   final String? photoPath; // 📌 Caminho da Foto Tirada
 
+  @HiveField(7)
+  bool isFavorito; // ✅ Adicionando a propriedade para favorito
+
     TestModel({
       required this.timestamp,
       required this.command,
@@ -33,6 +36,7 @@ class TestModel extends HiveObject {
       this.funcionarioId,
       required this.funcionarioNome,
       this.photoPath,
+      this.isFavorito = false, // ✅ Padrão inicial: não favorito
     });
 
   // 📌 Método para atualizar campos específicos

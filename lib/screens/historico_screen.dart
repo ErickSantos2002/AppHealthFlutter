@@ -39,7 +39,7 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2, // Duas abas: Testes e Favoritos
+      length: 2,
       child: Scaffold(
         appBar: AppBar(
           title: Text(mostrandoDetalhes ? "Detalhes do Teste" : "Histórico de Testes"),
@@ -82,7 +82,6 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
     );
   }
 
-  /// 🔹 Aba dos Testes com lista e filtros
   Widget _buildTestesTab() {
     final historicoState = ref.watch(historicoProvider);
     List<TestModel> testesFiltrados = historicoState.testesFiltrados;
@@ -96,16 +95,19 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
           child: testesFiltrados.isEmpty
               ? const Center(child: Text("Nenhum teste armazenado.", style: TextStyle(fontSize: 16)))
               : ListView.separated(
-                  itemCount: testesFiltrados.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 8),
-                  itemBuilder: (context, index) {
-                    final TestModel teste = testesFiltrados[index];
-                    return TestCard(
-                      teste: teste,
-                      onTap: _mostrarDetalhes, // ✅ Agora abre detalhes do teste
-                    );
-                  },
-                ),
+            itemCount: testesFiltrados.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 8),
+            itemBuilder: (context, index) {
+              final TestModel teste = testesFiltrados[index];
+              return TestCard(
+                teste: teste,
+                onTap: _mostrarDetalhes,
+                onFavoriteToggle: () {
+                  ref.read(historicoProvider.notifier).alternarFavorito(teste);
+                },
+              );
+            },
+          ),
         ),
       ],
     );
@@ -119,16 +121,17 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
     return favoritos.isEmpty
         ? const Center(child: Text("Nenhum teste favorito.", style: TextStyle(fontSize: 16)))
         : ListView.builder(
-            itemCount: favoritos.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text("Resultado: ${favoritos[index].command}"),
-                subtitle: Text("Data: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(favoritos[index].timestamp)}"),
-                trailing: const Icon(Icons.arrow_forward_ios),
-                onTap: () => _mostrarDetalhes(favoritos[index]),
-              );
-            },
-          );
+      itemCount: favoritos.length,
+      itemBuilder: (context, index) {
+        return TestCard(
+          teste: favoritos[index],
+          onTap: _mostrarDetalhes,
+          onFavoriteToggle: () {
+            ref.read(historicoProvider.notifier).alternarFavorito(favoritos[index]);
+          },
+        );
+      },
+    );
   }
 
   /// 🔹 Tela de detalhes do teste
@@ -156,7 +159,6 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
           // 🔹 Exibir todas as informações
           _infoTile("Data", _formatDateTime(testeSelecionado!.timestamp)),
           _infoTile("Funcionário", testeSelecionado!.funcionarioNome ?? "Visitante"),
-          _infoTile("ID Funcionário", testeSelecionado!.funcionarioId ?? "Não informado"),
           _infoTile("Resultado", testeSelecionado!.command),
           _infoTile("Status de Calibração", testeSelecionado!.statusCalibracao),
         ],
@@ -237,53 +239,24 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
             height: 220,
             child: BarChart(
               BarChartData(
-                gridData: FlGridData(
-                  show: true,
-                  drawVerticalLine: false, // 🔹 Remove linhas verticais desnecessárias
-                  horizontalInterval: 5, // 🔹 Define intervalos melhores no eixo Y
-                  getDrawingHorizontalLine: (value) => FlLine(
-                    color: Colors.grey.withOpacity(0.5),
-                    strokeWidth: 0.8,
-                  ),
-                ),
-                borderData: FlBorderData(
-                  border: const Border(
-                    bottom: BorderSide(width: 1),
-                    left: BorderSide(width: 1),
-                  ),
-                ),
                 titlesData: FlTitlesData(
                   leftTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
-                      reservedSize: 30, // 🔹 Mantém espaço para os valores do lado esquerdo
-                      interval: 5, // 🔹 Intervalo correto para o eixo Y
-                      getTitlesWidget: (value, meta) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 5),
-                          child: Text(
-                            value.toInt().toString(),
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                        );
-                      },
+                      getTitlesWidget: (value, meta) => Padding(
+                        padding: const EdgeInsets.only(right: 5),
+                        child: Text(value.toInt().toString()),
+                      ),
                     ),
-                  ),
-                  rightTitles: AxisTitles(
-                    sideTitles: SideTitles(showTitles: false), // ❌ 🔹 Removendo valores do lado direito
                   ),
                   bottomTitles: AxisTitles(
                     sideTitles: SideTitles(
                       showTitles: true,
-                      reservedSize: 28,
                       getTitlesWidget: (value, meta) {
                         if (value.toInt() >= 0 && value.toInt() < listaTestesPorDia.length) {
                           return Transform.rotate(
-                            angle: -0.5, // 🔹 Rotaciona um pouco os rótulos para melhor encaixe
-                            child: Text(
-                              listaTestesPorDia[value.toInt()].key, // 🔹 Exibe a data corretamente
-                              style: const TextStyle(fontSize: 10),
-                            ),
+                            angle: -0.5,
+                            child: Text(listaTestesPorDia[value.toInt()].key),
                           );
                         }
                         return const SizedBox.shrink();
@@ -298,22 +271,13 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
                       BarChartRodData(
                         toY: entry.value.value.toDouble(),
                         color: Colors.blue,
-                        width: 14, // 🔹 Reduz um pouco a largura das barras
+                        width: 14,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ],
                   ),
                 ).toList(),
               ),
-            ),
-          ),
-
-          // 🔹 Adicionando linha separadora entre o gráfico e os testes
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 10),
-            child: Divider(
-              thickness: 1.5,
-              color: Colors.grey,
             ),
           ),
         ],

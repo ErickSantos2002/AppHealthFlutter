@@ -46,7 +46,12 @@ class BluetoothManager {
       _connectedDevice = device;
 
       print("✅ Conectado! Descobrindo serviços...");
-      await discoverCharacteristics(device);
+      await discoverCharacteristics(device, (writable, notifiable) {
+        ref.read(bluetoothProvider.notifier).setCharacteristics(
+          writable: writable,
+          notifiable: notifiable,
+        );
+      });
 
       return true;
     } catch (e) {
@@ -56,30 +61,27 @@ class BluetoothManager {
   }
 
   /// 🔹 Descobrir características BLE e armazená-las no provider
-  Future<void> discoverCharacteristics(BluetoothDevice device) async {
+  Future<void> discoverCharacteristics(
+      BluetoothDevice device, Function(BluetoothCharacteristic?, BluetoothCharacteristic?) onCharacteristicsDiscovered) async {
     List<BluetoothService> services = await device.discoverServices();
 
     for (BluetoothService service in services) {
       for (BluetoothCharacteristic characteristic in service.characteristics) {
         if (characteristic.properties.write) {
           _writableCharacteristic = characteristic;
-          print("✍️ Característica de escrita detectada!");
         }
 
         if (characteristic.properties.notify) {
           _notifiableCharacteristic = characteristic;
-          print("📩 Característica de notificação detectada!");
           await _activateNotifications(characteristic);
         }
       }
     }
 
-    // 🔹 Atualiza as características no estado global
-    ref.read(bluetoothProvider.notifier).setCharacteristics(
-      writable: _writableCharacteristic,
-      notifiable: _notifiableCharacteristic,
-    );
+    // ✅ Em vez de chamar diretamente o provider, chamamos a função de callback
+    onCharacteristicsDiscovered(_writableCharacteristic, _notifiableCharacteristic);
   }
+
 
   /// 🔹 Ativar notificações BLE corretamente
   Future<void> _activateNotifications(BluetoothCharacteristic characteristic) async {
@@ -102,74 +104,28 @@ class BluetoothManager {
   Future<void> restoreCharacteristics() async {
     if (_connectedDevice != null) {
       print("♻️ Restaurando características BLE...");
-      await discoverCharacteristics(_connectedDevice!);
+      await discoverCharacteristics(_connectedDevice!, (writable, notifiable) {
+        ref.read(bluetoothProvider.notifier).setCharacteristics(
+          writable: writable,
+          notifiable: notifiable,
+        );
+      });
     }
   }
 
   /// 🔹 Processar dados recebidos e armazenar no Hive
-  void processReceivedData(List<int> rawData) {
-    if (rawData.length < 5) {
-      print("⚠️ Pacote muito curto para ser válido! Tamanho: ${rawData.length}");
-      return;
-    }
+  Map<String, dynamic>? processReceivedData(List<int> rawData) {
+    if (rawData.length < 5) return null;
 
     String commandCode = String.fromCharCodes(rawData.sublist(1, 4)).trim();
     String receivedData = String.fromCharCodes(rawData.sublist(4, rawData.length - 2)).replaceAll("#", "").trim();
-    int battery = rawData[rawData.length - 2]; // Captura o nível da bateria corretamente
+    int battery = rawData[rawData.length - 2];
 
-    // ✅ Verifica se o comando já foi salvo para evitar duplicação
-    if (commandCode == ultimoComandoRecebido) {
-      print("⚠️ Teste duplicado detectado, ignorando...");
-      return;
-    }
-    ultimoComandoRecebido = commandCode; // Atualiza o último comando salvo
-
-    // 🔹 Corrigir separador decimal e remover caracteres indesejados
-    receivedData = receivedData.replaceAll(",", ".").replaceAll(RegExp(r'[^0-9a-zA-Z.\s]'), '');
-
-    // 🔹 Separar os dados recebidos corretamente
-    List<String> dataParts = receivedData.split(',');
-
-    if (dataParts.length < 4) {
-      print("⚠️ Dados recebidos possuem menos de 4 partes, mas ainda serão processados: $receivedData");
-    }
-
-    // 🔹 Interpretar status do teste
-    String statusTeste = (dataParts.isNotEmpty && dataParts[0] == "1") ? "PASS" : "Normal";
-
-    // 🔹 Identificar unidade de medida
-    String unidade = (dataParts.length > 1) ? unidadeMedida[dataParts[1]] ?? "Desconhecido" : "Desconhecido";
-
-    // 🔹 Processar resultado corretamente
-    String resultado = (dataParts.length > 2) ? dataParts[2] : "0.000";
-
-    if (resultado.contains(RegExp(r'^\d+$'))) {
-      resultado = (int.parse(resultado) / 1000).toStringAsFixed(3);
-    }
-
-    // 🔹 Verificar status da calibração
-    String statusCalibracao = (dataParts.length > 3 && dataParts[3] == "0") ? "OK" : "Fora do período de calibração";
-
-    // ✅ Pegando ID e Nome do funcionário do Provider
-    String funcionarioId = ref.read(bluetoothProvider).selectedFuncionarioId ?? "Visitante";
-    String funcionarioNome = funcionarioId == "Visitante" ? "Visitante" : funcionarioId;
-
-    // ✅ Pegando caminho da foto do Provider
-    String? photoPath = ref.read(bluetoothProvider).lastCapturedPhotoPath;
-
-    // Use os parâmetros recebidos diretamente:
-    final teste = TestModel(
-      command: "$resultado $unidade",
-      batteryLevel: battery,
-      timestamp: DateTime.now(),
-      statusCalibracao: statusCalibracao,
-      funcionarioId: funcionarioId,
-      funcionarioNome: funcionarioNome,
-      photoPath: photoPath,
-    );
-
-    Hive.box<TestModel>('testes').add(teste);
-    print("✅ Teste salvo no histórico: $statusTeste - $resultado $unidade");
+    return {
+      "command": commandCode,
+      "data": receivedData,
+      "battery": battery,
+    };
   }
 
   /// 🔹 Enviar comando BLE ao dispositivo

@@ -1,10 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import '../models/funcionario_model.dart';
 import '../services/bluetooth_manager.dart';
 import '../models/test_model.dart';
 import '../providers/historico_provider.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+
+import 'funcionario_provider.dart';
 
 /// 🔹 Estado global para gerenciar a conexão Bluetooth
 class BluetoothState {
@@ -54,7 +57,7 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         super(BluetoothState(isConnected: false));
 
   /// 🔹 Método para selecionar um funcionário antes de iniciar o teste
-  void selecionarFuncionario(String funcionarioId) {
+  void selecionarFuncionario(String? funcionarioId) {
     state = state.copyWith(selectedFuncionarioId: funcionarioId);
   }
 
@@ -65,6 +68,15 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     bool success = await _bluetoothManager.connectToDevice(device);
     if (success) {
       state = state.copyWith(isConnected: true, connectedDevice: device);
+
+      // ✅ Agora usamos a função de callback para atualizar características BLE
+      _bluetoothManager.discoverCharacteristics(device, (writable, notifiable) {
+        setCharacteristics(
+          writable: writable,
+          notifiable: notifiable,
+        );
+        listenToNotifications();
+      });
     }
     return success;
   }
@@ -94,6 +106,76 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     }
   }
 
+  void listenToNotifications() {
+    final characteristic = state.notifiableCharacteristic;
+    if (characteristic == null) return;
+
+    characteristic.value.listen((rawData) {
+      final parsed = _bluetoothManager.processReceivedData(rawData);
+      if (parsed == null) return;
+
+      // Aqui processamos e salvamos os testes
+      _processarTeste(parsed);
+    });
+  }
+
+  String? _ultimoResultadoSalvo; // Variável para rastrear o último resultado salvo
+
+  void _processarTeste(Map<String, dynamic> parsed) {
+    final command = parsed["command"];
+    final data = parsed["data"];
+    final battery = parsed["battery"];
+
+    if (command == "T11") {
+      final agora = DateTime.now();
+      final partes = data.split(",");
+      if (partes.length < 3) return;
+
+      String unidade = _converterUnidade(partes[1]);
+      String valor = partes[2];
+      String statusCalibracao = partes.length > 3 && partes[3] == "1"
+          ? "Modo Calibração"
+          : "Modo Normal";
+
+      final resultadoFinal = "$valor $unidade";
+
+      // 🔹 Se for o mesmo resultado que já foi salvo, ignoramos
+      if (_ultimoResultadoSalvo == resultadoFinal) {
+        print("⚠️ Teste duplicado ignorado!");
+        return;
+      }
+
+      _ultimoResultadoSalvo = resultadoFinal; // Atualiza o último resultado salvo
+
+      // 🔹 Pegamos a lista de funcionários
+      final funcionarios = ref.read(funcionarioProvider);
+
+      // 🔹 Encontramos o funcionário correspondente ao ID selecionado
+      final funcionario = funcionarios.firstWhere(
+        (f) => f.id == state.selectedFuncionarioId,
+        orElse: () => FuncionarioModel(id: "visitante", nome: "Visitante"),
+      );
+
+      final novoTeste = TestModel(
+        timestamp: agora,
+        command: resultadoFinal,
+        statusCalibracao: statusCalibracao,
+        batteryLevel: battery,
+        funcionarioId: funcionario.id,
+        funcionarioNome: funcionario.nome,
+        photoPath: state.lastCapturedPhotoPath,
+      );
+
+      ref.read(historicoProvider.notifier).adicionarTeste(novoTeste);
+      print("✅ Teste salvo com sucesso: $resultadoFinal");
+    }
+  }
+
+  Future<void> iniciarNovoTeste() async {
+    _ultimoResultadoSalvo = null; // 🔹 Reseta o rastreador de testes duplicados
+    print("🔄 Novo teste iniciado! Resetando controle de duplicação.");
+  }
+
   /// 🔹 Obtém informações do dispositivo após conexão
   Future<void> fetchDeviceInfo() async {
     if (!state.isConnected || state.writableCharacteristic == null) {
@@ -116,11 +198,22 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     await _bluetoothManager.sendCommand(command, data, battery);
   }
 
+  void capturarFoto(String caminhoFoto) {
+    state = state.copyWith(lastCapturedPhotoPath: caminhoFoto);
+    print("📸 Foto salva para o próximo teste: $caminhoFoto");
+  }
+
   /// 🔹 Restaura as características BLE
   Future<void> restoreCharacteristics() async {
     if (state.connectedDevice != null) {
       print("♻️ Restaurando características BLE...");
-      await _bluetoothManager.discoverCharacteristics(state.connectedDevice!);
+      await _bluetoothManager.discoverCharacteristics(state.connectedDevice!, (writable, notifiable) {
+        setCharacteristics(
+          writable: writable,
+          notifiable: notifiable,
+        );
+        listenToNotifications();
+      });
     }
   }
 
@@ -128,72 +221,6 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
   Future<void> disconnect() async {
     await _bluetoothManager.disconnectDevice();
     state = BluetoothState(isConnected: false);
-  }
-
-  /// 📌 Captura a resposta do dispositivo e salva os dados do teste
-  void processReceivedData(List<int> rawData) {
-    if (rawData.length < 20) {
-      print("⚠️ Pacote inválido recebido.");
-      return;
-    }
-
-    String commandCode = String.fromCharCodes(rawData.sublist(1, 4)).trim();
-    String receivedData = String.fromCharCodes(rawData.sublist(4, 17)).replaceAll("#", "").trim();
-    int battery = rawData[17];
-
-    String translatedCommand = _translateCommand(commandCode);
-
-    // 📌 Se for T11 (resultado do teste), salvar no histórico
-    if (commandCode == "T11") {
-      _salvarTeste(receivedData, battery);
-    }
-  }
-
-  /// 🔹 Tradução dos comandos
-  String _translateCommand(String command) {
-    Map<String, String> commandTranslations = {
-      "T01": "Contagem de uso após calibração",
-      "T02": "Bloqueio de calibração",
-      "T03": "Aquecendo o sensor",
-      "T04": "Desligando",
-      "T05": "Erro de bateria",
-      "T06": "Aguardando sopro",
-      "T07": "Assoprando",
-      "T08": "Sopro insuficiente",
-      "T09": "Erro do sensor",
-      "T10": "Analisando",
-      "T11": "Resultado do teste",
-      "T12": "Modo de espera",
-      "T16": "Solicitação da data atual",
-      "T20": "Desligado",
-      "B20": "Comando recebido",
-    };
-    return commandTranslations[command] ?? "Comando desconhecido";
-  }
-
-  /// 📌 Salvar o teste no banco de dados
-  void _salvarTeste(String resultado, int bateria) {
-    final partes = resultado.split(",");
-    if (partes.length < 3) return;
-
-    String unidade = _converterUnidade(partes[1]);
-    String valor = partes[2];
-    String statusCalibracao = partes[3] == "1" ? "Modo Calibração" : "Modo Normal";
-    String resultadoFinal = "$valor $unidade";
-
-    String funcionarioId = state.selectedFuncionarioId ?? "Visitante";
-
-    final novoTeste = TestModel(
-      timestamp: DateTime.now(),
-      command: resultadoFinal,
-      statusCalibracao: statusCalibracao,
-      batteryLevel: bateria,
-      funcionarioId: funcionarioId,
-      funcionarioNome: funcionarioId == "Visitante" ? "Visitante" : funcionarioId,
-      photoPath: state.lastCapturedPhotoPath,
-    );
-
-    ref.read(historicoProvider.notifier).adicionarTeste(novoTeste);
   }
 
   /// 🔹 Converte o código da unidade para string legível

@@ -125,7 +125,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
     );
   }
 
-  void _removerFuncionario(int index) {
+  void _removerFuncionario(String id) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -138,8 +138,20 @@ class _PerfilScreenState extends State<PerfilScreen> {
           ),
           TextButton(
             onPressed: () {
-              funcionariosBox.deleteAt(index);
-              setState(() {});
+              // 🔹 Buscar pelo ID e remover corretamente
+              final funcionarioParaRemover = funcionariosBox.values.firstWhere(
+                (f) => f.id == id,
+                orElse: () => FuncionarioModel(id: "", nome: ""),
+              );
+
+              if (funcionarioParaRemover.id.isNotEmpty) {
+                funcionariosBox.delete(funcionarioParaRemover.key);
+                setState(() {});
+                print("🗑️ Funcionário removido com sucesso: ${funcionarioParaRemover.nome}");
+              } else {
+                print("⚠️ Erro ao tentar remover funcionário!");
+              }
+
               Navigator.pop(context);
             },
             child: const Text("Excluir", style: TextStyle(color: Colors.red)),
@@ -205,7 +217,7 @@ class _PerfilScreenState extends State<PerfilScreen> {
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removerFuncionario(index),
+                            onPressed: () => _removerFuncionario(funcionario.id), // 🔹 Agora passamos o ID
                           ),
                         ],
                       ),
