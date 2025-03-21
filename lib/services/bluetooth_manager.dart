@@ -150,18 +150,25 @@ class BluetoothManager {
     // 🔹 Verificar status da calibração
     String statusCalibracao = (dataParts.length > 3 && dataParts[3] == "0") ? "OK" : "Fora do período de calibração";
 
-    // ✅ Criando um modelo para salvar os dados
-    TestModel teste = TestModel(
-      command: statusTeste,
-      data: "$resultado $unidade",
+    // ✅ Pegando ID e Nome do funcionário do Provider
+    String funcionarioId = ref.read(bluetoothProvider).selectedFuncionarioId ?? "Visitante";
+    String funcionarioNome = funcionarioId == "Visitante" ? "Visitante" : funcionarioId;
+
+    // ✅ Pegando caminho da foto do Provider
+    String? photoPath = ref.read(bluetoothProvider).lastCapturedPhotoPath;
+
+    // Use os parâmetros recebidos diretamente:
+    final teste = TestModel(
+      command: "$resultado $unidade",
       batteryLevel: battery,
       timestamp: DateTime.now(),
       statusCalibracao: statusCalibracao,
+      funcionarioId: funcionarioId,
+      funcionarioNome: funcionarioNome,
+      photoPath: photoPath,
     );
 
-    var box = Hive.box<TestModel>('testes');
-    box.add(teste);
-
+    Hive.box<TestModel>('testes').add(teste);
     print("✅ Teste salvo no histórico: $statusTeste - $resultado $unidade");
   }
 

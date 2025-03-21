@@ -100,11 +100,9 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
                   separatorBuilder: (_, __) => const SizedBox(height: 8),
                   itemBuilder: (context, index) {
                     final TestModel teste = testesFiltrados[index];
-                    return ListTile(
-                      title: Text("Resultado: ${teste.command}"),
-                      subtitle: Text("Data: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(teste.timestamp)}"),
-                      trailing: const Icon(Icons.arrow_forward_ios),
-                      onTap: () => _mostrarDetalhes(teste),
+                    return TestCard(
+                      teste: teste,
+                      onTap: _mostrarDetalhes, // ✅ Agora abre detalhes do teste
                     );
                   },
                 ),
@@ -142,6 +140,7 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // 🔹 Exibir a foto se existir
           if (testeSelecionado!.photoPath != null && File(testeSelecionado!.photoPath!).existsSync())
             Image.file(
               File(testeSelecionado!.photoPath!),
@@ -153,9 +152,26 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
             const Text("Nenhuma foto disponível", style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic)),
 
           const SizedBox(height: 10),
-          Text("Data: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(testeSelecionado!.timestamp)}"),
-          Text("Funcionário: ${testeSelecionado!.funcionarioNome ?? "Visitante"}"),
-          Text("Resultado: ${testeSelecionado!.command}"),
+
+          // 🔹 Exibir todas as informações
+          _infoTile("Data", _formatDateTime(testeSelecionado!.timestamp)),
+          _infoTile("Funcionário", testeSelecionado!.funcionarioNome ?? "Visitante"),
+          _infoTile("ID Funcionário", testeSelecionado!.funcionarioId ?? "Não informado"),
+          _infoTile("Resultado", testeSelecionado!.command),
+          _infoTile("Status de Calibração", testeSelecionado!.statusCalibracao),
+        ],
+      ),
+    );
+  }
+
+  Widget _infoTile(String titulo, String valor) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(titulo, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          Text(valor, style: const TextStyle(fontSize: 16, color: Colors.blueAccent)),
         ],
       ),
     );

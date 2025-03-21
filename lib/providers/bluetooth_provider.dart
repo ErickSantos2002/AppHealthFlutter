@@ -202,8 +202,8 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     int index = int.tryParse(unidade) ?? 0;
     return (index >= 0 && index < unidades.length) ? unidades[index] : "Unidade desconhecida";
   }
-  /// 🔹 Criamos um provider global para o Bluetooth
-  final bluetoothProvider = StateNotifierProvider<BluetoothNotifier, BluetoothState>(
-    (ref) => BluetoothNotifier(ref),
-  );
 }
+  /// 🔹 Criamos um provider global para o Bluetooth
+final bluetoothProvider = StateNotifierProvider<BluetoothNotifier, BluetoothState>(
+  (ref) => BluetoothNotifier(ref),
+);
