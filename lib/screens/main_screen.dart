@@ -37,20 +37,20 @@ class _MainScreenState extends State<MainScreen> {
         children: _screens,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        backgroundColor: Colors.blueAccent,
-        selectedItemColor: const Color.fromARGB(255, 0, 72, 167),
-        unselectedItemColor: Colors.white70,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Principal"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Perfil"),
-          BottomNavigationBarItem(icon: Icon(Icons.history), label: "Histórico"),
-          BottomNavigationBarItem(icon: Icon(Icons.bluetooth), label: "Dispositivo"),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Configurações"),
-        ],
-      ),
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      type: BottomNavigationBarType.fixed,
+      selectedItemColor: Theme.of(context).colorScheme.primary,
+      unselectedItemColor: Theme.of(context).unselectedWidgetColor,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      items: const [
+        BottomNavigationBarItem(icon: Icon(Icons.home), label: "Principal"),
+        BottomNavigationBarItem(icon: Icon(Icons.person), label: "Perfil"),
+        BottomNavigationBarItem(icon: Icon(Icons.history), label: "Histórico"),
+        BottomNavigationBarItem(icon: Icon(Icons.bluetooth), label: "Dispositivo"),
+        BottomNavigationBarItem(icon: Icon(Icons.settings), label: "Configurações"),
+      ],
+    ),
     );
   }
 }

@@ -52,10 +52,15 @@ class BluetoothService {
 
     FlutterBluePlus.scanResults.listen((results) {
       for (var result in results) {
-        if (!_scannedDevices.any((d) => d.id == result.device.id)) {
+        final nome = result.device.name.toUpperCase();
+        final ehValido = nome.startsWith("AL88") || nome.startsWith("IBLOW");
+        final jaAdicionado = _scannedDevices.any((d) => d.id == result.device.id);
+
+        // 🔍 Apenas dispositivos com nome válido e ainda não adicionados
+        if (ehValido && !jaAdicionado) {
           _scannedDevices.add(result.device);
-          print("✅ Dispositivo encontrado: ${result.device.name} - ${result.device.id}");
-          if (updateUI != null) updateUI(); // Atualiza a interface quando um novo dispositivo é encontrado
+          print("✅ Dispositivo válido encontrado: ${result.device.name} - ${result.device.id}");
+          if (updateUI != null) updateUI();
         }
       }
     });

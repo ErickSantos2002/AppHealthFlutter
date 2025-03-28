@@ -118,6 +118,14 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       _processarTeste(parsed);
     });
   }
+  Future<void> _reiniciarIBlow() async {
+    final device = state.connectedDevice;
+    if (device != null) {
+      await disconnect();
+      await Future.delayed(const Duration(seconds: 1)); // Pequeno delay antes de reconectar
+      await connectToDevice(device);
+    }
+  }
 
   String? _ultimoResultadoSalvo; // Variável para rastrear o último resultado salvo
 
@@ -139,7 +147,7 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
 
       final resultadoFinal = "$valor $unidade";
 
-      // 🔹 Se for o mesmo resultado que já foi salvo, ignoramos
+      // 🔹 Se for o mesmo resultado que já foi salvo, ignoramos  
       if (_ultimoResultadoSalvo == resultadoFinal) {
         print("⚠️ Teste duplicado ignorado!");
         return;
@@ -164,10 +172,17 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         funcionarioId: funcionario.id,
         funcionarioNome: funcionario.nome,
         photoPath: state.lastCapturedPhotoPath,
+        deviceName: state.connectedDevice?.name, // ✅ Novo campo aqui
       );
 
       ref.read(historicoProvider.notifier).adicionarTeste(novoTeste);
       print("✅ Teste salvo com sucesso: $resultadoFinal");
+      // Se for iBlow, desconecta e reconecta para resetar interface
+      final deviceName = state.connectedDevice?.name.toLowerCase() ?? "";
+      if (deviceName.contains("iblow")) {
+        print("🔁 iBlow detectado: reiniciando via reconexão...");
+        _reiniciarIBlow();
+      }
     }
   }
 
@@ -184,18 +199,18 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     }
 
     print("📤 Enviando comandos para obter informações do dispositivo...");
-    sendCommand("A01", "INFORMATION", 0);
-    sendCommand("A03", "0", 0);
-    sendCommand("A04", "0", 0);
+    sendCommand("A01", "INFORMATION");
+    sendCommand("A03", "0");
+    sendCommand("A04", "0");
   }
 
   /// 🔹 Envia um comando para o dispositivo
-  Future<void> sendCommand(String command, String data, int battery) async {
+  Future<void> sendCommand(String command, String data) async {
     if (state.writableCharacteristic == null) {
       print("❌ Característica de escrita não disponível!");
       return;
     }
-    await _bluetoothManager.sendCommand(command, data, battery);
+    await _bluetoothManager.sendCommand(command, data);
   }
 
   void capturarFoto(String caminhoFoto) {

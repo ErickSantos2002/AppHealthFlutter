@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hsapp/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // ✅ Importando Riverpod
 import 'package:hive_flutter/hive_flutter.dart';
 import 'screens/main_screen.dart';
 import 'screens/perfil_screen.dart';
-import 'screens/login_screen.dart';
 import 'models/test_model.dart';
 import 'models/funcionario_model.dart';
 import 'theme_provider.dart';
@@ -31,19 +31,17 @@ class MeuAppBLE extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeState = ref.watch(themeProvider); // 🔹 Obtém o ThemeState
-    final themeMode = themeState.themeMode; // 🔹 Acessa o themeMode dentro do ThemeState
+    final themeMode = ref.watch(themeProvider); // Agora é diretamente ThemeMode
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Meu App BLE",
-      themeMode: themeMode, // 🔹 Agora passamos o ThemeMode correto
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
+      themeMode: themeMode,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       home: const MainScreen(),
       routes: {
         "/perfil": (context) => const PerfilScreen(),
-        "/login": (context) => const LoginScreen(),
       },
     );
   }

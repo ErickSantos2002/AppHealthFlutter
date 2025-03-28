@@ -62,26 +62,33 @@ class BluetoothManager {
 
   /// 🔹 Descobrir características BLE e armazená-las no provider
   Future<void> discoverCharacteristics(
-      BluetoothDevice device, Function(BluetoothCharacteristic?, BluetoothCharacteristic?) onCharacteristicsDiscovered) async {
+    BluetoothDevice device,
+    Function(BluetoothCharacteristic?, BluetoothCharacteristic?) onCharacteristicsDiscovered,
+  ) async {
     List<BluetoothService> services = await device.discoverServices();
 
     for (BluetoothService service in services) {
       for (BluetoothCharacteristic characteristic in service.characteristics) {
-        if (characteristic.properties.write) {
+        final uuid = characteristic.uuid.toString().toLowerCase();
+
+        // 🟢 Aceita apenas a característica de escrita correta (fff2)
+        if (_writableCharacteristic == null &&
+            uuid.contains("fff2") &&
+            (characteristic.properties.write || characteristic.properties.writeWithoutResponse)) {
           _writableCharacteristic = characteristic;
+          print("✅ Característica escrita selecionada: ${characteristic.uuid}");
         }
 
-        if (characteristic.properties.notify) {
+        // 🔄 Notificações (normalmente fff1)
+        if (_notifiableCharacteristic == null && characteristic.properties.notify) {
           _notifiableCharacteristic = characteristic;
           await _activateNotifications(characteristic);
         }
       }
     }
 
-    // ✅ Em vez de chamar diretamente o provider, chamamos a função de callback
     onCharacteristicsDiscovered(_writableCharacteristic, _notifiableCharacteristic);
   }
-
 
   /// 🔹 Ativar notificações BLE corretamente
   Future<void> _activateNotifications(BluetoothCharacteristic characteristic) async {
@@ -119,7 +126,8 @@ class BluetoothManager {
 
     String commandCode = String.fromCharCodes(rawData.sublist(1, 4)).trim();
     String receivedData = String.fromCharCodes(rawData.sublist(4, rawData.length - 2)).replaceAll("#", "").trim();
-    int battery = rawData[rawData.length - 2];
+    final hasBattery = rawData.length == 20;
+    int? battery = hasBattery ? rawData[rawData.length - 2] : null;
 
     return {
       "command": commandCode,
@@ -128,50 +136,79 @@ class BluetoothManager {
     };
   }
 
-  /// 🔹 Enviar comando BLE ao dispositivo
-  Future<void> sendCommand(String command, String data, int battery) async {
+  Future<void> sendCommand(String command, String data) async {
     if (_writableCharacteristic == null) {
       print("❌ Característica de escrita não encontrada!");
       return;
     }
 
-    List<int> packet = createPacket(command, data, battery);
+    final packet = createPacket(command, data);
+
+    if (packet.length != 20) {
+      print("❌ Pacote inválido! Tamanho esperado: 20, recebido: ${packet.length}");
+      return;
+    }
+
+    // 🧪 Debug: mostrar o pacote antes de enviar
+    final hex = packet.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ').toUpperCase();
+    final ascii = packet.map((b) => (b >= 32 && b <= 126) ? String.fromCharCode(b) : '.').join();
+    print("📦 Pacote (HEX): $hex");
+    print("📦 Pacote (ASCII): $ascii");
+
     print("📤 Enviando comando: $command com dados: $data");
 
     try {
-      await _writableCharacteristic!.write(packet);
+      await _writableCharacteristic!.write(packet, withoutResponse: true);
       print("✅ Comando $command enviado com sucesso!");
+      print("💡 Usando característica: ${_writableCharacteristic?.uuid} (write: ${_writableCharacteristic?.properties.write}, withoutResponse: ${_writableCharacteristic?.properties.writeWithoutResponse})");
     } catch (e) {
       print("❌ Erro ao enviar comando: $e");
     }
   }
 
-  /// 🔹 Criar pacote de dados BLE
-  List<int> createPacket(String command, String data, int battery) {
-    int stx = 0x02;
-    int etx = 0x03;
-    String commandCode = command.padRight(3);
-    String paddedData = data.padRight(13, "#");
-    int bcc = calculateBCC(commandCode, paddedData, battery);
+  List<int> createPacket(String command, String data) {
+    final packet = List<int>.filled(20, 0); // Sempre 20 bytes
 
-    return [
-      stx,
-      ...utf8.encode(commandCode),
-      ...utf8.encode(paddedData),
-      battery,
-      bcc,
-      etx,
-    ];
+    packet[0] = 0x02; // STX
+    final cmdBytes = ascii.encode(command.padRight(3).substring(0, 3));
+    packet.setRange(1, 4, cmdBytes);
+
+    // Preenchimento personalizado para comandos conhecidos
+    if (command == "A01") {
+      packet.setRange(4, 15, ascii.encode("INFORMATION")); // 11 bytes
+      packet.setRange(15, 18, ascii.encode("###"));        // 3 bytes
+    } else if (command == "A02") {
+      packet.setRange(4, 14, ascii.encode("CAL,UNLOCK"));  // 10 bytes
+      packet.setRange(14, 18, ascii.encode("####"));       // 4 bytes
+    } else if ((command == "A03" || command == "A04") && data.length == 1) {
+      packet[4] = ascii.encode(data)[0];                   // 1 byte
+      packet.setRange(5, 18, ascii.encode("#############")); // 13 bytes
+    } else if (command == "A20") {
+      packet.setRange(4, 14, ascii.encode("TEST,START"));  // 10 bytes
+      packet.setRange(14, 18, ascii.encode("####"));       // 4 bytes
+    } else {
+      // Fallback genérico para dados simples
+      final payload = ascii.encode(data.padRight(13, "#").substring(0, 13));
+      packet.setRange(4, 17, payload);
+    }
+
+    // Calcular e inserir BCC
+    packet[18] = calculateBCC(packet);
+
+    // ETX
+    packet[19] = 0x03;
+
+    return packet;
   }
 
-  int calculateBCC(String commandCode, String data, int battery) {
-    List<int> bytes = [
-      ...utf8.encode(commandCode),
-      ...utf8.encode(data),
-      battery
-    ];
-    int sum = bytes.fold(0, (prev, byte) => prev + byte);
-    return (~sum + 1) & 0xFF;
+  int calculateBCC(List<int> packet) {
+    // Soma dos bytes entre índices 1 e 17 (exclui STX, BCC e ETX)
+    int sum = 0;
+    for (int i = 1; i < 18; i++) {
+      sum += packet[i];
+    }
+
+    return (0x10000 - sum) % 256;
   }
 
   Future<void> disconnectDevice() async {

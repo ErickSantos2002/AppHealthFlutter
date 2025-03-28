@@ -28,6 +28,9 @@ class TestModel extends HiveObject {
   @HiveField(7)
   bool isFavorito; // ✅ Adicionando a propriedade para favorito
 
+  @HiveField(8)
+  final String? deviceName; // 📌 Nome do dispositivo utilizado
+
     TestModel({
       required this.timestamp,
       required this.command,
@@ -37,6 +40,7 @@ class TestModel extends HiveObject {
       required this.funcionarioNome,
       this.photoPath,
       this.isFavorito = false, // ✅ Padrão inicial: não favorito
+      this.deviceName,
     });
 
   // 📌 Método para atualizar campos específicos
@@ -44,6 +48,7 @@ class TestModel extends HiveObject {
     String? funcionarioId,
     String? funcionarioNome,
     String? photoPath,
+    String? deviceName,
   }) {
     return TestModel(
       timestamp: timestamp,
@@ -53,6 +58,20 @@ class TestModel extends HiveObject {
       funcionarioId: funcionarioId ?? this.funcionarioId,
       funcionarioNome: funcionarioNome ?? this.funcionarioNome,
       photoPath: photoPath ?? this.photoPath,
+      deviceName: deviceName ?? this.deviceName,
+    );
+  }
+  TestModel applyFavorito(bool favorito) {
+    return TestModel(
+      timestamp: timestamp,
+      command: command,
+      statusCalibracao: statusCalibracao,
+      batteryLevel: batteryLevel,
+      funcionarioId: funcionarioId,
+      funcionarioNome: funcionarioNome,
+      photoPath: photoPath,
+      deviceName: deviceName,
+      isFavorito: favorito,
     );
   }
 }

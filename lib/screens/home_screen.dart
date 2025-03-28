@@ -165,7 +165,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.read(bluetoothProvider.notifier).iniciarNovoTeste(); // 🔹 Reseta a verificação de duplicados
 
     // 🔹 Envia o comando primeiro
-    ref.read(bluetoothProvider.notifier).sendCommand("A20", "TEST,START", batteryLevel);
+    ref.read(bluetoothProvider.notifier).sendCommand("A20", "TEST,START");
 
     // 🔹 Ativa a câmera dentro da tela HomeScreen
     setState(() {
@@ -220,6 +220,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     // ✅ Traduzindo o comando, se existir no mapa
     String translatedCommand = commandTranslations[commandCode] ?? "Comando desconhecido";
+
+    if (commandCode == "T11") {
+      final partes = receivedData.split(',');
+      if (partes.length >= 3) {
+        receivedData = partes[2]; // Isso será o "0.000"
+      }
+    }
 
     return {
       "command": translatedCommand, // Agora retorna a tradução
@@ -314,18 +321,29 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             stream: scanService.scannedDevicesStream,
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text("Nenhum dispositivo encontrado"));
+                return Center(
+                  child: Text(
+                    "Nenhum dispositivo encontrado",
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                );
               }
               return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   final device = snapshot.data![index];
                   return Card(
-                    color: Colors.blue[100],
+                    color: Theme.of(context).cardColor,
                     margin: const EdgeInsets.symmetric(vertical: 5),
                     child: ListTile(
-                      title: Text(device.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                      subtitle: Text(device.id.toString()),
+                      title: Text(
+                        device.name,
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        device.id.toString(),
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
                       trailing: const Icon(Icons.bluetooth, color: Colors.blue),
                       onTap: () => connectToDevice(device),
                     ),
@@ -346,7 +364,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("📡 Conectado ao Dispositivo", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(
+          "📡 Conectado ao Dispositivo",
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 20),
 
         _buildFuncionarioSelector(funcionarios, selectedFuncionarioId),
@@ -368,8 +389,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         const SizedBox(height: 10),
 
         ElevatedButton.icon(
-          onPressed: () {
-            ref.read(bluetoothProvider.notifier).sendCommand("A22", "SOFT,RESET", batteryLevel);
+          onPressed: () async {
+            final deviceName = ref.read(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
+            if (deviceName.contains("iblow")) {
+              print("🔁 iBlow detectado: reiniciando via reconexão...");
+              final device = ref.read(bluetoothProvider).connectedDevice;
+              if (device != null) {
+                await ref.read(bluetoothProvider.notifier).disconnect();
+                await Future.delayed(const Duration(seconds: 1));
+                await ref.read(bluetoothProvider.notifier).connectToDevice(device);
+              }
+            } else {
+              ref.read(bluetoothProvider.notifier).sendCommand("A22", "SOFT,RESET");
+            }
           },
           icon: const Icon(Icons.restart_alt),
           label: const Text("Reiniciar Dispositivo"),
@@ -388,7 +420,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           },
           icon: const Icon(Icons.close),
           label: const Text("Desconectar"),
-          style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.error,
+            foregroundColor: Theme.of(context).colorScheme.onError,
+          ),
         )
       ],
     );
@@ -397,15 +432,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _infoCard(String title, String value) {
     return Card(
       elevation: 2,
-      color: Colors.white,
+      color: Theme.of(context).cardColor,
       margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-            Text(value, style: const TextStyle(color: Colors.blueAccent)),
+            Text(
+              title,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            Text(
+              value,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
           ],
         ),
       ),

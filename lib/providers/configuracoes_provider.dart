@@ -4,34 +4,51 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// 🔹 Classe que gerencia o estado das configurações
 class ConfiguracoesState {
   final bool exibirStatusCalibracao;
+  final bool notificacoesAtivas; // ✅ Novo campo
 
-  ConfiguracoesState({required this.exibirStatusCalibracao});
+  ConfiguracoesState({
+    required this.exibirStatusCalibracao,
+    required this.notificacoesAtivas,
+  });
 
-  ConfiguracoesState copyWith({bool? exibirStatusCalibracao}) {
+  ConfiguracoesState copyWith({
+    bool? exibirStatusCalibracao,
+    bool? notificacoesAtivas,
+  }) {
     return ConfiguracoesState(
       exibirStatusCalibracao: exibirStatusCalibracao ?? this.exibirStatusCalibracao,
+      notificacoesAtivas: notificacoesAtivas ?? this.notificacoesAtivas,
     );
   }
 }
 
 /// 🔹 Notifier que gerencia as configurações no SharedPreferences
 class ConfiguracoesNotifier extends StateNotifier<ConfiguracoesState> {
-  ConfiguracoesNotifier() : super(ConfiguracoesState(exibirStatusCalibracao: true)) {
+  ConfiguracoesNotifier()
+      : super(ConfiguracoesState(exibirStatusCalibracao: true, notificacoesAtivas: true)) {
     _carregarConfiguracoes();
   }
 
-  /// 🔄 Carrega a configuração do SharedPreferences
   Future<void> _carregarConfiguracoes() async {
     final prefs = await SharedPreferences.getInstance();
     bool exibir = prefs.getBool('exibirStatusCalibracao') ?? true;
-    state = state.copyWith(exibirStatusCalibracao: exibir);
+    bool notificacoes = prefs.getBool('notificacoesAtivas') ?? true;
+    state = state.copyWith(
+      exibirStatusCalibracao: exibir,
+      notificacoesAtivas: notificacoes,
+    );
   }
 
-  /// 💾 Atualiza e salva a configuração
-  Future<void> alterarExibirStatusCalibracao(bool novoValor) async {
+  Future<void> alterarExibirStatusCalibracao(bool valor) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('exibirStatusCalibracao', novoValor);
-    state = state.copyWith(exibirStatusCalibracao: novoValor);
+    await prefs.setBool('exibirStatusCalibracao', valor);
+    state = state.copyWith(exibirStatusCalibracao: valor);
+  }
+
+  Future<void> alterarNotificacoes(bool valor) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('notificacoesAtivas', valor);
+    state = state.copyWith(notificacoesAtivas: valor);
   }
 }
 

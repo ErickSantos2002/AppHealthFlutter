@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/configuracoes_provider.dart';
 import '../providers/bluetooth_provider.dart';
 import 'dart:async';
 
@@ -78,7 +79,9 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
   void _iniciarListener() {
     void _verificarAvisos() {
       try {
-        // Verificação de calibração
+        final notificacoesAtivas = ref.read(configuracoesProvider).notificacoesAtivas;
+        if (!notificacoesAtivas) return; // 🔇 Notificações desativadas
+
         DateTime hoje = DateTime.now();
         DateTime? dataCalibracao;
 
@@ -94,9 +97,8 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
 
         bool calibracaoAtrasada = dataCalibracao != null && hoje.difference(dataCalibracao).inDays > 365;
 
-        // Verificação da contagem de uso
         int usoAtual = int.tryParse(contagemUso.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-        bool usoExcedido = usoAtual > 100;
+        bool usoExcedido = usoAtual > 1000;
 
         if ((calibracaoAtrasada && !avisoCalibracaoExibido) || (usoExcedido && !avisoUsoExibido)) {
           String mensagem = "";
@@ -171,11 +173,11 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
 
     if (bluetoothState.isConnected && bluetoothState.writableCharacteristic != null) {
       print("📤 Enviando comandos para obter informações...");
-      bluetoothNotifier.sendCommand("A01", "INFORMATION", 100);
+      bluetoothNotifier.sendCommand("A01", "INFORMATION");
       await Future.delayed(const Duration(milliseconds: 500));
-      bluetoothNotifier.sendCommand("A03", "0", 100);
+      bluetoothNotifier.sendCommand("A03", "0");
       await Future.delayed(const Duration(milliseconds: 500));
-      bluetoothNotifier.sendCommand("A04", "0", 100);
+      bluetoothNotifier.sendCommand("A04", "0");
     } else {
       print("❌ Dispositivo não está conectado ou característica de escrita indisponível!");
     }
@@ -283,10 +285,17 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
     return Card(
       elevation: 2,
       margin: const EdgeInsets.symmetric(vertical: 8),
+      color: Theme.of(context).cardColor,
       child: ListTile(
-        leading: Icon(icon, color: Colors.blue),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(formattedValue, style: const TextStyle(fontSize: 16)),
+        leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
+        title: Text(
+          title,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        subtitle: Text(
+          formattedValue,
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
       ),
     );
   }

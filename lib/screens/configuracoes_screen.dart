@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hsapp/providers/historico_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../theme_provider.dart'; // ✅ Importando o novo provider
 import '../providers/configuracoes_provider.dart'; // ✅ Importando as configurações
+import 'package:url_launcher/url_launcher.dart';
+
 
 class ConfiguracoesScreen extends ConsumerStatefulWidget {
   const ConfiguracoesScreen({super.key});
@@ -31,6 +34,32 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
     });
   }
 
+  void _abrirWhatsApp() async {
+    final uri = Uri.parse("https://wa.me/message/M4IXBOMSG6V6K1");
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Não foi possível abrir o WhatsApp")),
+      );
+    }
+  }
+
+  void _enviarEmail() async {
+    final uri = Uri(
+      scheme: 'mailto',
+      path: 'suporte@healthsafety.com.br',
+      query: 'subject=Suporte App BLE&body=Olá, preciso de ajuda com...',
+    );
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Não foi possível abrir o app de e-mail")),
+      );
+    }
+  }
+
   Future<void> _confirmarLimparHistorico() async {
     bool? confirmar = await showDialog(
       context: context,
@@ -45,7 +74,8 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
             ),
             TextButton(
               onPressed: () async {
-                await Hive.box('testes').clear();
+                await Hive.deleteBoxFromDisk('testes');
+                ref.invalidate(historicoProvider); // ✅ Força recarregar os testes
                 Navigator.pop(context, true);
               },
               child: const Text("Limpar", style: TextStyle(color: Colors.red)),
@@ -68,7 +98,7 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeMode = ref.watch(themeProvider).themeMode; // ✅ Agora usando Riverpod!
+    final themeMode = ref.watch(themeProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Configurações")),
@@ -79,13 +109,11 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
           _buildSectionTitle("Configurações Gerais"),
           _buildSwitchTile(
             title: "Notificações",
-            subtitle: "Ativar ou desativar notificações",
+            subtitle: "Ativar ou desativar alertas de calibração/uso",
             icon: Icons.notifications,
-            value: notificacoesAtivadas,
+            value: ref.watch(configuracoesProvider).notificacoesAtivas,
             onChanged: (value) {
-              setState(() {
-                notificacoesAtivadas = value;
-              });
+              ref.read(configuracoesProvider.notifier).alterarNotificacoes(value);
             },
           ),
           _buildSwitchTile(
@@ -98,23 +126,16 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
             },
           ),
           _buildSwitchTile(
-            title: "Modo Escuro",
+            title: "🌙 Modo Escuro",
             subtitle: "Alternar entre tema claro e escuro",
             icon: Icons.dark_mode,
-            value: themeMode == ThemeMode.dark, // ✅ Corrigido
+            value: themeMode == ThemeMode.dark, // ✅ Vai marcar corretamente
             onChanged: (_) {
-              ref.read(themeProvider.notifier).toggleTheme(); // ✅ Agora usa Riverpod
+              ref.read(themeProvider.notifier).toggleTheme(); // ✅ Alterna o tema
             },
           ),
-          _buildDropdownTile(),
 
           _buildSectionTitle("Configurações de Dados"),
-          _buildButtonTile(
-            title: "Exportar Dados",
-            subtitle: "Salvar histórico de testes",
-            icon: Icons.download,
-            onTap: _exportarDados,
-          ),
           _buildButtonTile(
             title: "Limpar Histórico",
             subtitle: "Remover todos os testes armazenados",
@@ -129,13 +150,13 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
             title: "Ajuda e Suporte",
             subtitle: "Entre em contato para suporte",
             icon: Icons.help,
-            onTap: () {},
+            onTap: _abrirWhatsApp,
           ),
           _buildButtonTile(
             title: "Contato do Desenvolvedor",
             subtitle: "Enviar e-mail",
             icon: Icons.email,
-            onTap: () {},
+            onTap: _enviarEmail,
           ),
 
           const SizedBox(height: 20),

@@ -85,6 +85,7 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
   Widget _buildTestesTab() {
     final historicoState = ref.watch(historicoProvider);
     List<TestModel> testesFiltrados = historicoState.testesFiltrados;
+    List<TestModel> favoritos = historicoState.testesFavoritos;
     Map<String, int> testesPorDia = _calcularTestesPorDia(testesFiltrados);
 
     return Column(
@@ -95,19 +96,24 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
           child: testesFiltrados.isEmpty
               ? const Center(child: Text("Nenhum teste armazenado.", style: TextStyle(fontSize: 16)))
               : ListView.separated(
-            itemCount: testesFiltrados.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              final TestModel teste = testesFiltrados[index];
-              return TestCard(
-                teste: teste,
-                onTap: _mostrarDetalhes,
-                onFavoriteToggle: () {
-                  ref.read(historicoProvider.notifier).alternarFavorito(teste);
-                },
-              );
-            },
-          ),
+                  itemCount: testesFiltrados.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 8),
+                  itemBuilder: (context, index) {
+                    final TestModel teste = testesFiltrados[index];
+
+                    // ✅ Atualiza o status visual de favorito com base na lista
+                    final isFavorito = favoritos.any((f) => f.key == teste.key);
+                    final testeComFavorito = teste.copyWith().applyFavorito(isFavorito);
+
+                    return TestCard(
+                      teste: testeComFavorito,
+                      onTap: _mostrarDetalhes,
+                      onFavoriteToggle: () {
+                        ref.read(historicoProvider.notifier).alternarFavorito(teste);
+                      },
+                    );
+                  },
+                ),
         ),
       ],
     );
@@ -121,17 +127,22 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
     return favoritos.isEmpty
         ? const Center(child: Text("Nenhum teste favorito.", style: TextStyle(fontSize: 16)))
         : ListView.builder(
-      itemCount: favoritos.length,
-      itemBuilder: (context, index) {
-        return TestCard(
-          teste: favoritos[index],
-          onTap: _mostrarDetalhes,
-          onFavoriteToggle: () {
-            ref.read(historicoProvider.notifier).alternarFavorito(favoritos[index]);
-          },
-        );
-      },
-    );
+            itemCount: favoritos.length,
+            itemBuilder: (context, index) {
+              final teste = favoritos[index];
+
+              // ✅ Garante que a estrela apareça corretamente
+              final testeComFavorito = teste.copyWith().applyFavorito(true);
+
+              return TestCard(
+                teste: testeComFavorito,
+                onTap: _mostrarDetalhes,
+                onFavoriteToggle: () {
+                  ref.read(historicoProvider.notifier).alternarFavorito(teste);
+                },
+              );
+            },
+          );
   }
 
   /// 🔹 Tela de detalhes do teste
@@ -160,7 +171,9 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
           _infoTile("Data", _formatDateTime(testeSelecionado!.timestamp)),
           _infoTile("Funcionário", testeSelecionado!.funcionarioNome ?? "Visitante"),
           _infoTile("Resultado", testeSelecionado!.command),
-          _infoTile("Status de Calibração", testeSelecionado!.statusCalibracao),
+          _infoTile("Dispositivo", testeSelecionado!.deviceName ?? "Desconhecido"),
+          if (ref.watch(configuracoesProvider).exibirStatusCalibracao)
+            _infoTile("Status de Calibração", testeSelecionado!.statusCalibracao),
         ],
       ),
     );
@@ -322,11 +335,11 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
 
     // 🔹 Cabeçalho do CSV
     bool exibirCalibracao = ref.read(configuracoesProvider).exibirStatusCalibracao;
-    List<String> linhas = ["Data, Resultado, Status${exibirCalibracao ? ', Calibração' : ''}"];
+    List<String> linhas = ["Data, Resultado, Status${exibirCalibracao ? ', Calibração' : ''}, Dispositivo"];
 
     for (var teste in testes) {
       linhas.add(
-        "${_formatDateTime(teste.timestamp)}, ${teste.command}${exibirCalibracao ? ', ${teste.statusCalibracao}' : ''}",
+        "${_formatDateTime(teste.timestamp)}, ${teste.command}, ${teste.statusCalibracao}, ${teste.deviceName ?? 'Desconhecido'}"
       );
     }
 

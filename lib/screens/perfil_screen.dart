@@ -173,15 +173,20 @@ class _PerfilScreenState extends State<PerfilScreen> {
           ),
         ],
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
+          preferredSize: const Size.fromHeight(60),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: searchController,
-              decoration: const InputDecoration(
-                hintText: "Buscar funcionário...",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  hintText: "Buscar funcionário...",
+                  prefixIcon: const Icon(Icons.search),
+                  filled: true, // ✅ necessário para que fillColor funcione
+                  fillColor: Colors.grey[200], // ✅ cor de fundo desejada
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide.none,
+                  ),
               ),
               onChanged: (value) {
                 setState(() {

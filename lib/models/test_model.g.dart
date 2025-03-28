@@ -24,13 +24,15 @@ class TestModelAdapter extends TypeAdapter<TestModel> {
       funcionarioId: fields[4] as String?,
       funcionarioNome: fields[5] as String,
       photoPath: fields[6] as String?,
+      isFavorito: fields[7] as bool,
+      deviceName: fields[8] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, TestModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.timestamp)
       ..writeByte(1)
@@ -44,7 +46,11 @@ class TestModelAdapter extends TypeAdapter<TestModel> {
       ..writeByte(5)
       ..write(obj.funcionarioNome)
       ..writeByte(6)
-      ..write(obj.photoPath);
+      ..write(obj.photoPath)
+      ..writeByte(7)
+      ..write(obj.isFavorito)
+      ..writeByte(8)
+      ..write(obj.deviceName);
   }
 
   @override

@@ -2,41 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// 🔹 Estado do tema (Light/Dark)
-class ThemeState {
-  final ThemeMode themeMode;
-
-  ThemeState(this.themeMode);
-}
-
-/// 🔹 Notifier responsável por gerenciar o tema
-class ThemeNotifier extends StateNotifier<ThemeState> {
-  ThemeNotifier() : super(ThemeState(ThemeMode.light)) {
+/// 🔹 Notifier que gerencia o tema claro/escuro
+class ThemeNotifier extends StateNotifier<ThemeMode> {
+  ThemeNotifier() : super(ThemeMode.light) {
     _loadTheme();
   }
 
-  /// Alterna o tema e salva no SharedPreferences
+  /// Alterna entre claro e escuro
   Future<void> toggleTheme() async {
-    final isDarkMode = state.themeMode == ThemeMode.light;
-    state = ThemeState(isDarkMode ? ThemeMode.dark : ThemeMode.light);
-    _saveTheme(isDarkMode);
+    final isDark = state == ThemeMode.dark;
+    final newMode = isDark ? ThemeMode.light : ThemeMode.dark;
+    state = newMode;
+    await _saveTheme(newMode);
   }
 
-  /// 🔄 Carrega o tema salvo
+  /// Define o tema diretamente
+  Future<void> setTheme(ThemeMode mode) async {
+    state = mode;
+    await _saveTheme(mode);
+  }
+
+  /// Carrega o tema salvo
   Future<void> _loadTheme() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isDarkMode = prefs.getBool('isDarkMode') ?? false;
-    state = ThemeState(isDarkMode ? ThemeMode.dark : ThemeMode.light);
+    final prefs = await SharedPreferences.getInstance();
+    final isDark = prefs.getBool('isDarkMode') ?? false;
+    state = isDark ? ThemeMode.dark : ThemeMode.light;
   }
 
-  /// 💾 Salva a preferência do usuário
-  Future<void> _saveTheme(bool isDarkMode) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('isDarkMode', isDarkMode);
+  /// Salva o tema no SharedPreferences
+  Future<void> _saveTheme(ThemeMode mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDarkMode', mode == ThemeMode.dark);
   }
 }
 
-/// 🔹 Criando o provider global para o tema
-final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeState>(
+/// 🔹 Provider global do tema
+final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeMode>(
   (ref) => ThemeNotifier(),
 );
