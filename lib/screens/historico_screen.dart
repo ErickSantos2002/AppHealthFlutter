@@ -8,6 +8,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/export_helper.dart';
 import '../providers/historico_provider.dart';
 import '../widgets/test_card.dart'; // ✅ Importando o novo widget TestCard
 
@@ -60,9 +61,27 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
           actions: !mostrandoDetalhes
               ? [
                   IconButton(
-                    icon: const Icon(Icons.download),
-                    onPressed: () => _exportarCSV(),
-                    tooltip: "Exportar Testes",
+                    icon: const Icon(Icons.share),
+                    onPressed: () async {
+                      final historico = ref.read(historicoProvider);
+                      final testes = DefaultTabController.of(context).index == 0
+                          ? historico.testesFiltrados
+                          : historico.testesFavoritos;
+
+                      final incluirStatus = ref.read(configuracoesProvider).exibirStatusCalibracao;
+
+                      if (testes.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Nenhum teste para exportar.")),
+                        );
+                        return;
+                      }
+
+                      await ExportHelper.exportarTestes(
+                        testes: testes,
+                        incluirStatusCalibracao: incluirStatus,
+                      );
+                    },
                   ),
                 ]
               : null,
@@ -105,8 +124,10 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
                     final isFavorito = favoritos.any((f) => f.key == teste.key);
                     final testeComFavorito = teste.copyWith().applyFavorito(isFavorito);
 
+                    final tolerancia = ref.watch(configuracoesProvider).tolerancia;
                     return TestCard(
                       teste: testeComFavorito,
+                      tolerancia: tolerancia, // ✅ Passa a tolerância para colorir corretamente
                       onTap: _mostrarDetalhes,
                       onFavoriteToggle: () {
                         ref.read(historicoProvider.notifier).alternarFavorito(teste);
@@ -134,8 +155,10 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
               // ✅ Garante que a estrela apareça corretamente
               final testeComFavorito = teste.copyWith().applyFavorito(true);
 
+              final tolerancia = ref.watch(configuracoesProvider).tolerancia;
               return TestCard(
                 teste: testeComFavorito,
+                tolerancia: tolerancia, // ✅ Passa a tolerância para colorir corretamente
                 onTap: _mostrarDetalhes,
                 onFavoriteToggle: () {
                   ref.read(historicoProvider.notifier).alternarFavorito(teste);
@@ -204,7 +227,7 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
               // Filtro por status
               DropdownButton<String>(
                 value: ref.watch(historicoProvider).filtroStatus,
-                items: ["Todos", "PASS", "Normal"].map((status) {
+                items: ["Todos", "Aprovados", "Rejeitados"].map((status) {
                   return DropdownMenuItem(value: status, child: Text(status));
                 }).toList(),
                 onChanged: (value) {

@@ -1,5 +1,6 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hsapp/providers/configuracoes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/funcionario_provider.dart';
 import '../models/funcionario_model.dart';
@@ -168,10 +169,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     ref.read(bluetoothProvider.notifier).sendCommand("A20", "TEST,START");
 
     // 🔹 Ativa a câmera dentro da tela HomeScreen
-    setState(() {
-      isCapturingPhoto = true;
-      soproProgress = 0; // 🔹 Reseta a barra de progresso
-    });
+    final config = ref.read(configuracoesProvider);
+
+    final bluetoothNotifier = ref.read(bluetoothProvider.notifier);
+
+    // 🔹 Se a câmera estiver desativada, limpa qualquer foto anterior
+    if (!config.fotoAtivada) {
+      bluetoothNotifier.capturarFoto(""); // Limpa o caminho da última foto
+    }
+    
+    if (config.fotoAtivada) {
+      setState(() {
+        isCapturingPhoto = true;
+        soproProgress = 0;
+      });
+    } else {
+      // 🔹 Se não vai tirar foto, limpa o caminho da última foto salva
+      bluetoothNotifier.capturarFoto(""); // Isso evita reutilização
+      setState(() {
+        soproProgress = 0;
+      });
+    }
   }
 
   Future<void> _tirarFoto() async {

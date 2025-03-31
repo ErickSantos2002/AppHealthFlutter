@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:flutter/material.dart';
 
 part 'test_model.g.dart'; // Gera o adaptador automaticamente
 
@@ -75,3 +76,40 @@ class TestModel extends HiveObject {
     );
   }
 }
+extension UnidadeHelper on TestModel {
+  String getUnidadeFormatada() {
+    final resultado = command.trim();
+    final unidade = resultado.split(" ").length > 1 ? resultado.split(" ")[1] : "";
+    return unidade;
+  }
+}
+extension TestModelHelper on TestModel {
+  Color getCorPorResultado(double tolerancia) {
+    final valorStr = command.toUpperCase().trim();
+
+    // Se for PASS
+    if (valorStr.contains("PASS")) return Colors.green.shade700;
+
+    // Se for 0.000 ou valor numérico
+    final valorLimpo = valorStr.split(" ").first.replaceAll(",", "."); // remove unidade
+    final valor = double.tryParse(valorLimpo) ?? -1;
+
+    if (valor == 0.0) return const Color(0xFF00C853);
+    if (valor > 0 && valor < tolerancia) return const Color(0xFFFFC107);
+    if (valor >= tolerancia || valorStr.contains("FAIL")) return const Color(0xFFD50000);
+
+    return Colors.grey;
+  }
+
+  bool isAcimaDaTolerancia(double tolerancia) {
+    final valorStr = command.toUpperCase().trim();
+
+    if (valorStr.contains("PASS")) return false;
+
+    final valorLimpo = valorStr.split(" ").first.replaceAll(",", ".");
+    final valor = double.tryParse(valorLimpo) ?? -1;
+
+    return valor > 0.0;
+  }
+}
+

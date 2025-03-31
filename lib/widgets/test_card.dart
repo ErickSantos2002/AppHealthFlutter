@@ -8,17 +8,21 @@ class TestCard extends ConsumerWidget {
   final TestModel teste;
   final Function(TestModel)? onTap; // ✅ Callback para abrir detalhes
   final VoidCallback? onFavoriteToggle; // ✅ Adicionando o parâmetro correto
+  final double tolerancia;
 
   const TestCard({
     Key? key,
     required this.teste,
-    this.onTap,
-    this.onFavoriteToggle, // ✅ Recebendo o callback
+    required this.onTap,
+    required this.onFavoriteToggle,
+    required this.tolerancia, // ✅ Adicionado aqui
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final corStatus = teste.getCorPorResultado(tolerancia);
     return Card(
+      color: corStatus.withOpacity(0.2), // fundo sutil baseado no status
       child: ListTile(
         title: Text("Resultado: ${teste.command}"),
         subtitle: Text("Data: ${_formatDateTime(teste.timestamp)}"),
@@ -29,7 +33,7 @@ class TestCard extends ConsumerWidget {
           ),
           onPressed: onFavoriteToggle,
         ),
-        onTap: onTap != null ? () => onTap!(teste) : null, // ✅ Verifica se `onTap` está definido antes de chamar
+        onTap: onTap != null ? () => onTap!(teste) : null,
       ),
     );
   }

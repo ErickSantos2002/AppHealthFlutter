@@ -1,3 +1,4 @@
+import 'package:flutter_hsapp/providers/configuracoes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import '../models/funcionario_model.dart';
@@ -164,6 +165,17 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         orElse: () => FuncionarioModel(id: "visitante", nome: "Visitante"),
       );
 
+      final isAcima = TestModel(
+        timestamp: agora,
+        command: resultadoFinal,
+        statusCalibracao: statusCalibracao,
+        batteryLevel: battery,
+        funcionarioId: funcionario.id,
+        funcionarioNome: funcionario.nome,
+        photoPath: state.lastCapturedPhotoPath,
+        deviceName: state.connectedDevice?.name,
+      ).isAcimaDaTolerancia(ref.read(configuracoesProvider).tolerancia);
+
       final novoTeste = TestModel(
         timestamp: agora,
         command: resultadoFinal,
@@ -172,8 +184,11 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         funcionarioId: funcionario.id,
         funcionarioNome: funcionario.nome,
         photoPath: state.lastCapturedPhotoPath,
-        deviceName: state.connectedDevice?.name, // ✅ Novo campo aqui
+        deviceName: state.connectedDevice?.name,
+        isFavorito: isAcima, // ✅ Isso aqui faz ele já ir como favorito se passar o limite
       );
+
+      state = state.copyWith(lastCapturedPhotoPath: null);
 
       ref.read(historicoProvider.notifier).adicionarTeste(novoTeste);
       print("✅ Teste salvo com sucesso: $resultadoFinal");

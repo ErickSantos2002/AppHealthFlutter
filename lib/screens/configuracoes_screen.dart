@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import '../models/test_model.dart';
+import '../providers/export_helper.dart';
 import '../theme_provider.dart'; // ✅ Importando o novo provider
 import '../providers/configuracoes_provider.dart'; // ✅ Importando as configurações
 import 'package:url_launcher/url_launcher.dart';
@@ -93,12 +95,28 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
   }
 
   Future<void> _exportarDados() async {
-    Share.share("Exportação de dados em breve disponível!", subject: "Exportação de Dados");
+    final box = await Hive.openBox<TestModel>('testes');
+    final testes = box.values.toList();
+    final incluirStatus = ref.read(configuracoesProvider).exibirStatusCalibracao;
+
+    if (testes.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Nenhum teste para exportar.")),
+      );
+      return;
+    }
+
+    await ExportHelper.exportarTestes(
+      testes: testes,
+      incluirStatusCalibracao: incluirStatus,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final themeMode = ref.watch(themeProvider);
+    final configuracoes = ref.watch(configuracoesProvider);
+    final tolerancia = configuracoes.tolerancia;
 
     return Scaffold(
       appBar: AppBar(title: const Text("Configurações")),
@@ -134,6 +152,16 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
               ref.read(themeProvider.notifier).toggleTheme(); // ✅ Alterna o tema
             },
           ),
+          _buildToleranciaSlider(tolerancia),
+          _buildSwitchTile(
+            title: "Capturar Foto",
+            subtitle: "Tirar uma foto automaticamente antes de cada teste",
+            icon: Icons.camera_alt,
+            value: configuracoes.fotoAtivada,
+            onChanged: (value) {
+              ref.read(configuracoesProvider.notifier).alterarFotoAtivada(value);
+            },
+          ),
 
           _buildSectionTitle("Configurações de Dados"),
           _buildButtonTile(
@@ -142,6 +170,12 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
             icon: Icons.delete,
             onTap: _confirmarLimparHistorico,
             isDestructive: true,
+          ),
+          _buildButtonTile(
+            title: "Exportar Testes",
+            subtitle: "Salvar e compartilhar os dados dos testes realizados",
+            icon: Icons.upload_file,
+            onTap: _exportarDados,
           ),
 
           _buildSectionTitle("Sobre o Aplicativo"),
@@ -188,6 +222,35 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
       secondary: Icon(icon, color: Colors.blueAccent),
       value: value,
       onChanged: onChanged,
+    );
+  }
+
+  Widget _buildToleranciaSlider(double valorAtual) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Text(
+            "Tolerância de Álcool",
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Slider(
+          value: valorAtual * 10,
+          min: 0,
+          max: 9,
+          divisions: 9,
+          label: (valorAtual).toStringAsFixed(3),
+          onChanged: (value) {
+            ref.read(configuracoesProvider.notifier).alterarTolerancia(value / 10);
+          },
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Text("Valor atual: ${valorAtual.toStringAsFixed(3)}"),
+        ),
+      ],
     );
   }
 

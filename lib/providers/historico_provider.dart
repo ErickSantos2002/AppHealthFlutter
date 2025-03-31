@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/test_model.dart';
 import 'package:intl/intl.dart';
 
@@ -65,9 +66,17 @@ class HistoricoNotifier extends StateNotifier<HistoricoState> {
   void _aplicarFiltros(List<TestModel> testes) {
     List<TestModel> filtrados = testes;
 
-    // Filtra por status
+    // Filtra por tipo de teste
     if (state.filtroStatus != "Todos") {
-      filtrados = filtrados.where((t) => t.command == state.filtroStatus).toList();
+      filtrados = filtrados.where((t) {
+        final cmd = t.command.toUpperCase();
+        if (state.filtroStatus == "Aprovados") {
+          return cmd.contains("PASS") || cmd.contains("0.000");
+        } else if (state.filtroStatus == "Rejeitados") {
+          return !cmd.contains("PASS") && !cmd.contains("0.000");
+        }
+        return true;
+      }).toList();
     }
 
     // Filtra por data
@@ -121,11 +130,18 @@ class HistoricoNotifier extends StateNotifier<HistoricoState> {
   /// 📌 Adiciona um novo teste ao banco de dados e atualiza o histórico
   Future<void> adicionarTeste(TestModel novoTeste) async {
     _testesBox = await Hive.openBox<TestModel>('testes');
+    _favoritosBox = await Hive.openBox<String>('favoritos');
 
-    // 🔹 Salvamos o teste no banco
+    // 📌 Obtemos a tolerância
+    final prefs = await SharedPreferences.getInstance();
+    final tolerancia = prefs.getDouble('tolerancia') ?? 0.5;
+
+    // 📌 Se for acima da tolerância, salva como favorito
+    if (novoTeste.isAcimaDaTolerancia(tolerancia)) {
+      _favoritosBox.put(novoTeste.timestamp.toString(), "favorito");
+    }
+
     await _testesBox.put(novoTeste.timestamp.toString(), novoTeste);
-
-    // 🔹 Recarregar os testes para atualizar a interface
     await carregarTestes();
   }
 }
