@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hsapp/models/funcionario_model.dart';
+import 'package:hive/hive.dart';
 import '../providers/configuracoes_provider.dart';
 import '../models/test_model.dart';
 import 'package:intl/intl.dart';
@@ -20,6 +22,8 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
   bool mostrandoDetalhes = false;
   TestModel? testeSelecionado;
   int _tabIndex = 0;
+  final TextEditingController _searchController = TextEditingController();
+  String searchQuery = "";
 
   void _mostrarDetalhes(TestModel teste) {
     setState(() {
@@ -123,11 +127,56 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
   Widget _buildTestesTab() {
     final historicoState = ref.watch(historicoProvider);
     List<TestModel> testesFiltrados = historicoState.testesFiltrados;
+    final funcionariosBox = Hive.box<FuncionarioModel>('funcionarios');
+
+    if (searchQuery.isNotEmpty) {
+      testesFiltrados = testesFiltrados.where((teste) {
+        final funcionario = funcionariosBox.values.firstWhere(
+          (f) => f.id == teste.funcionarioId,
+          orElse: () => FuncionarioModel(id: "visitante", nome: teste.funcionarioNome),
+        );
+
+        return [
+          teste.funcionarioNome,
+          funcionario.cpf ?? "",
+          funcionario.matricula ?? "",
+          funcionario.informacao1 ?? "",
+          funcionario.informacao2 ?? "",
+          funcionario.cargo,
+          teste.deviceName ?? "",
+        ].any((campo) => campo.toLowerCase().contains(searchQuery));
+      }).toList();
+    }
     List<TestModel> favoritos = historicoState.testesFavoritos;
     Map<String, int> testesPorDia = _calcularTestesPorDia(testesFiltrados);
 
     return Column(
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          child: TextField(
+            controller: _searchController,
+            decoration: InputDecoration(
+              hintText: "Buscar por nome, CPF, matrícula, info ou dispositivo...",
+              hintStyle: TextStyle(
+                color: Theme.of(context).hintColor.withOpacity(0.7),
+              ),
+              prefixIcon: const Icon(Icons.search),
+              filled: true,
+              fillColor: Theme.of(context).cardColor.withOpacity(0.9),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
+              ),
+            ),
+            style: Theme.of(context).textTheme.bodyLarge,
+            onChanged: (value) {
+              setState(() {
+                searchQuery = value.toLowerCase().trim();
+              });
+            },
+          ),
+        ),
         _buildFiltros(),
         _buildGraficoBarras(testesPorDia),
         Expanded(
@@ -191,27 +240,41 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
   Widget _buildDetalhesView() {
     if (testeSelecionado == null) return const Center(child: Text("Erro ao carregar detalhes"));
 
-    return Padding(
+    final funcionariosBox = Hive.box<FuncionarioModel>('funcionarios');
+    final funcionario = funcionariosBox.values.firstWhere(
+      (f) => f.id == testeSelecionado!.funcionarioId,
+      orElse: () => FuncionarioModel(id: "visitante", nome: testeSelecionado!.funcionarioNome),
+    );
+
+    return SingleChildScrollView(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // 🔹 Exibir a foto se existir
-          if (testeSelecionado!.photoPath != null && File(testeSelecionado!.photoPath!).existsSync())
-            Image.file(
-              File(testeSelecionado!.photoPath!),
-              height: 250,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          if (testeSelecionado!.photoPath != null &&
+              File(testeSelecionado!.photoPath!).existsSync())
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.file(
+                File(testeSelecionado!.photoPath!),
+                height: 400, // Aumentado
+                width: double.infinity,
+                fit: BoxFit.contain, // Evita corte da imagem
+              ),
             )
           else
             const Text("Nenhuma foto disponível", style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic)),
 
-          const SizedBox(height: 10),
+          const SizedBox(height: 16),
 
-          // 🔹 Exibir todas as informações
           _infoTile("Data", _formatDateTime(testeSelecionado!.timestamp)),
-          _infoTile("Funcionário", testeSelecionado!.funcionarioNome),
+          _infoTile("Funcionário", funcionario.nome),
+          if (funcionario.cargo.isNotEmpty) _infoTile("Cargo", funcionario.cargo),
+          if ((funcionario.cpf ?? "").isNotEmpty) _infoTile("CPF", funcionario.cpf!),
+          if ((funcionario.matricula ?? "").isNotEmpty) _infoTile("Matrícula", funcionario.matricula!),
+          if ((funcionario.informacao1 ?? "").isNotEmpty) _infoTile("Informação 1", funcionario.informacao1!),
+          if ((funcionario.informacao2 ?? "").isNotEmpty) _infoTile("Informação 2", funcionario.informacao2!),
           _infoTile("Resultado", testeSelecionado!.command),
           _infoTile("Dispositivo", testeSelecionado!.deviceName ?? "Desconhecido"),
           if (ref.watch(configuracoesProvider).exibirStatusCalibracao)

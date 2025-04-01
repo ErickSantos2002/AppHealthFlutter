@@ -19,22 +19,39 @@ class FuncionarioModel extends HiveObject {
   @HiveField(4)
   final String? matricula; // 🔹 Agora Matrícula é opcional
 
+  @HiveField(5)
+  final String? informacao1;
+
+  @HiveField(6)
+  final String? informacao2;
+
   FuncionarioModel({
-    required this.id, // 🔹 Agora precisamos de um ID
+    required this.id,
     required this.nome,
     this.cargo = "",
-    this.cpf, // 🔹 Opcional
-    this.matricula, // 🔹 Opcional
+    this.cpf,
+    this.matricula,
+    this.informacao1,
+    this.informacao2,
   });
 
   /// 🔄 Método para criar um novo funcionário com um ID único
-  factory FuncionarioModel.novoFuncionario({required String nome, String cargo = "", String? cpf, String? matricula}) {
+  factory FuncionarioModel.novoFuncionario({
+    required String nome,
+    String cargo = "",
+    String? cpf,
+    String? matricula,
+    String? informacao1,
+    String? informacao2,
+  }) {
     return FuncionarioModel(
-      id: DateTime.now().millisecondsSinceEpoch.toString(), // 🔹 Gera um ID único baseado no tempo
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
       nome: nome,
       cargo: cargo,
       cpf: cpf,
       matricula: matricula,
+      informacao1: informacao1,
+      informacao2: informacao2,
     );
   }
 }

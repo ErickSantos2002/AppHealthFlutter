@@ -22,13 +22,15 @@ class FuncionarioModelAdapter extends TypeAdapter<FuncionarioModel> {
       cargo: fields[2] as String,
       cpf: fields[3] as String?,
       matricula: fields[4] as String?,
+      informacao1: fields[5] as String?,
+      informacao2: fields[6] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, FuncionarioModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -38,7 +40,11 @@ class FuncionarioModelAdapter extends TypeAdapter<FuncionarioModel> {
       ..writeByte(3)
       ..write(obj.cpf)
       ..writeByte(4)
-      ..write(obj.matricula);
+      ..write(obj.matricula)
+      ..writeByte(5)
+      ..write(obj.informacao1)
+      ..writeByte(6)
+      ..write(obj.informacao2);
   }
 
   @override
