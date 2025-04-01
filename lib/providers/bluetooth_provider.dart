@@ -5,9 +5,6 @@ import '../models/funcionario_model.dart';
 import '../services/bluetooth_manager.dart';
 import '../models/test_model.dart';
 import '../providers/historico_provider.dart';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-
 import 'funcionario_provider.dart';
 
 /// 🔹 Estado global para gerenciar a conexão Bluetooth

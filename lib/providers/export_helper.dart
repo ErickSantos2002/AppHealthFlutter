@@ -1,5 +1,6 @@
 import 'dart:io';
-import 'package:archive/archive_io.dart';
+import 'dart:typed_data';
+import 'package:archive/archive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import '../models/test_model.dart';
@@ -9,13 +10,19 @@ class ExportHelper {
     required List<TestModel> testes,
     required bool incluirStatusCalibracao,
   }) async {
+    if (testes.isEmpty) {
+      print("⚠️ Nenhum teste disponível para exportar.");
+      return;
+    }
+
     final Directory tempDir = await getTemporaryDirectory();
     final exportDir = Directory('${tempDir.path}/exportacao');
-    final fotosDir = Directory('${exportDir.path}/fotos');
+    if (await exportDir.exists()) {
+      await exportDir.delete(recursive: true);
+    }
+    await exportDir.create(recursive: true);
 
-    if (await exportDir.exists()) await exportDir.delete(recursive: true);
-    await fotosDir.create(recursive: true);
-
+    // 1. Gera o conteúdo CSV em memória
     final csvBuffer = StringBuffer();
     final header = [
       "Data",
@@ -29,24 +36,27 @@ class ExportHelper {
     ];
     csvBuffer.writeln(header.join(','));
 
+    // Fotos a serem incluídas no zip manualmente
+    final Map<String, List<int>> fotosBytes = {};
+
     for (var teste in testes) {
       final data = teste.timestamp;
-      final resultado = teste.command;
-      final unidade = teste.getUnidadeFormatada();
-      final dispositivo = teste.deviceName ?? "";
-      final funcionario = teste.funcionarioNome;
-      final fotoPath = teste.photoPath ?? "";
+      final resultado = teste.command.replaceAll(",", ";");
+      final unidade = teste.getUnidadeFormatada().replaceAll(",", ";");
+      final dispositivo = (teste.deviceName ?? "").replaceAll(",", ";");
+      final funcionario = (teste.funcionarioNome).replaceAll(",", ";");
       final calibrado = incluirStatusCalibracao
-      ? (teste.statusCalibracao.toLowerCase().contains("normal") ? "Sim" : "Não")
-      : "";
+          ? (teste.statusCalibracao.toLowerCase().contains("normal") ? "Sim" : "Não")
+          : "";
 
       String fotoArquivo = "";
-      if (fotoPath.isNotEmpty) {
-        final fotoFile = File(fotoPath);
+      if (teste.photoPath != null && teste.photoPath!.isNotEmpty) {
+        final fotoFile = File(teste.photoPath!);
         if (await fotoFile.exists()) {
-          final nomeFoto = fotoFile.uri.pathSegments.last;
-          await fotoFile.copy('${fotosDir.path}/$nomeFoto');
-          fotoArquivo = 'fotos/$nomeFoto';
+          final nomeFoto = 'fotos/${fotoFile.uri.pathSegments.last}';
+          final bytes = await fotoFile.readAsBytes();
+          fotosBytes[nomeFoto] = bytes;
+          fotoArquivo = nomeFoto;
         }
       }
 
@@ -64,15 +74,30 @@ class ExportHelper {
       csvBuffer.writeln(linha);
     }
 
-    final csvPath = '${exportDir.path}/testes.csv';
-    await File(csvPath).writeAsString(csvBuffer.toString());
+    // 2. Cria o arquivo zip manualmente
+    final archive = Archive();
 
-    final zipEncoder = ZipFileEncoder();
-    final zipPath = '${tempDir.path}/dados_exportados.zip';
-    zipEncoder.create(zipPath);
-    zipEncoder.addDirectory(exportDir);
-    zipEncoder.close();
+    // Adiciona o CSV
+    final csvName = 'testes.csv';
+    final csvBytes = Uint8List.fromList(csvBuffer.toString().codeUnits);
+    archive.addFile(ArchiveFile(csvName, csvBytes.length, csvBytes));
 
-    await Share.shareXFiles([XFile(zipPath)], text: 'Exportação de dados do app');
+    // Adiciona as fotos
+    fotosBytes.forEach((path, bytes) {
+      archive.addFile(ArchiveFile(path, bytes.length, bytes));
+    });
+
+    // 3. Salva o zip na pasta temporária
+    final zipPath = '${tempDir.path}/dados_exportados_${DateTime.now().millisecondsSinceEpoch}.zip';
+    final zipFile = File(zipPath);
+    await zipFile.writeAsBytes(ZipEncoder().encode(archive));
+
+    print("✅ ZIP manual gerado com ${archive.length} arquivos: $zipPath");
+
+    // 4. Compartilha com o usuário
+    await Share.shareXFiles(
+      [XFile(zipPath)],
+      text: 'Exportação de dados do app',
+    );
   }
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hsapp/providers/historico_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import '../models/test_model.dart';
 import '../providers/export_helper.dart';
 import '../theme_provider.dart'; // ✅ Importando o novo provider
 import '../providers/configuracoes_provider.dart'; // ✅ Importando as configurações
@@ -95,21 +93,36 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
   }
 
   Future<void> _exportarDados() async {
-    final box = await Hive.openBox<TestModel>('testes');
-    final testes = box.values.toList();
-    final incluirStatus = ref.read(configuracoesProvider).exibirStatusCalibracao;
+    try {
+      final historico = ref.read(historicoProvider);
+      final testes = historico.testesFiltrados + historico.testesFavoritos;
 
-    if (testes.isEmpty) {
+      final incluirStatus = ref.read(configuracoesProvider).exibirStatusCalibracao;
+
+      if (testes.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Nenhum teste para exportar.")),
+        );
+        return;
+      }
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Nenhum teste para exportar.")),
+        const SnackBar(content: Text("Exportando dados...")),
       );
-      return;
-    }
 
-    await ExportHelper.exportarTestes(
-      testes: testes,
-      incluirStatusCalibracao: incluirStatus,
-    );
+      await ExportHelper.exportarTestes(
+        testes: testes.toSet().toList(), // remove duplicados
+        incluirStatusCalibracao: incluirStatus,
+      );
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Exportação concluída com sucesso!")),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Erro ao exportar: $e")),
+      );
+    }
   }
 
   @override
@@ -278,22 +291,4 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
     );
   }
 
-  Widget _buildDropdownTile() {
-    return ListTile(
-      leading: const Icon(Icons.language, color: Colors.blueAccent),
-      title: const Text("Idioma", style: TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: const Text("Alterar idioma do aplicativo"),
-      trailing: DropdownButton<String>(
-        value: idiomaSelecionado,
-        items: ["Português", "Inglês", "Espanhol"].map((String idioma) {
-          return DropdownMenuItem(value: idioma, child: Text(idioma));
-        }).toList(),
-        onChanged: (String? novoIdioma) {
-          setState(() {
-            idiomaSelecionado = novoIdioma!;
-          });
-        },
-      ),
-    );
-  }
 }

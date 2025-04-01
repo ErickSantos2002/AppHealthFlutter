@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import '../providers/configuracoes_provider.dart';
 import '../models/test_model.dart';
 import 'package:intl/intl.dart';
-import 'package:share_plus/share_plus.dart';
 import 'dart:io';
-import 'package:path_provider/path_provider.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/export_helper.dart';
@@ -22,6 +19,7 @@ class HistoricoScreen extends ConsumerStatefulWidget {
 class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
   bool mostrandoDetalhes = false;
   TestModel? testeSelecionado;
+  int _tabIndex = 0;
 
   void _mostrarDetalhes(TestModel teste) {
     setState(() {
@@ -41,52 +39,73 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(mostrandoDetalhes ? "Detalhes do Teste" : "Histórico de Testes"),
-          leading: mostrandoDetalhes
-              ? IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: _voltarParaHistorico,
-                )
-              : null,
-          bottom: mostrandoDetalhes
-              ? null
-              : const TabBar(
-                  tabs: [
-                    Tab(icon: Icon(Icons.list), text: "Histórico"),
-                    Tab(icon: Icon(Icons.star), text: "Favoritos"),
-                  ],
-                ),
-          actions: !mostrandoDetalhes
-              ? [
-                  IconButton(
-                    icon: const Icon(Icons.share),
-                    onPressed: () async {
-                      final historico = ref.read(historicoProvider);
-                      final testes = DefaultTabController.of(context).index == 0
-                          ? historico.testesFiltrados
-                          : historico.testesFavoritos;
+      initialIndex: 0,
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(mostrandoDetalhes ? "Detalhes do Teste" : "Histórico de Testes"),
+              leading: mostrandoDetalhes
+                  ? IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: _voltarParaHistorico,
+                    )
+                  : null,
+              bottom: mostrandoDetalhes
+                  ? null
+                  : TabBar(
+                      onTap: (index) {
+                        setState(() => _tabIndex = index);
+                      },
+                      tabs: const [
+                        Tab(icon: Icon(Icons.list), text: "Histórico"),
+                        Tab(icon: Icon(Icons.star), text: "Favoritos"),
+                      ],
+                    ),
+              actions: !mostrandoDetalhes
+                  ? [
+                      IconButton(
+                        icon: const Icon(Icons.download),
+                        tooltip: "Exportar Testes",
+                        onPressed: () async {
+                          try {
+                            final historico = ref.read(historicoProvider);
+                            final testes = _tabIndex == 0
+                                ? historico.testesFiltrados
+                                : historico.testesFavoritos;
 
-                      final incluirStatus = ref.read(configuracoesProvider).exibirStatusCalibracao;
+                            if (testes.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text("Nenhum teste para exportar.")),
+                              );
+                              return;
+                            }
 
-                      if (testes.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Nenhum teste para exportar.")),
-                        );
-                        return;
-                      }
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Exportando dados...")),
+                            );
 
-                      await ExportHelper.exportarTestes(
-                        testes: testes,
-                        incluirStatusCalibracao: incluirStatus,
-                      );
-                    },
-                  ),
-                ]
-              : null,
-        ),
-        body: mostrandoDetalhes ? _buildDetalhesView() : _buildHistoricoView(),
+                            await ExportHelper.exportarTestes(
+                              testes: testes,
+                              incluirStatusCalibracao: ref.read(configuracoesProvider).exibirStatusCalibracao,
+                            );
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text("Exportação concluída com sucesso!")),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text("Erro ao exportar: $e")),
+                            );
+                          }
+                        },
+                      ),
+                    ]
+                  : null,
+            ),
+            body: mostrandoDetalhes ? _buildDetalhesView() : _buildHistoricoView(),
+          );
+        },
       ),
     );
   }
@@ -192,7 +211,7 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
 
           // 🔹 Exibir todas as informações
           _infoTile("Data", _formatDateTime(testeSelecionado!.timestamp)),
-          _infoTile("Funcionário", testeSelecionado!.funcionarioNome ?? "Visitante"),
+          _infoTile("Funcionário", testeSelecionado!.funcionarioNome),
           _infoTile("Resultado", testeSelecionado!.command),
           _infoTile("Dispositivo", testeSelecionado!.deviceName ?? "Desconhecido"),
           if (ref.watch(configuracoesProvider).exibirStatusCalibracao)
@@ -329,71 +348,6 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
       testesPorDia[dataFormatada] = (testesPorDia[dataFormatada] ?? 0) + 1;
     }
     return testesPorDia;
-  }
-
-  // ✅ Exportação de CSV
-  Future<void> _exportarCSV() async {
-    final historicoState = ref.read(historicoProvider);
-
-    // 🔹 Pergunta ao usuário se ele deseja exportar todos os testes ou apenas os favoritos
-    bool? exportarFavoritos = await _mostrarDialogoExportacao(context);
-
-    // ✅ Se o usuário tocou fora e não escolheu, simplesmente sai da função
-    if (exportarFavoritos == null) return;
-
-    List<TestModel> testes = exportarFavoritos
-        ? historicoState.testesFavoritos
-        : historicoState.testesFiltrados;
-
-    if (testes.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Nenhum teste para exportar!")),
-      );
-      return;
-    }
-
-    // 🔹 Diretório para salvar o arquivo
-    final Directory directory = await getApplicationDocumentsDirectory();
-    final File file = File("${directory.path}/historico_testes.csv");
-
-    // 🔹 Cabeçalho do CSV
-    bool exibirCalibracao = ref.read(configuracoesProvider).exibirStatusCalibracao;
-    List<String> linhas = ["Data, Resultado, Status${exibirCalibracao ? ', Calibração' : ''}, Dispositivo"];
-
-    for (var teste in testes) {
-      linhas.add(
-        "${_formatDateTime(teste.timestamp)}, ${teste.command}, ${teste.statusCalibracao}, ${teste.deviceName ?? 'Desconhecido'}"
-      );
-    }
-
-    await file.writeAsString(linhas.join("\n"));
-
-    // 🔹 Compartilhar o arquivo CSV
-    Share.shareXFiles([XFile(file.path)], text: "Histórico de Testes Exportado");
-  }
-
-  /// 🔹 Mostra um diálogo perguntando se o usuário quer exportar favoritos ou todos os testes
-  Future<bool?> _mostrarDialogoExportacao(BuildContext context) async {
-    return await showDialog<bool>(
-      context: context,
-      barrierDismissible: true, // ✅ Permite fechar ao tocar fora
-      builder: (context) {
-        return AlertDialog(
-          title: const Text("Exportar Testes"),
-          content: const Text("Deseja exportar apenas os testes favoritos?"),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context, false), // Exportar todos
-              child: const Text("Todos"),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, true), // Exportar favoritos
-              child: const Text("Apenas Favoritos"),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   // ✅ Formatação de data

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/test_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/historico_provider.dart';
-import '../providers/configuracoes_provider.dart';
-
 class TestCard extends ConsumerWidget {
   final TestModel teste;
   final Function(TestModel)? onTap; // ✅ Callback para abrir detalhes
