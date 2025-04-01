@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hsapp/providers/historico_provider.dart';
+import 'package:Health_App/providers/historico_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive/hive.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -250,13 +250,13 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
           ),
         ),
         Slider(
-          value: valorAtual * 10,
+          value: valorAtual * 1000,
           min: 0,
-          max: 9,
-          divisions: 9,
+          max: 90,
+          divisions: 90,
           label: (valorAtual).toStringAsFixed(3),
           onChanged: (value) {
-            ref.read(configuracoesProvider.notifier).alterarTolerancia(value / 10);
+            ref.read(configuracoesProvider.notifier).alterarTolerancia(value / 1000);
           },
         ),
         Padding(

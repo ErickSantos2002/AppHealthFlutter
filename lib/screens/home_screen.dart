@@ -1,12 +1,11 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hsapp/providers/configuracoes_provider.dart';
+import 'package:Health_App/providers/configuracoes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/funcionario_provider.dart';
 import '../models/funcionario_model.dart';
 import '../services/bluetooth_scan_service.dart';
 import '../providers/bluetooth_provider.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:camera/camera.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';

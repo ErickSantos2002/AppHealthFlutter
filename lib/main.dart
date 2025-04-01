@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hsapp/theme.dart';
+import 'package:Health_App/theme.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // ✅ Importando Riverpod
 import 'package:hive_flutter/hive_flutter.dart';
 import 'screens/main_screen.dart';

@@ -1,4 +1,4 @@
-import 'package:flutter_hsapp/providers/configuracoes_provider.dart';
+import 'package:Health_App/providers/configuracoes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import '../models/funcionario_model.dart';

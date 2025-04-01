@@ -41,7 +41,12 @@ class ConfiguracoesNotifier extends StateNotifier<ConfiguracoesState> {
     final prefs = await SharedPreferences.getInstance();
     bool exibir = prefs.getBool('exibirStatusCalibracao') ?? true;
     bool notificacoes = prefs.getBool('notificacoesAtivas') ?? true;
-    double tolerancia = prefs.getDouble('tolerancia') ?? 0.5;
+    double tolerancia = prefs.getDouble('tolerancia') ?? 0.05;
+    if (tolerancia > 1.0) {
+      // valor antigo inválido salvo como 500, por exemplo
+      tolerancia = 0.05;
+      await prefs.setDouble('tolerancia', tolerancia);
+    }
     bool fotoAtivada = prefs.getBool('fotoAtivada') ?? true;
 
     state = state.copyWith(

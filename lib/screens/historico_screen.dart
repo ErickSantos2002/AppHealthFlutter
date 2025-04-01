@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hsapp/models/funcionario_model.dart';
+import 'package:Health_App/models/funcionario_model.dart';
 import 'package:hive/hive.dart';
 import '../providers/configuracoes_provider.dart';
 import '../models/test_model.dart';
@@ -32,13 +32,6 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
     });
   }
 
-  void _voltarParaHistorico() {
-    setState(() {
-      testeSelecionado = null;
-      mostrandoDetalhes = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -49,12 +42,7 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
           return Scaffold(
             appBar: AppBar(
               title: Text(mostrandoDetalhes ? "Detalhes do Teste" : "Histórico de Testes"),
-              leading: mostrandoDetalhes
-                  ? IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: _voltarParaHistorico,
-                    )
-                  : null,
+              leading: null,
               bottom: mostrandoDetalhes
                   ? null
                   : TabBar(
