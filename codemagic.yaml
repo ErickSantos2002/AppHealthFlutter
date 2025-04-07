@@ -1,0 +1,17 @@
+workflows:
+  ios-workflow:
+    name: Build iOS IPA
+    environment:
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: Get Flutter dependencies
+        script: flutter pub get
+      - name: Build iOS release
+        script: flutter build ios --release --no-codesign
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      email:
+        recipients:
+          - seuemail@example.com
