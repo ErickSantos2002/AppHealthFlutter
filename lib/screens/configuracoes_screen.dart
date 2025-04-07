@@ -34,17 +34,6 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
     });
   }
 
-  void _abrirWhatsApp() async {
-    final uri = Uri.parse("https://wa.me/message/M4IXBOMSG6V6K1");
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Não foi possível abrir o WhatsApp")),
-      );
-    }
-  }
-
   void _enviarEmail() async {
     final uri = Uri(
       scheme: 'mailto',
@@ -193,12 +182,7 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
 
           _buildSectionTitle("Sobre o Aplicativo"),
           _buildInfoTile("Versão do App", versaoApp, Icons.info),
-          _buildButtonTile(
-            title: "Ajuda e Suporte",
-            subtitle: "Entre em contato para suporte",
-            icon: Icons.help,
-            onTap: _abrirWhatsApp,
-          ),
+          _buildInfoTile("Entre em contato para suporte 4007-1507", versaoApp, Icons.help),
           _buildButtonTile(
             title: "Contato do Desenvolvedor",
             subtitle: "Enviar e-mail",
