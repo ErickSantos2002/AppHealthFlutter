@@ -1,4 +1,4 @@
-package com.example.flutter_hsapp
+package com.healthsafety.app
 
 import io.flutter.embedding.android.FlutterActivity
 

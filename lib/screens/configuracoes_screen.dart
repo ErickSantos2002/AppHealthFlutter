@@ -182,7 +182,7 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
 
           _buildSectionTitle("Sobre o Aplicativo"),
           _buildInfoTile("Versão do App", versaoApp, Icons.info),
-          _buildInfoTile("Entre em contato para suporte 4007-1507", versaoApp, Icons.help),
+          _buildInfoTile("Entre em contato para suporte 4007-1507", "Caso tenha alguma dúvida", Icons.help),
           _buildButtonTile(
             title: "Contato do Desenvolvedor",
             subtitle: "Enviar e-mail",
