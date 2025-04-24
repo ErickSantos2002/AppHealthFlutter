@@ -3,21 +3,19 @@ workflows:
     name: iOS Release
     environment:
       vars:
-        FLUTTER_CHANNEL: stable
-        XCODE_WORKSPACE: Runner.xcworkspace
-        XCODE_SCHEME: Runner
-        CERTIFICATE: <conteúdo em base64 ou já salvo como variável Secure>
-        PROVISIONING_PROFILE: <conteúdo em base64 ou já salvo como variável Secure>
-        CERTIFICATE_PASSWORD: <sua_senha>
+        CERTIFICATE: <cole aqui o conteúdo sem aspas>
+        PROVISIONING_PROFILE: <idem>
+        CERTIFICATE_PASSWORD: your_password
     scripts:
       - name: Decode signing files
         script: |
-          echo $CERTIFICATE | base64 --decode > certificate.p12
-          echo $PROVISIONING_PROFILE | base64 --decode > provisioning_profile.mobileprovision
+          echo "$CERTIFICATE" | base64 -d > certificate.p12
+          echo "$PROVISIONING_PROFILE" | base64 -d > provisioning_profile.mobileprovision
       - name: Set up keychain
         script: |
           keychain initialize
           keychain add-certificates --certificate certificate.p12 --password $CERTIFICATE_PASSWORD
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp provisioning_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
       - name: Build IPA
         script: |
