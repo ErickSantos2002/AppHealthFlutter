@@ -15,6 +15,7 @@ workflows:
       - name: Set up keychain
         script: |
           keychain initialize
+          keychain add-certificates
       - name: Build IPA
         script: |
           flutter build ipa --release
