@@ -1,8 +1,3 @@
-code_signing:
-  certificate: $CERTIFICATE
-  certificate_password: $CERTIFICATE_PASSWORD
-  provisioning_profile: $PROVISIONING_PROFILE
-
 workflows:
   ios-release:
     name: iOS Release
@@ -15,8 +10,12 @@ workflows:
       - name: Set up keychain
         script: |
           keychain initialize
-      - name: Build iOS release
+      - name: Build IPA
         script: |
           flutter build ipa --release
+    code_signing:
+      certificate: $CERTIFICATE
+      certificate_password: $CERTIFICATE_PASSWORD
+      provisioning_profile: $PROVISIONING_PROFILE
     artifacts:
       - build/ios/ipa/*.ipa
