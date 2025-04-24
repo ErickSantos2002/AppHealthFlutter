@@ -1,3 +1,8 @@
+code_signing:
+  certificate: $CERTIFICATE
+  certificate_password: $CERTIFICATE_PASSWORD
+  provisioning_profile: $PROVISIONING_PROFILE
+
 workflows:
   ios-release:
     name: iOS Release
@@ -6,14 +11,10 @@ workflows:
         FLUTTER_CHANNEL: stable
         XCODE_WORKSPACE: Runner.xcworkspace
         XCODE_SCHEME: Runner
-        CERTIFICATE: Encrypted(...)
-        CERTIFICATE_PASSWORD: Encrypted(...)
-        PROVISIONING_PROFILE: Encrypted(...)
     scripts:
       - name: Set up keychain
         script: |
           keychain initialize
-          keychain add-certificates
       - name: Build IPA
         script: |
           flutter build ipa --release
