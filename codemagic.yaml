@@ -11,6 +11,9 @@ workflows:
         script: |
           echo "$CERTIFICATE" | base64 -d > certificate.p12
           echo "$PROVISIONING_PROFILE" | base64 -d > provisioning_profile.mobileprovision
+      - name: Debug certificate password
+        script: |
+          openssl pkcs12 -in certificate.p12 -nokeys -passin pass:$CERTIFICATE_PASSWORD
       - name: Set up keychain
         script: |
           keychain initialize
