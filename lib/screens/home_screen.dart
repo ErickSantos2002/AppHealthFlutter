@@ -613,7 +613,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 Navigator.pop(context);
                               },
                             );
-                          }).toList(),
+                          }),
                         ],
                       ),
                     ),

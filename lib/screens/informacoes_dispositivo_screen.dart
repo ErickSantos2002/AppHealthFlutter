@@ -77,7 +77,7 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
   }
 
   void _iniciarListener() {
-    void _verificarAvisos() {
+    void verificarAvisos() {
       try {
         final notificacoesAtivas = ref.read(configuracoesProvider).notificacoesAtivas;
         if (!notificacoesAtivas) return; // 🔇 Notificações desativadas
@@ -158,7 +158,7 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
           if (processedData["command"] == "B03") contagemUso = "${processedData["data"]} testes";
           if (processedData["command"] == "B04") ultimaCalibracao = processedData["data"];
 
-          _verificarAvisos(); // 🔹 Chama a função para verificar os avisos
+          verificarAvisos(); // 🔹 Chama a função para verificar os avisos
         });
       }
     });

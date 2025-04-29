@@ -40,7 +40,7 @@ class BluetoothService {
       return;
     }
 
-    if (!(await FlutterBluePlus.isScanningNow)) {
+    if (!(FlutterBluePlus.isScanningNow)) {
       await FlutterBluePlus.turnOn();
       print("🔵 Bluetooth ativado automaticamente!");
     }

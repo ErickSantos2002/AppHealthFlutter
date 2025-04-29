@@ -11,12 +11,12 @@ class TestCard extends ConsumerWidget {
   final double tolerancia;
 
   const TestCard({
-    Key? key,
+    super.key,
     required this.teste,
     required this.onTap,
     required this.onFavoriteToggle,
     required this.tolerancia,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
