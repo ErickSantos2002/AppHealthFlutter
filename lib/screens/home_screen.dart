@@ -1,4 +1,5 @@
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'dart:async';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart' as ble;
 import 'package:flutter/material.dart';
 import 'package:Health_App/providers/configuracoes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +7,7 @@ import '../providers/funcionario_provider.dart';
 import '../models/funcionario_model.dart';
 import '../services/bluetooth_scan_service.dart';
 import '../providers/bluetooth_provider.dart';
+import '../providers/bluetooth_permission_helper.dart';
 import 'package:camera/camera.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
@@ -38,6 +40,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   final BluetoothScanService scanService = BluetoothScanService();
   bool isScanning = false;
+  bool permissoesOk = false;
   String command = "";
   String data = "";
   int batteryLevel = 0;
@@ -48,16 +51,46 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool isFrontCamera = true;
   int soproProgress = 0; // 🔹 Progresso do sopro (0 a 100)
   bool podeIniciarTeste = true; // 🔹 Só permite iniciar um novo teste após T12
+  late StreamSubscription<ble.BluetoothAdapterState> bluetoothStateSubscription;
+  late StreamSubscription<bool> scanStateSubscription;
+  ble.BluetoothAdapterState bluetoothState = ble.BluetoothAdapterState.unknown;
 
   @override
   void initState() {
     super.initState();
+    _verificarPermissaoBluetooth();
     _initCamera();
+
+    bluetoothStateSubscription = ble.FlutterBluePlus.adapterState.listen((state) {
+      setState(() {
+        bluetoothState = state;
+      });
+    });
+
+    scanStateSubscription = ble.FlutterBluePlus.isScanning.listen((scanActive) {
+      setState(() {
+        isScanning = scanActive;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    bluetoothStateSubscription.cancel();
+    scanStateSubscription.cancel(); // ✅ novo
+    super.dispose();
   }
 
   Future<void> _initCamera() async {
     cameras = await availableCameras();
     _setupCamera();
+  }
+
+  void _verificarPermissaoBluetooth() async {
+    final granted = await BluetoothPermissionHelper.verificarPermissao(context, silencioso: true);
+    setState(() {
+      permissoesOk = granted;
+    });
   }
 
   void _setupCamera() {
@@ -130,17 +163,41 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void toggleScan() {
+    if (bluetoothState != ble.BluetoothAdapterState.on) {
+      _mostrarDialogoBluetoothDesligado();
+      return;
+    }
+
     if (isScanning) {
       scanService.stopScan();
     } else {
       scanService.startScan();
     }
+
     setState(() {
       isScanning = !isScanning;
     });
   }
 
-  Future<void> connectToDevice(BluetoothDevice device) async {
+  void _mostrarDialogoBluetoothDesligado() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Bluetooth Desligado"),
+        content: const Text(
+          "Para buscar dispositivos, é necessário que o Bluetooth esteja ativado.\n\nAtive o Bluetooth nas configurações do sistema e tente novamente.",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> connectToDevice(ble.BluetoothDevice device) async {
     final bluetoothManager = ref.read(bluetoothProvider.notifier);
     bool success = await bluetoothManager.connectToDevice(device);
 
@@ -257,7 +314,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final bluetoothState = ref.watch(bluetoothProvider);
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Bluetooth BLE App")),
+      appBar: AppBar(
+        title: const Text("Health App"),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.bluetooth,
+              color: permissoesOk ? Colors.green : Colors.red,
+            ),
+            tooltip: "Status do Bluetooth",
+            onPressed: () {
+              _verificarPermissaoBluetooth();
+            },
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20),
         child: bluetoothState.isConnected
@@ -322,7 +393,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _buildScanUI() {
     return Column(
       children: [
-        Image.asset('assets/images/Logo.png', width: 120),
+        Image.asset('assets/images/Logo.png', width: 180),
         const SizedBox(height: 20),
 
         ElevatedButton.icon(
@@ -334,7 +405,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         const SizedBox(height: 20),
 
         Expanded(
-          child: StreamBuilder<List<BluetoothDevice>>(
+          child: StreamBuilder<List<ble.BluetoothDevice>>(
             stream: scanService.scannedDevicesStream,
             builder: (context, snapshot) {
               if (!snapshot.hasData || snapshot.data!.isEmpty) {

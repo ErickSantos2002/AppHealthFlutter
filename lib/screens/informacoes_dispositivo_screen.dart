@@ -231,6 +231,9 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
   }
 
   Widget _buildDeviceInfo() {
+    final deviceName = ref.watch(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
+    final isIBlow = deviceName.contains("iblow");
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -238,7 +241,8 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
         children: [
           _buildInfoCard(Icons.device_hub, "Versão do Firmware", versaoFirmware),
           _buildInfoCard(Icons.bar_chart, "Contagem de Uso", _formatarQuantidadeTestes(contagemUso)),
-          _buildInfoCard(Icons.date_range, "Última Calibração", _formatarData(ultimaCalibracao)),
+          if (isIBlow)
+            _buildInfoCard(Icons.date_range, "Última Calibração", _formatarData(ultimaCalibracao)),
           const SizedBox(height: 20),
           Center(
             child: ElevatedButton.icon(

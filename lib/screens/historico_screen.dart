@@ -42,7 +42,17 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
           return Scaffold(
             appBar: AppBar(
               title: Text(mostrandoDetalhes ? "Detalhes do Teste" : "Histórico de Testes"),
-              leading: null,
+              leading: mostrandoDetalhes
+              ? IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    setState(() {
+                      mostrandoDetalhes = false;
+                      testeSelecionado = null;
+                    });
+                  },
+                )
+              : null,
               bottom: mostrandoDetalhes
                   ? null
                   : TabBar(
