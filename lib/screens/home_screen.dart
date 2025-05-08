@@ -11,6 +11,7 @@ import '../providers/bluetooth_permission_helper.dart';
 import 'package:camera/camera.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Map<String, String> commandTranslations = {
   "T01": "Contagem de uso após calibração",
@@ -59,6 +60,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void initState() {
     super.initState();
     _verificarPermissaoBluetooth();
+    solicitarPermissoesIOS();
     _initCamera();
 
     bluetoothStateSubscription = ble.FlutterBluePlus.adapterState.listen((state) {
@@ -79,6 +81,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     bluetoothStateSubscription.cancel();
     scanStateSubscription.cancel(); // ✅ novo
     super.dispose();
+  }
+
+  Future<void> solicitarPermissoesIOS() async {
+    if (Platform.isIOS) {
+      final bluetooth = await Permission.bluetooth.request();
+      final location = await Permission.locationWhenInUse.request();
+
+      if (bluetooth.isGranted && location.isGranted) {
+        print("✅ Permissões iOS concedidas");
+      } else {
+        print("❌ Permissões iOS negadas");
+        openAppSettings(); // Abre configurações se necessário
+      }
+    }
   }
 
   Future<void> _initCamera() async {

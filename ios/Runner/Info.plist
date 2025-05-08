@@ -45,5 +45,11 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Este app usa o Bluetooth para se conectar ao etilômetro.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetooth é necessário para detectar e conectar a dispositivos BLE.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Usamos a localização para ativar o Bluetooth no iOS corretamente.</string>
 </dict>
 </plist>
