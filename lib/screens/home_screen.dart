@@ -178,8 +178,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
-  void toggleScan() {
-    if (bluetoothState != ble.BluetoothAdapterState.on) {
+  Future<void> toggleScan() async {
+    if (Platform.isIOS) {
+      final bluetooth = await Permission.bluetooth.status;
+      final location = await Permission.locationWhenInUse.status;
+
+      if (!bluetooth.isGranted || !location.isGranted) {
+        print("❌ Permissões de Bluetooth ou Localização não concedidas.");
+        await solicitarPermissoesIOS();
+        return;
+      }
+    }
+
+    final isOn = bluetoothState == ble.BluetoothAdapterState.on;
+    if (!isOn) {
       _mostrarDialogoBluetoothDesligado();
       return;
     }
@@ -187,6 +199,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (isScanning) {
       scanService.stopScan();
     } else {
+      print("🔍 Iniciando scan BLE...");
       scanService.startScan();
     }
 

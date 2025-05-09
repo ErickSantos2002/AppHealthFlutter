@@ -1,14 +1,19 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class BluetoothPermissionHelper {
   static Future<bool> verificarPermissao(BuildContext context, {bool silencioso = false}) async {
-    final permissions = [
-      Permission.bluetooth,
-      Permission.bluetoothScan,
-      Permission.bluetoothConnect,
-      Permission.locationWhenInUse,
-    ];
+    final permissions = Platform.isAndroid
+        ? [
+            Permission.bluetoothScan,
+            Permission.bluetoothConnect,
+            Permission.locationWhenInUse,
+          ]
+        : [
+            Permission.bluetooth,
+            Permission.locationWhenInUse,
+          ];
 
     bool allGranted = true;
 
