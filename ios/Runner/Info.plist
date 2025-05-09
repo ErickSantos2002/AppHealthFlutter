@@ -45,11 +45,15 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	
+	<!-- 🔒 Permissões necessárias -->
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Este app usa o Bluetooth para se conectar ao etilômetro.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Bluetooth é necessário para detectar e conectar a dispositivos BLE.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Usamos a localização para ativar o Bluetooth no iOS corretamente.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Este app utiliza a câmera para capturar fotos durante os testes de alcoolemia.</string>
 </dict>
 </plist>
