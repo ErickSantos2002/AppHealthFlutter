@@ -3,6 +3,7 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart' as ble;
 import 'package:flutter/material.dart';
 import 'package:Health_App/providers/configuracoes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:geolocator/geolocator.dart';
 import '../providers/funcionario_provider.dart';
 import '../models/funcionario_model.dart';
 import '../services/bluetooth_scan_service.dart';
@@ -85,14 +86,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> solicitarPermissoesIOS() async {
     if (Platform.isIOS) {
-      final bluetooth = await Permission.bluetooth.request();
-      final location = await Permission.locationWhenInUse.request();
+      final status = await Permission.locationWhenInUse.status;
 
-      if (bluetooth.isGranted && location.isGranted) {
-        print("✅ Permissões iOS concedidas");
-      } else {
-        print("❌ Permissões iOS negadas");
-        openAppSettings(); // Abre configurações se necessário
+      if (!status.isGranted) {
+        final result = await Permission.locationWhenInUse.request();
+
+        if (!result.isGranted) {
+          print("❌ Permissão de localização iOS negada");
+          openAppSettings();
+          return;
+        }
+      }
+
+      // 👇 Força o iOS a entender que o app *usa de fato* a localização
+      try {
+        bool locationEnabled = await Geolocator.isLocationServiceEnabled();
+        if (!locationEnabled) {
+          print("⚠️ Localização do dispositivo está desligada. Peça ao usuário para ativar nas Configurações.");
+          // Ideal: mostrar uma mensagem para o usuário
+        }
+
+        final pos = await Geolocator.getCurrentPosition();
+        print("📍 Localização atual: $pos");
+      } catch (e) {
+        print("⚠️ Erro ao obter localização: $e");
       }
     }
   }
@@ -103,7 +120,41 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _verificarPermissaoBluetooth() async {
-    final granted = await BluetoothPermissionHelper.verificarPermissao(context, silencioso: true);
+    bool granted = false;
+
+    if (Platform.isIOS) {
+      final location = await Permission.locationWhenInUse.status;
+
+      if (location.isGranted) {
+        granted = true;
+        print("✅ iOS: permissão de localização concedida.");
+      } else if (location.isDenied) {
+        final result = await Permission.locationWhenInUse.request();
+        granted = result.isGranted;
+        if (granted) {
+          print("✅ iOS: permissão concedida após solicitação.");
+        } else {
+          print("❌ iOS: permissão negada após solicitação.");
+        }
+      } else if (location.isPermanentlyDenied) {
+        print("❌ iOS: permissão negada permanentemente.");
+        openAppSettings();
+      }
+    } else {
+      // Android – verificar múltiplas permissões
+      final statusScan = await Permission.bluetoothScan.request();
+      final statusConnect = await Permission.bluetoothConnect.request();
+      final statusLocation = await Permission.locationWhenInUse.request();
+
+      granted = statusScan.isGranted &&
+                statusConnect.isGranted &&
+                statusLocation.isGranted;
+
+      print(granted
+          ? "✅ Android: permissões concedidas"
+          : "❌ Android: permissões negadas");
+    }
+
     setState(() {
       permissoesOk = granted;
     });
@@ -124,8 +175,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   /// 🔹 Inicia a escuta de notificações BLE
   void _startNotifications() {
-    final bluetoothState = ref.watch(bluetoothProvider);
-    bluetoothState.notifiableCharacteristic?.value.listen((value) async {
+    final bluetoothData = ref.watch(bluetoothProvider);
+    bluetoothData.notifiableCharacteristic?.value.listen((value) async {
       if (value.isNotEmpty && mounted) {
         final processedData = processReceivedData(value);
         setState(() {
@@ -180,11 +231,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> toggleScan() async {
     if (Platform.isIOS) {
-      final bluetooth = await Permission.bluetooth.status;
-      final location = await Permission.locationWhenInUse.status;
+      final locationStatus = await Permission.locationWhenInUse.status;
 
-      if (!bluetooth.isGranted || !location.isGranted) {
-        print("❌ Permissões de Bluetooth ou Localização não concedidas.");
+      if (!locationStatus.isGranted) {
+        print("❌ Permissão de localização não concedida no iOS.");
         await solicitarPermissoesIOS();
         return;
       }
