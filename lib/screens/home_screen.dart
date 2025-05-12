@@ -3,7 +3,6 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart' as ble;
 import 'package:flutter/material.dart';
 import 'package:Health_App/providers/configuracoes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:geolocator/geolocator.dart';
 import '../providers/funcionario_provider.dart';
 import '../models/funcionario_model.dart';
 import '../services/bluetooth_scan_service.dart';
@@ -12,7 +11,6 @@ import '../providers/bluetooth_permission_helper.dart';
 import 'package:camera/camera.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 Map<String, String> commandTranslations = {
   "T01": "Contagem de uso após calibração",
@@ -61,7 +59,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void initState() {
     super.initState();
     _verificarPermissaoBluetooth();
-    solicitarPermissoesIOS();
     _initCamera();
 
     bluetoothStateSubscription = ble.FlutterBluePlus.adapterState.listen((state) {
@@ -84,77 +81,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     super.dispose();
   }
 
-  Future<void> solicitarPermissoesIOS() async {
-    if (Platform.isIOS) {
-      final status = await Permission.locationWhenInUse.status;
-
-      if (!status.isGranted) {
-        final result = await Permission.locationWhenInUse.request();
-
-        if (!result.isGranted) {
-          print("❌ Permissão de localização iOS negada");
-          openAppSettings();
-          return;
-        }
-      }
-
-      // 👇 Força o iOS a entender que o app *usa de fato* a localização
-      try {
-        bool locationEnabled = await Geolocator.isLocationServiceEnabled();
-        if (!locationEnabled) {
-          print("⚠️ Localização do dispositivo está desligada. Peça ao usuário para ativar nas Configurações.");
-          // Ideal: mostrar uma mensagem para o usuário
-        }
-
-        final pos = await Geolocator.getCurrentPosition();
-        print("📍 Localização atual: $pos");
-      } catch (e) {
-        print("⚠️ Erro ao obter localização: $e");
-      }
-    }
-  }
-
   Future<void> _initCamera() async {
     cameras = await availableCameras();
     _setupCamera();
   }
 
   void _verificarPermissaoBluetooth() async {
-    bool granted = false;
-
-    if (Platform.isIOS) {
-      final location = await Permission.locationWhenInUse.status;
-
-      if (location.isGranted) {
-        granted = true;
-        print("✅ iOS: permissão de localização concedida.");
-      } else if (location.isDenied) {
-        final result = await Permission.locationWhenInUse.request();
-        granted = result.isGranted;
-        if (granted) {
-          print("✅ iOS: permissão concedida após solicitação.");
-        } else {
-          print("❌ iOS: permissão negada após solicitação.");
-        }
-      } else if (location.isPermanentlyDenied) {
-        print("❌ iOS: permissão negada permanentemente.");
-        openAppSettings();
-      }
-    } else {
-      // Android – verificar múltiplas permissões
-      final statusScan = await Permission.bluetoothScan.request();
-      final statusConnect = await Permission.bluetoothConnect.request();
-      final statusLocation = await Permission.locationWhenInUse.request();
-
-      granted = statusScan.isGranted &&
-                statusConnect.isGranted &&
-                statusLocation.isGranted;
-
-      print(granted
-          ? "✅ Android: permissões concedidas"
-          : "❌ Android: permissões negadas");
-    }
-
+    final granted = await BluetoothPermissionHelper.verificarPermissao(context);
     setState(() {
       permissoesOk = granted;
     });
@@ -230,23 +163,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Future<void> toggleScan() async {
-    if (Platform.isIOS) {
-      final locationStatus = await Permission.locationWhenInUse.status;
-
-      if (!locationStatus.isGranted) {
-        print("❌ Permissão de localização não concedida no iOS.");
-        await solicitarPermissoesIOS();
-        return;
-      }
+    // ✅ Verifica todas as permissões usando o helper
+    final granted = await BluetoothPermissionHelper.verificarPermissao(context, silencioso: true);
+    if (!granted) {
+      print("❌ Permissões insuficientes para iniciar scan.");
+      return;
     }
 
+    // ✅ Verifica se o Bluetooth está ativado
     final isOn = bluetoothState == ble.BluetoothAdapterState.on;
     if (!isOn) {
       _mostrarDialogoBluetoothDesligado();
       return;
     }
 
+    // ✅ Inicia ou para o scan
     if (isScanning) {
+      print("🛑 Parando scan BLE...");
       scanService.stopScan();
     } else {
       print("🔍 Iniciando scan BLE...");
