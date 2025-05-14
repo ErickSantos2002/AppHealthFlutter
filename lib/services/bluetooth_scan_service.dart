@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,15 +16,19 @@ class BluetoothScanService {
   }
 
   Future<bool> requestPermissions() async {
+  if (Platform.isAndroid) {
     Map<Permission, PermissionStatus> statuses = await [
       Permission.bluetoothScan,
       Permission.bluetoothConnect,
-      Permission.location,
+      Permission.locationWhenInUse,
     ].request();
 
     return statuses.values.every((status) => status.isGranted);
+  } else {
+    // iOS não precisa solicitar via permission_handler
+    return true;
   }
-
+}
   void _updateDevices() {
     _deviceController.add(List.from(_scannedDevices));
   }

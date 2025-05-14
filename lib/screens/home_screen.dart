@@ -3,14 +3,16 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart' as ble;
 import 'package:flutter/material.dart';
 import 'package:Health_App/providers/configuracoes_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../providers/funcionario_provider.dart';
-import '../models/funcionario_model.dart';
-import '../services/bluetooth_scan_service.dart';
-import '../providers/bluetooth_provider.dart';
-import '../providers/bluetooth_permission_helper.dart';
+import '../../../providers/funcionario_provider.dart';
+import '../../../models/funcionario_model.dart';
+import '../../../services/bluetooth_scan_service.dart';
+import '../../../providers/bluetooth_provider.dart';
+import '../../../providers/bluetooth_permission_helper.dart';
 import 'package:camera/camera.dart';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:geolocator/geolocator.dart';
 
 Map<String, String> commandTranslations = {
   "T01": "Contagem de uso após calibração",
@@ -58,8 +60,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _verificarPermissaoBluetooth();
-    _initCamera();
+
+    // ✅ Força o iOS a reconhecer uso real de localização
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _usarLocalizacao();
+    });
 
     bluetoothStateSubscription = ble.FlutterBluePlus.adapterState.listen((state) {
       setState(() {
@@ -72,6 +77,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         isScanning = scanActive;
       });
     });
+    _verificarPermissaoBluetooth();
+    _initCamera();
   }
 
   @override
@@ -79,6 +86,35 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     bluetoothStateSubscription.cancel();
     scanStateSubscription.cancel(); // ✅ novo
     super.dispose();
+  }
+  
+  
+ 
+   Future<void> _usarLocalizacao() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      print("❌ Serviço de localização desativado.");
+      return;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      print("⚠️ Permissão negada permanentemente. Abra os Ajustes.");
+      await openAppSettings();
+      return;
+    }
+
+    try {
+      // ✅ Isso força o iOS a registrar o uso da localização e mostrar o pop-up
+      Position pos = await Geolocator.getCurrentPosition();
+      print("📍 Localização obtida: ${pos.latitude}, ${pos.longitude}");
+    } catch (e) {
+      print("Erro ao obter localização: $e");
+    }
   }
 
   Future<void> _initCamera() async {
@@ -92,7 +128,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       permissoesOk = granted;
     });
   }
-
+  
   void _setupCamera() {
     if (cameras != null && cameras!.isNotEmpty) {
       cameraController = CameraController(

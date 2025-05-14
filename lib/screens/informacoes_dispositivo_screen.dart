@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/configuracoes_provider.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import '../providers/bluetooth_provider.dart';
 import 'dart:async';
 
@@ -19,6 +20,7 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
   bool _conexaoRestaurada = false;
   bool avisoCalibracaoExibido = false;
   bool avisoUsoExibido = false;
+  BluetoothDevice? _ultimoDispositivoConectado;
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +30,29 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
       avisoUsoExibido = false;
     }
 
-    if (bluetoothState.isConnected && !_conexaoRestaurada) {
-      print("🔄 [InformacoesDispositivoScreen] Bluetooth conectado! Chamando _restaurarConexao()...");
-      _conexaoRestaurada = true;
-      Future.microtask(() => _restaurarConexao());
+    if (bluetoothState.isConnected) {
+      final dispositivoAtual = bluetoothState.connectedDevice;
+
+      if (_ultimoDispositivoConectado?.id != dispositivoAtual?.id) {
+        print("🔁 Novo dispositivo conectado detectado!");
+        _ultimoDispositivoConectado = dispositivoAtual;
+        _conexaoRestaurada = false; // Força nova restauração
+      }
+
+      if (!_conexaoRestaurada) {
+        print("🔄 Chamando _restaurarConexao() para o novo dispositivo...");
+        _conexaoRestaurada = true;
+        Future.microtask(() => _restaurarConexao());
+      }
+    } else {
+      // 🔄 Se estiver desconectado, limpar os dados exibidos
+      _ultimoDispositivoConectado = null;
+      _conexaoRestaurada = false;
+      versaoFirmware = "Carregando...";
+      contagemUso = "Carregando...";
+      ultimaCalibracao = "Carregando...";
+      avisoCalibracaoExibido = false;
+      avisoUsoExibido = false;
     }
 
     return Scaffold(
@@ -98,7 +119,7 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
         bool calibracaoAtrasada = dataCalibracao != null && hoje.difference(dataCalibracao).inDays > 365;
 
         int usoAtual = int.tryParse(contagemUso.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-        bool usoExcedido = usoAtual > 1000;
+        bool usoExcedido = usoAtual > 5000;
 
         if ((calibracaoAtrasada && !avisoCalibracaoExibido) || (usoExcedido && !avisoUsoExibido)) {
           String mensagem = "";

@@ -5,62 +5,76 @@ import 'package:geolocator/geolocator.dart';
 
 class BluetoothPermissionHelper {
   static Future<bool> verificarPermissao(BuildContext context, {bool silencioso = false}) async {
-    bool allGranted = true;
+  bool allGranted = true;
 
-    if (Platform.isAndroid) {
-      final permissions = [
-        Permission.bluetoothScan,
-        Permission.bluetoothConnect,
-        Permission.locationWhenInUse,
-      ];
+  if (Platform.isAndroid) {
+    print("🟢 Verificando permissões no Android...");
 
-      for (var permission in permissions) {
-        var status = await permission.status;
+    final permissions = [
+      Permission.bluetoothScan,
+      Permission.bluetoothConnect,
+      Permission.locationWhenInUse,
+    ];
 
-        if (status.isGranted) continue;
+    for (var permission in permissions) {
+      var status = await permission.status;
+      print("🔍 Status de ${permission.toString()}: $status");
 
-        if (status.isDenied) {
-          var result = await permission.request();
-          if (!result.isGranted) {
-            allGranted = false;
-          }
-        } else if (status.isPermanentlyDenied) {
+      if (status.isGranted) continue;
+
+      if (status.isDenied) {
+        var result = await permission.request();
+        print("📥 Resultado do pedido de ${permission.toString()}: $result");
+
+        if (!result.isGranted) {
           allGranted = false;
-          _mostrarDialogoPermissaoNegada(context);
         }
-      }
-    } else {
-      // iOS: precisa da permissão de localização E do serviço de localização ativado
-      var locationStatus = await Permission.locationWhenInUse.status;
-
-      if (locationStatus.isDenied) {
-        var result = await Permission.locationWhenInUse.request();
-        locationStatus = result;
-      }
-
-      if (!locationStatus.isGranted) {
+      } else if (status.isPermanentlyDenied) {
+        print("❌ Permissão ${permission.toString()} permanentemente negada.");
         allGranted = false;
-        _mostrarDialogoPermissaoNegada(context, mensagemPersonalizada: "A permissão de localização é necessária para detectar dispositivos Bluetooth no iOS.");
-      } else {
-        // ✅ Verifica se os serviços de localização estão ativados
-        bool locationEnabled = await Geolocator.isLocationServiceEnabled();
-        if (!locationEnabled) {
-          allGranted = false;
-          _mostrarDialogoAtivarLocalizacao(context);
-        }
+        _mostrarDialogoPermissaoNegada(context);
       }
+    }
+  } else {
+    print("🍏 Verificando permissões no iOS...");
 
-      // iOS 13+: ainda é necessário declarar bluetooth nos plist, mas não há permissão explícita via código.
+    bool locationEnabled = await Geolocator.isLocationServiceEnabled();
+    print("📡 Serviço de localização ativo: $locationEnabled");
+
+    if (!locationEnabled) {
+      print("⚠️ Localização desativada no sistema.");
+      allGranted = false;
+      _mostrarDialogoAtivarLocalizacao(context);
     }
 
-    if (!silencioso && allGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("✅ Permissões de Bluetooth já estão concedidas.")),
+    LocationPermission permission = await Geolocator.checkPermission();
+    print("🔎 Status atual da permissão de localização: $permission");
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      print("📥 Resultado da solicitação de permissão de localização: $permission");
+    }
+
+    if (permission == LocationPermission.deniedForever || permission == LocationPermission.denied) {
+      print("❌ Localização negada ou permanentemente negada: $permission");
+      allGranted = false;
+      _mostrarDialogoPermissaoNegada(
+        context,
+        mensagemPersonalizada: "A permissão de localização é necessária para detectar dispositivos Bluetooth no iOS.",
       );
     }
-
-    return allGranted;
   }
+
+  print("✅ Resultado final da verificação de permissões: $allGranted");
+
+  if (!silencioso && allGranted) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text("✅ Permissões de Bluetooth já estão concedidas.")),
+    );
+  }
+
+  return allGranted;
+}
 
   static void _mostrarDialogoPermissaoNegada(BuildContext context, {String? mensagemPersonalizada}) {
     showDialog(
