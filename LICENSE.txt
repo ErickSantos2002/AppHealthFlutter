@@ -1,0 +1,30 @@
+LICENÇA DE USO DO SOFTWARE EBSoftware
+
+IMPORTANTE: LEIA ESTE DOCUMENTO ANTES DE INSTALAR OU UTILIZAR O SOFTWARE.
+
+Este contrato de licença é um acordo legal entre você (usuário) e os desenvolvedores do software EBSoftware. Ao instalar, copiar ou utilizar este software, você concorda em ficar vinculado aos termos e condições deste contrato. Se você não concorda com os termos desta licença, não instale ou utilize o software.
+
+1. CONCESSÃO DE LICENÇA
+Você tem permissão para instalar e utilizar o EBSoftware em um único dispositivo. A redistribuição, engenharia reversa, desmontagem ou modificação do software não é permitida sem autorização prévia por escrito dos desenvolvedores.
+
+2. DIREITOS DE PROPRIEDADE INTELECTUAL
+O software é protegido pelas leis de direitos autorais e tratados internacionais. Todos os direitos, títulos e interesses relacionados ao software permanecem com os desenvolvedores.
+
+3. LIMITAÇÃO DE RESPONSABILIDADE
+Os desenvolvedores não são responsáveis por quaisquer danos diretos, indiretos, incidentais, especiais ou consequenciais resultantes do uso ou da incapacidade de usar este software, mesmo que tenham sido avisados sobre a possibilidade de tais danos.
+
+4. USO NÃO AUTORIZADO
+Este software não pode ser utilizado para fins ilegais ou em violação de quaisquer leis aplicáveis.
+
+5. RESCISÃO
+Esta licença será rescindida automaticamente se você violar qualquer um dos termos aqui descritos. Em caso de rescisão, você deverá desinstalar o software imediatamente e remover todas as cópias existentes.
+
+6. SUPORTE E ATUALIZAÇÕES
+O suporte técnico e as atualizações podem ser fornecidos pelos desenvolvedores a seu critério e não são garantidos como parte desta licença.
+
+7. ACEITAÇÃO DOS TERMOS
+Ao instalar ou utilizar este software, você declara que leu, entendeu e concorda com os termos desta licença.
+
+---
+
+© 2025 Health & Safety Ltda. Todos os direitos reservados.
