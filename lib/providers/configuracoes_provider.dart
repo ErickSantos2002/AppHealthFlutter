@@ -33,14 +33,14 @@ class ConfiguracoesState {
 /// 🔹 Notifier que gerencia as configurações no SharedPreferences
 class ConfiguracoesNotifier extends StateNotifier<ConfiguracoesState> {
   ConfiguracoesNotifier()
-      : super(ConfiguracoesState(exibirStatusCalibracao: true, notificacoesAtivas: true, tolerancia: 0.5,fotoAtivada: true)) {
+      : super(ConfiguracoesState(exibirStatusCalibracao: false, notificacoesAtivas: false, tolerancia: 0.5,fotoAtivada: true)) {
     _carregarConfiguracoes();
   }
 
   Future<void> _carregarConfiguracoes() async {
     final prefs = await SharedPreferences.getInstance();
-    bool exibir = prefs.getBool('exibirStatusCalibracao') ?? true;
-    bool notificacoes = prefs.getBool('notificacoesAtivas') ?? true;
+    bool exibir = prefs.getBool('exibirStatusCalibracao') ?? false;
+    bool notificacoes = prefs.getBool('notificacoesAtivas') ?? false;
     double tolerancia = prefs.getDouble('tolerancia') ?? 0.05;
     if (tolerancia > 1.0) {
       // valor antigo inválido salvo como 500, por exemplo

@@ -207,9 +207,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     cpf = cpfController.text;
                     matricula = matriculaController.text;
 
-                    if (nome.isEmpty || (cpf.isEmpty && matricula.isEmpty)) {
+                    if (nome.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("É obrigatório preencher pelo menos CPF ou Matrícula.")),
+                        const SnackBar(content: Text("O nome é obrigatório.")),
                       );
                       return;
                     }

@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/export_helper.dart';
 import '../providers/historico_provider.dart';
 import '../widgets/test_card.dart'; // ✅ Importando o novo widget TestCard
+import '../helpers/laudo_pdf_helper.dart';
 
 class HistoricoScreen extends ConsumerStatefulWidget {
   const HistoricoScreen({super.key});
@@ -87,9 +88,10 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
                               const SnackBar(content: Text("Exportando dados...")),
                             );
 
-                            await ExportHelper.exportarTestes(
+                            await ExportHelper.exportarTestesTipo(
                               testes: testes,
                               incluirStatusCalibracao: ref.read(configuracoesProvider).exibirStatusCalibracao,
+                              tipo: 'pdf',
                             );
 
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -103,7 +105,45 @@ class _HistoricoScreenState extends ConsumerState<HistoricoScreen> {
                         },
                       ),
                     ]
-                  : null,
+                  : [
+                      // Botão para exportar apenas o teste selecionado
+                      IconButton(
+                        icon: const Icon(Icons.picture_as_pdf),
+                        tooltip: "Exportar Laudo PDF",
+                        onPressed: () async {
+                          if (testeSelecionado != null) {
+                            final resultado = await showModalBottomSheet<bool>(
+                              context: context,
+                              builder: (context) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListTile(
+                                      leading: Icon(Icons.image),
+                                      title: Text("Gerar laudo Com foto"),
+                                      onTap: () => Navigator.pop(context, true),
+                                    ),
+                                    ListTile(
+                                      leading: Icon(Icons.hide_image),
+                                      title: Text("Gerar laudo Sem foto"),
+                                      onTap: () => Navigator.pop(context, false),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+
+                            if (resultado != null) {
+                              await LaudoPdfHelper.exportarTesteComoPDF(
+                                testeSelecionado!,
+                                exibirStatusCalibracao: ref.read(configuracoesProvider).exibirStatusCalibracao,
+                                comFoto: resultado,
+                              );
+                            }
+                          }
+                        },
+                      ),
+                    ],
             ),
             body: mostrandoDetalhes ? _buildDetalhesView() : _buildHistoricoView(),
           );

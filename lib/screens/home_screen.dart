@@ -17,10 +17,10 @@ import 'package:geolocator/geolocator.dart';
 Map<String, String> commandTranslations = {
   "T01": "Contagem de uso após calibração",
   "T02": "Bloqueio de calibração",
-  "T03": "Aquecendo o sensor",
+  "T03": "Aquecendo",
   "T04": "Desligando",
   "T05": "Erro de bateria",
-  "T06": "Aguardando sopro",
+  "T06": "Soprar",
   "T07": "Assoprando",
   "T08": "Sopro insuficiente",
   "T09": "Erro do sensor",
@@ -399,19 +399,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 CameraPreview(cameraController!),
 
               Positioned(
-                top: 20,
+                top: 40,
                 right: 20,
                 child: IconButton(
-                  icon: Icon(isFlashOn ? Icons.flash_on : Icons.flash_off, color: Colors.white),
+                  icon: Icon(isFlashOn ? Icons.flash_on : Icons.flash_off, color: Colors.blue),
                   onPressed: toggleFlash,
                 ),
               ),
 
               Positioned(
-                bottom: 20,
+                bottom: 40,
                 left: 20,
                 child: IconButton(
-                  icon: const Icon(Icons.switch_camera, color: Colors.white),
+                  icon: const Icon(Icons.switch_camera, color: Colors.blue),
                   onPressed: toggleCamera,
                 ),
               ),

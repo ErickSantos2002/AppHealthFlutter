@@ -49,6 +49,44 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
     }
   }
 
+  void _showExportOptions() {
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            leading: const Icon(Icons.archive),
+            title: const Text("Exportar testes + fotos (ZIP)"),
+            onTap: () {
+              Navigator.pop(context);
+              _exportarDados(tipo: 'zip');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.picture_as_pdf),
+            title: const Text("Exportar apenas testes (PDF)"),
+            onTap: () {
+              Navigator.pop(context);
+              _exportarDados(tipo: 'pdf');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.table_chart),
+            title: const Text("Exportar apenas testes (Excel)"),
+            onTap: () {
+              Navigator.pop(context);
+              _exportarDados(tipo: 'xls');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   Future<void> _confirmarLimparHistorico() async {
     bool? confirmar = await showDialog(
       context: context,
@@ -81,11 +119,10 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
     }
   }
 
-  Future<void> _exportarDados() async {
+  Future<void> _exportarDados({required String tipo}) async {
     try {
       final historico = ref.read(historicoProvider);
       final testes = historico.testesFiltrados + historico.testesFavoritos;
-
       final incluirStatus = ref.read(configuracoesProvider).exibirStatusCalibracao;
 
       if (testes.isEmpty) {
@@ -99,9 +136,10 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
         const SnackBar(content: Text("Exportando dados...")),
       );
 
-      await ExportHelper.exportarTestes(
+      await ExportHelper.exportarTestesTipo(
         testes: testes.toSet().toList(), // remove duplicados
         incluirStatusCalibracao: incluirStatus,
+        tipo: tipo,
       );
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -177,7 +215,7 @@ class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
             title: "Exportar Testes",
             subtitle: "Salvar e compartilhar os dados dos testes realizados",
             icon: Icons.upload_file,
-            onTap: _exportarDados,
+            onTap: _showExportOptions,
           ),
 
           _buildSectionTitle("Sobre o Aplicativo"),

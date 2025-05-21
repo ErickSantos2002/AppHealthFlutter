@@ -20,6 +20,7 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
   bool _conexaoRestaurada = false;
   bool avisoCalibracaoExibido = false;
   bool avisoUsoExibido = false;
+  bool avisoProximidadeExibido = false;
   BluetoothDevice? _ultimoDispositivoConectado;
 
   @override
@@ -119,16 +120,23 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
         bool calibracaoAtrasada = dataCalibracao != null && hoje.difference(dataCalibracao).inDays > 365;
 
         int usoAtual = int.tryParse(contagemUso.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-        bool usoExcedido = usoAtual > 5000;
+        final deviceName = ref.watch(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
+        final isAL88 = deviceName.contains("al88");
+        final usoProximoDoLimite = isAL88 && usoAtual >= 900 && usoAtual < 1000;
+        bool usoExcedido = usoAtual > 1000;
 
-        if ((calibracaoAtrasada && !avisoCalibracaoExibido) || (usoExcedido && !avisoUsoExibido)) {
+        if ((calibracaoAtrasada && !avisoCalibracaoExibido) || (usoExcedido && !avisoUsoExibido) || (usoProximoDoLimite && !avisoProximidadeExibido)) {
           String mensagem = "";
 
           if (calibracaoAtrasada && !avisoCalibracaoExibido) {
             mensagem += "⚠️ A calibração do aparelho está atrasada! Realize uma nova calibração.\n\n";
             avisoCalibracaoExibido = true;
           }
-          if (usoExcedido && !avisoUsoExibido) {
+          if (usoProximoDoLimite && !avisoProximidadeExibido) {
+            mensagem += "⚠️ Faltam ${1000 - usoAtual} testes para o limite de 1000! Recomendamos calibrar o aparelho.\n";
+            avisoProximidadeExibido = true;
+          }
+          if (isAL88 && usoExcedido && !avisoUsoExibido) {
             mensagem += "⚠️ O limite de 1000 testes foi atingido! Recomenda-se uma calibração.\n";
             avisoUsoExibido = true;
           }
