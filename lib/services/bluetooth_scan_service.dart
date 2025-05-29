@@ -55,8 +55,12 @@ class BluetoothScanService {
         final device = result.device;
         final nome = device.name.toUpperCase();
 
-        // ✅ Apenas dispositivos com nome iniciando com AL88 ou IBLOW
-        final ehValido = nome.startsWith("AL88") || nome.startsWith("IBLOW");
+        // Aceita dispositivos cujo nome começa com AL88, IBLOW, HLX ou DEIMOS
+        final ehValido = nome.startsWith("AL88") ||
+                        nome.startsWith("IBLOW") ||
+                        nome.startsWith("HLX") ||
+                        nome.startsWith("DEIMOS");
+
         final jaAdicionado = _scannedDevices.any((d) => d.id == device.id);
 
         if (ehValido && !jaAdicionado && device.name.isNotEmpty) {

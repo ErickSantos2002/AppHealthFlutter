@@ -116,6 +116,7 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       _processarTeste(parsed);
     });
   }
+  
   Future<void> _reiniciarIBlow() async {
     final device = state.connectedDevice;
     if (device != null) {
