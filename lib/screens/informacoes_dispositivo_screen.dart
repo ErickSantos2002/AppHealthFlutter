@@ -9,10 +9,12 @@ class InformacoesDispositivoScreen extends ConsumerStatefulWidget {
   const InformacoesDispositivoScreen({super.key});
 
   @override
-  ConsumerState<InformacoesDispositivoScreen> createState() => _InformacoesDispositivoScreenState();
+  ConsumerState<InformacoesDispositivoScreen> createState() =>
+      _InformacoesDispositivoScreenState();
 }
 
-class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispositivoScreen> {
+class _InformacoesDispositivoScreenState
+    extends ConsumerState<InformacoesDispositivoScreen> {
   String versaoFirmware = "Carregando...";
   String contagemUso = "Carregando...";
   String ultimaCalibracao = "Carregando...";
@@ -58,7 +60,10 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
 
     return Scaffold(
       appBar: AppBar(title: const Text("Informações do Dispositivo")),
-      body: bluetoothState.isConnected ? _buildDeviceInfo() : _buildNoDeviceConnected(),
+      body:
+          bluetoothState.isConnected
+              ? _buildDeviceInfo()
+              : _buildNoDeviceConnected(),
     );
   }
 
@@ -79,16 +84,22 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
       return;
     }
 
-    print("🔎 [InformacoesDispositivoScreen] Descobrindo características BLE...");
+    print(
+      "🔎 [InformacoesDispositivoScreen] Descobrindo características BLE...",
+    );
     await bluetoothNotifier.restoreCharacteristics();
     await Future.delayed(const Duration(seconds: 1));
 
     if (bluetoothState.notifiableCharacteristic == null) {
-      print("❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!");
+      print(
+        "❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!",
+      );
       return;
     }
 
-    print("🔍 [InformacoesDispositivoScreen] Característica de notificação confirmada: ${bluetoothState.notifiableCharacteristic!.uuid}");
+    print(
+      "🔍 [InformacoesDispositivoScreen] Característica de notificação confirmada: ${bluetoothState.notifiableCharacteristic!.uuid}",
+    );
 
     await bluetoothState.notifiableCharacteristic!.setNotifyValue(true);
     print("✅ [InformacoesDispositivoScreen] Notificações BLE ativadas!");
@@ -101,7 +112,8 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
   void _iniciarListener() {
     void verificarAvisos() {
       try {
-        final notificacoesAtivas = ref.read(configuracoesProvider).notificacoesAtivas;
+        final notificacoesAtivas =
+            ref.read(configuracoesProvider).notificacoesAtivas;
         if (!notificacoesAtivas) return; // 🔇 Notificações desativadas
 
         DateTime hoje = DateTime.now();
@@ -117,27 +129,37 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
           }
         }
 
-        bool calibracaoAtrasada = dataCalibracao != null && hoje.difference(dataCalibracao).inDays > 365;
+        bool calibracaoAtrasada =
+            dataCalibracao != null &&
+            hoje.difference(dataCalibracao).inDays > 365;
 
-        int usoAtual = int.tryParse(contagemUso.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
-        final deviceName = ref.watch(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
+        int usoAtual =
+            int.tryParse(contagemUso.replaceAll(RegExp(r'[^0-9]'), '')) ?? 0;
+        final deviceName =
+            ref.watch(bluetoothProvider).connectedDevice?.name.toLowerCase() ??
+            "";
         final isAL88 = deviceName.contains("al88");
         final usoProximoDoLimite = isAL88 && usoAtual >= 900 && usoAtual < 1000;
         bool usoExcedido = usoAtual > 1000;
 
-        if ((calibracaoAtrasada && !avisoCalibracaoExibido) || (usoExcedido && !avisoUsoExibido) || (usoProximoDoLimite && !avisoProximidadeExibido)) {
+        if ((calibracaoAtrasada && !avisoCalibracaoExibido) ||
+            (usoExcedido && !avisoUsoExibido) ||
+            (usoProximoDoLimite && !avisoProximidadeExibido)) {
           String mensagem = "";
 
           if (calibracaoAtrasada && !avisoCalibracaoExibido) {
-            mensagem += "⚠️ A calibração do aparelho está atrasada! Realize uma nova calibração.\n\n";
+            mensagem +=
+                "⚠️ A calibração do aparelho está atrasada! Realize uma nova calibração.\n\n";
             avisoCalibracaoExibido = true;
           }
           if (usoProximoDoLimite && !avisoProximidadeExibido) {
-            mensagem += "⚠️ Faltam ${1000 - usoAtual} testes para o limite de 1000! Recomendamos calibrar o aparelho.\n";
+            mensagem +=
+                "⚠️ Faltam ${1000 - usoAtual} testes para o limite de 1000! Recomendamos calibrar o aparelho.\n";
             avisoProximidadeExibido = true;
           }
           if (isAL88 && usoExcedido && !avisoUsoExibido) {
-            mensagem += "⚠️ O limite de 1000 testes foi atingido! Recomenda-se uma calibração.\n";
+            mensagem +=
+                "⚠️ O limite de 1000 testes foi atingido! Recomenda-se uma calibração.\n";
             avisoUsoExibido = true;
           }
 
@@ -163,36 +185,63 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
         print("Erro ao verificar avisos: $e");
       }
     }
+
     final bluetoothState = ref.read(bluetoothProvider);
 
     print("🔄 [InformacoesDispositivoScreen] Tentando iniciar listener BLE...");
 
     if (bluetoothState.notifiableCharacteristic == null) {
-      print("❌ [InformacoesDispositivoScreen] Característica de notificação não encontrada!");
+      print(
+        "❌ [InformacoesDispositivoScreen] Característica de notificação não encontrada!",
+      );
       return;
     }
 
-    print("✅ [InformacoesDispositivoScreen] Característica BLE disponível: ${bluetoothState.notifiableCharacteristic!.uuid}");
+    print(
+      "✅ [InformacoesDispositivoScreen] Característica BLE disponível: ${bluetoothState.notifiableCharacteristic!.uuid}",
+    );
 
     _bluetoothSubscription?.cancel();
-    _bluetoothSubscription = bluetoothState.notifiableCharacteristic!.value.listen((value) {
-      print("📡 [InformacoesDispositivoScreen] Listener ativo! Recebendo notificações BLE...");
+    _bluetoothSubscription = bluetoothState.notifiableCharacteristic!.value.listen((
+      value,
+    ) {
+      print(
+        "📡 [InformacoesDispositivoScreen] Listener ativo! Recebendo notificações BLE...",
+      );
 
       if (value.isNotEmpty && mounted) {
-        final processedData = processReceivedData(value);
-        print("📩 [InformacoesDispositivoScreen] Dados recebidos: ${processedData["command"]} -> ${processedData["data"]}");
+        // Usa o método público do provider para processar os dados
+        final processedData = ref
+            .read(bluetoothProvider.notifier)
+            .processReceivedData(value);
+        print(
+          "📩 [InformacoesDispositivoScreen] Dados recebidos: $processedData",
+        );
 
         setState(() {
-          if (processedData["command"] == "B01") versaoFirmware = processedData["data"];
-          if (processedData["command"] == "B03") contagemUso = "${processedData["data"]} testes";
-          if (processedData["command"] == "B04") ultimaCalibracao = processedData["data"];
-
-          verificarAvisos(); // 🔹 Chama a função para verificar os avisos
+          if (processedData == null) return;
+          // AL88/iBlow
+          if (processedData["command"] == "B01")
+            versaoFirmware = processedData["data"];
+          if (processedData["command"] == "B03")
+            contagemUso = "${processedData["data"]} testes";
+          if (processedData["command"] == "B04")
+            ultimaCalibracao = processedData["data"];
+          // Deimos/HLX
+          if (processedData["firmware"] != null)
+            versaoFirmware = processedData["firmware"].toString();
+          if (processedData["usageCounter"] != null)
+            contagemUso = "${processedData["usageCounter"]} testes";
+          if (processedData["testResult"] != null)
+            ultimaCalibracao = processedData["testResult"].toString();
+          verificarAvisos();
         });
       }
     });
 
-    print("🎯 [InformacoesDispositivoScreen] Listener BLE iniciado com sucesso!");
+    print(
+      "🎯 [InformacoesDispositivoScreen] Listener BLE iniciado com sucesso!",
+    );
   }
 
   /// 🔹 Aguarda a característica de escrita antes de enviar os comandos
@@ -201,12 +250,23 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
     final bluetoothState = ref.read(bluetoothProvider);
 
     if (bluetoothState.isConnected && bluetoothState.writableCharacteristic != null) {
+      final deviceName = bluetoothState.connectedDevice?.name.toLowerCase() ?? "";
       print("📤 Enviando comandos para obter informações...");
-      bluetoothNotifier.sendCommand("A01", "INFORMATION");
-      await Future.delayed(const Duration(milliseconds: 500));
-      bluetoothNotifier.sendCommand("A03", "0");
-      await Future.delayed(const Duration(milliseconds: 500));
-      bluetoothNotifier.sendCommand("A04", "0");
+      if (deviceName.contains("al88") || deviceName.contains("iblow")) {
+        bluetoothNotifier.sendCommand("A01", "INFORMATION");
+        await Future.delayed(const Duration(milliseconds: 500));
+        bluetoothNotifier.sendCommand("A03", "0");
+        await Future.delayed(const Duration(milliseconds: 500));
+        bluetoothNotifier.sendCommand("A04", "0");
+      } else if (deviceName.contains("deimos") || deviceName.contains("hlx")) {
+        bluetoothNotifier.sendCommand("9002", "");
+        await Future.delayed(const Duration(milliseconds: 500));
+        bluetoothNotifier.sendCommand("9003", "");
+        await Future.delayed(const Duration(milliseconds: 500));
+        bluetoothNotifier.sendCommand("9004", "");
+      } else {
+        print("❌ Tipo de dispositivo desconhecido para envio de comandos!");
+      }
     } else {
       print("❌ Dispositivo não está conectado ou característica de escrita indisponível!");
     }
@@ -214,22 +274,29 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
 
   /// 🔹 Processa os dados recebidos do Bluetooth
   Map<String, dynamic> processReceivedData(List<int> rawData) {
-    print("📩 Pacote recebido (bruto): ${rawData.map((e) => e.toRadixString(16)).join(" ")}");
+    print(
+      "📩 Pacote recebido (bruto): ${rawData.map((e) => e.toRadixString(16)).join(" ")}",
+    );
 
     if (rawData.length < 5) {
-      print("⚠️ Pacote muito curto para ser válido! Tamanho: ${rawData.length}");
+      print(
+        "⚠️ Pacote muito curto para ser válido! Tamanho: ${rawData.length}",
+      );
       return {"command": "Erro", "data": "Pacote inválido", "battery": 0};
     }
 
     String commandCode = String.fromCharCodes(rawData.sublist(1, 4)).trim();
-    String receivedData = String.fromCharCodes(rawData.sublist(4, 17)).replaceAll("#", "").trim();
+    String receivedData =
+        String.fromCharCodes(rawData.sublist(4, 17)).replaceAll("#", "").trim();
 
     // Substituir vírgulas por pontos para números
     if (receivedData.contains(",")) {
       receivedData = receivedData.replaceAll(",", ".");
     }
 
-    print("✅ Dados processados corretamente: Comando: $commandCode | Dados: $receivedData");
+    print(
+      "✅ Dados processados corretamente: Comando: $commandCode | Dados: $receivedData",
+    );
 
     return {
       "command": commandCode,
@@ -256,11 +323,14 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
     valor = valor.replaceFirst(RegExp(r'^0+'), '');
 
     // Retorna o valor formatado
-    return valor.isNotEmpty ? valor : "0"; // Se ficar vazio após a remoção, retorna "0"
+    return valor.isNotEmpty
+        ? valor
+        : "0"; // Se ficar vazio após a remoção, retorna "0"
   }
 
   Widget _buildDeviceInfo() {
-    final deviceName = ref.watch(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
+    final deviceName =
+        ref.watch(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
     final isIBlow = deviceName.contains("iblow");
 
     return Padding(
@@ -268,10 +338,22 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildInfoCard(Icons.device_hub, "Versão do Firmware", versaoFirmware),
-          _buildInfoCard(Icons.bar_chart, "Contagem de Uso", _formatarQuantidadeTestes(contagemUso)),
+          _buildInfoCard(
+            Icons.device_hub,
+            "Versão do Firmware",
+            versaoFirmware,
+          ),
+          _buildInfoCard(
+            Icons.bar_chart,
+            "Contagem de Uso",
+            _formatarQuantidadeTestes(contagemUso),
+          ),
           if (isIBlow)
-            _buildInfoCard(Icons.date_range, "Última Calibração", _formatarData(ultimaCalibracao)),
+            _buildInfoCard(
+              Icons.date_range,
+              "Última Calibração",
+              _formatarData(ultimaCalibracao),
+            ),
           const SizedBox(height: 20),
           Center(
             child: ElevatedButton.icon(
@@ -315,10 +397,7 @@ class _InformacoesDispositivoScreenState extends ConsumerState<InformacoesDispos
       color: Theme.of(context).cardColor,
       child: ListTile(
         leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
-        title: Text(
-          title,
-          style: Theme.of(context).textTheme.titleMedium,
-        ),
+        title: Text(title, style: Theme.of(context).textTheme.titleMedium),
         subtitle: Text(
           formattedValue,
           style: Theme.of(context).textTheme.bodyLarge,

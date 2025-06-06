@@ -1,0 +1,51 @@
+I/flutter (29947): ❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!
+I/flutter (29947): 📤 Enviando comandos para obter informações...
+D/[FBP-Android](29947): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](29947): [FBP] onCharacteristicChanged:
+D/[FBP-Android](29947): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](29947): [FBP] onCharacteristicWrite:
+D/[FBP-Android](29947): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](29947): [FBP]   status: GATT_SUCCESS (0)
+I/flutter (29947): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 39, 16, 104, 196, 1, 0, 32, 172, 22]
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 39, 16, 104, 196, 1, 0, 32, 172, 22]
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 39, 16, 104, 196, 1, 0, 32, 172, 22]
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+D/[FBP-Android](29947): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](29947): [FBP] onCharacteristicWrite:
+D/[FBP-Android](29947): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](29947): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android](29947): [FBP] onCharacteristicChanged:
+D/[FBP-Android](29947): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter (29947): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 39, 16, 104, 196, 1, 0, 32, 172, 22]
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 39, 16, 104, 196, 1, 0, 32, 172, 22]
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 39, 16, 104, 196, 1, 0, 32, 172, 22]
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+D/[FBP-Android](29947): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](29947): [FBP] onCharacteristicWrite:
+D/[FBP-Android](29947): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](29947): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android](29947): [FBP] onCharacteristicChanged:
+D/[FBP-Android](29947): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter (29947): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 39, 16, 104, 196, 1, 0, 32, 172, 22]
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 39, 16, 104, 196, 1, 0, 32, 172, 22]
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 39, 16, 104, 196, 1, 0, 32, 172, 22]
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+I/flutter (29947): [TitanDeimosHandler] End bit inválido: 0xac
+D/BluetoothGatt(29947): onConnectionUpdated() - Device=C4:7B:4A:C5:43:07 interval=36 latency=0 timeout=400 status=0
+D/[FBP-Android](29947): [FBP] onMethodCall: stopScan
+D/BluetoothAdapter(29947): isLeEnabled(): ON
+I/flutter (29947): 🛑 Escaneamento finalizado.

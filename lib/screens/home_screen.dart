@@ -66,7 +66,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       _usarLocalizacao();
     });
 
-    bluetoothStateSubscription = ble.FlutterBluePlus.adapterState.listen((state) {
+    bluetoothStateSubscription = ble.FlutterBluePlus.adapterState.listen((
+      state,
+    ) {
       setState(() {
         bluetoothState = state;
       });
@@ -85,12 +87,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void dispose() {
     bluetoothStateSubscription.cancel();
     scanStateSubscription.cancel(); // ✅ novo
+    cameraController?.dispose();
     super.dispose();
   }
-  
-  
- 
-   Future<void> _usarLocalizacao() async {
+
+  Future<void> _usarLocalizacao() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       print("❌ Serviço de localização desativado.");
@@ -128,14 +129,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       permissoesOk = granted;
     });
   }
-  
+
   void _setupCamera() {
     if (cameras != null && cameras!.isNotEmpty) {
+      // Dispose do controller anterior antes de criar o novo
+      cameraController?.dispose();
+
       cameraController = CameraController(
         isFrontCamera ? cameras!.first : cameras!.last,
         ResolutionPreset.medium,
         enableAudio: false,
       );
+
       cameraController!.initialize().then((_) {
         if (mounted) setState(() {});
       });
@@ -200,7 +205,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Future<void> toggleScan() async {
     // ✅ Verifica todas as permissões usando o helper
-    final granted = await BluetoothPermissionHelper.verificarPermissao(context, silencioso: true);
+    final granted = await BluetoothPermissionHelper.verificarPermissao(
+      context,
+      silencioso: true,
+    );
     if (!granted) {
       print("❌ Permissões insuficientes para iniciar scan.");
       return;
@@ -230,18 +238,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void _mostrarDialogoBluetoothDesligado() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Bluetooth Desligado"),
-        content: const Text(
-          "Para buscar dispositivos, é necessário que o Bluetooth esteja ativado.\n\nAtive o Bluetooth nas configurações do sistema e tente novamente.",
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("OK"),
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Bluetooth Desligado"),
+            content: const Text(
+              "Para buscar dispositivos, é necessário que o Bluetooth esteja ativado.\n\nAtive o Bluetooth nas configurações do sistema e tente novamente.",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("OK"),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -251,10 +260,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
     if (success && mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("✅ Conectado a ${device.name}"), backgroundColor: Colors.blue),
+        SnackBar(
+          content: Text("✅ Conectado a ${device.name}"),
+          backgroundColor: Colors.blue,
+        ),
       );
       _startNotifications(); // 🔹 Inicia escuta de notificações BLE
-        ref.read(bluetoothProvider.notifier).connectToDevice(device).then((success) {
+      ref.read(bluetoothProvider.notifier).connectToDevice(device).then((
+        success,
+      ) {
         if (success) {
           print("✅ Dispositivo conectado com sucesso!");
           // 🔹 Agora notificamos a tela de informações para buscar os dados
@@ -265,9 +279,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Future<void> _iniciarTeste() async {
-    if (!podeIniciarTeste) return; // 🔹 Impede iniciar teste se não estiver no estado correto
+    if (!podeIniciarTeste)
+      return; // 🔹 Impede iniciar teste se não estiver no estado correto
 
-    ref.read(bluetoothProvider.notifier).iniciarNovoTeste(); // 🔹 Reseta a verificação de duplicados
+    ref
+        .read(bluetoothProvider.notifier)
+        .iniciarNovoTeste(); // 🔹 Reseta a verificação de duplicados
 
     // 🔹 Envia o comando primeiro
     ref.read(bluetoothProvider.notifier).sendCommand("A20", "TEST,START");
@@ -281,7 +298,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (!config.fotoAtivada) {
       bluetoothNotifier.capturarFoto(""); // Limpa o caminho da última foto
     }
-    
+
     if (config.fotoAtivada) {
       setState(() {
         isCapturingPhoto = true;
@@ -302,7 +319,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
       // 🔹 Salvar a foto localmente
       final Directory directory = await getApplicationDocumentsDirectory();
-      final String caminhoFoto = "${directory.path}/foto_teste_${DateTime.now().millisecondsSinceEpoch}.jpg";
+      final String caminhoFoto =
+          "${directory.path}/foto_teste_${DateTime.now().millisecondsSinceEpoch}.jpg";
       await File(foto.path).copy(caminhoFoto);
 
       print("📸 Foto automática salva em: $caminhoFoto");
@@ -327,7 +345,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void toggleFlash() {
     setState(() {
       isFlashOn = !isFlashOn;
-      cameraController?.setFlashMode(isFlashOn ? FlashMode.torch : FlashMode.off);
+      cameraController?.setFlashMode(
+        isFlashOn ? FlashMode.torch : FlashMode.off,
+      );
     });
   }
 
@@ -337,11 +357,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     String commandCode = String.fromCharCodes(rawData.sublist(1, 4)).trim();
-    String receivedData = String.fromCharCodes(rawData.sublist(4, 17)).replaceAll("#", "").trim();
+    String receivedData =
+        String.fromCharCodes(rawData.sublist(4, 17)).replaceAll("#", "").trim();
     int battery = rawData[17];
 
     // ✅ Traduzindo o comando, se existir no mapa
-    String translatedCommand = commandTranslations[commandCode] ?? "Comando desconhecido";
+    String translatedCommand =
+        commandTranslations[commandCode] ?? "Comando desconhecido";
 
     if (commandCode == "T11") {
       final partes = receivedData.split(',');
@@ -379,30 +401,35 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: bluetoothState.isConnected
-            ? isCapturingPhoto
-                ? _buildCameraView() // 🔹 Exibir câmera quando está capturando
-                : _buildConnectedUI()
-            : _buildScanUI(),
+        child:
+            bluetoothState.isConnected
+                ? isCapturingPhoto
+                    ? _buildCameraView() // 🔹 Exibir câmera quando está capturando
+                    : _buildConnectedUI()
+                : _buildScanUI(),
       ),
     );
   }
 
-   Widget _buildCameraView() {
+  Widget _buildCameraView() {
     return Column(
       children: [
         Expanded(
           child: Stack(
             alignment: Alignment.center,
             children: [
-              if (cameraController != null && cameraController!.value.isInitialized)
+              if (cameraController != null &&
+                  cameraController!.value.isInitialized)
                 CameraPreview(cameraController!),
 
               Positioned(
                 top: 40,
                 right: 20,
                 child: IconButton(
-                  icon: Icon(isFlashOn ? Icons.flash_on : Icons.flash_off, color: Colors.blue),
+                  icon: Icon(
+                    isFlashOn ? Icons.flash_on : Icons.flash_off,
+                    color: Colors.blue,
+                  ),
                   onPressed: toggleFlash,
                 ),
               ),
@@ -424,7 +451,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              Text("Força do Sopro: $soproProgress%", style: const TextStyle(fontSize: 16)),
+              Text(
+                "Força do Sopro: $soproProgress%",
+                style: const TextStyle(fontSize: 16),
+              ),
               LinearProgressIndicator(
                 value: soproProgress / 100,
                 backgroundColor: Colors.grey[300],
@@ -474,7 +504,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     child: ListTile(
                       title: Text(
                         device.name,
-                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
                         device.id.toString(),
@@ -495,14 +526,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildConnectedUI() {
     final funcionarios = ref.watch(funcionarioProvider);
-    final selectedFuncionarioId = ref.watch(bluetoothProvider).selectedFuncionarioId;
+    final selectedFuncionarioId =
+        ref.watch(bluetoothProvider).selectedFuncionarioId;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           "📡 Conectado ao Dispositivo",
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+          style: Theme.of(
+            context,
+          ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 20),
 
@@ -526,17 +560,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
         ElevatedButton.icon(
           onPressed: () async {
-            final deviceName = ref.read(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
+            final deviceName =
+                ref
+                    .read(bluetoothProvider)
+                    .connectedDevice
+                    ?.name
+                    .toLowerCase() ??
+                "";
             if (deviceName.contains("iblow")) {
               print("🔁 iBlow detectado: reiniciando via reconexão...");
               final device = ref.read(bluetoothProvider).connectedDevice;
               if (device != null) {
                 await ref.read(bluetoothProvider.notifier).disconnect();
                 await Future.delayed(const Duration(seconds: 1));
-                await ref.read(bluetoothProvider.notifier).connectToDevice(device);
+                await ref
+                    .read(bluetoothProvider.notifier)
+                    .connectToDevice(device);
               }
             } else {
-              ref.read(bluetoothProvider.notifier).sendCommand("A22", "SOFT,RESET");
+              ref
+                  .read(bluetoothProvider.notifier)
+                  .sendCommand("A22", "SOFT,RESET");
             }
           },
           icon: const Icon(Icons.restart_alt),
@@ -560,7 +604,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             backgroundColor: Theme.of(context).colorScheme.error,
             foregroundColor: Theme.of(context).colorScheme.onError,
           ),
-        )
+        ),
       ],
     );
   }
@@ -577,7 +621,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
             ),
             Text(
               value,
@@ -591,19 +637,32 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildFuncionarioSelector(List funcionarios, String? selectedFuncionarioId) {
-    final nomeFuncionario = funcionarios.firstWhere(
-      (funcionario) => funcionario.id == selectedFuncionarioId,
-      orElse: () => FuncionarioModel(id: "visitante", nome: "Visitante"),
-    ).nome;
+  Widget _buildFuncionarioSelector(
+    List funcionarios,
+    String? selectedFuncionarioId,
+  ) {
+    final nomeFuncionario =
+        funcionarios
+            .firstWhere(
+              (funcionario) => funcionario.id == selectedFuncionarioId,
+              orElse:
+                  () => FuncionarioModel(id: "visitante", nome: "Visitante"),
+            )
+            .nome;
 
     return ListTile(
       title: const Text("Funcionário Selecionado"),
-      subtitle: Text(selectedFuncionarioId == null ? "Visitante" : nomeFuncionario),
+      subtitle: Text(
+        selectedFuncionarioId == null ? "Visitante" : nomeFuncionario,
+      ),
       trailing: const Icon(Icons.arrow_drop_down),
       onTap: () {
-        ref.read(funcionarioProvider.notifier).carregarFuncionarios(); // 🔹 Força atualização
-        _mostrarSelecaoFuncionario(ref.watch(funcionarioProvider)); // 🔹 Chama a lista atualizada
+        ref
+            .read(funcionarioProvider.notifier)
+            .carregarFuncionarios(); // 🔹 Força atualização
+        _mostrarSelecaoFuncionario(
+          ref.watch(funcionarioProvider),
+        ); // 🔹 Chama a lista atualizada
       },
     );
   }
@@ -611,16 +670,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   void _mostrarSelecaoFuncionario(List funcionarios) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // 🔹 Isso permite ajustar a altura do modal dinamicamente
+      isScrollControlled:
+          true, // 🔹 Isso permite ajustar a altura do modal dinamicamente
       builder: (context) {
         TextEditingController filtroController = TextEditingController();
         List funcionariosFiltrados = funcionarios;
 
         return Padding(
           padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom, // 🔹 Ajusta para o teclado
+            bottom:
+                MediaQuery.of(
+                  context,
+                ).viewInsets.bottom, // 🔹 Ajusta para o teclado
           ),
-          child: SingleChildScrollView( // 🔹 Evita que o teclado esconda os itens
+          child: SingleChildScrollView(
+            // 🔹 Evita que o teclado esconda os itens
             child: StatefulBuilder(
               builder: (context, setState) {
                 return Column(
@@ -634,9 +698,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       ),
                       onChanged: (query) {
                         setState(() {
-                          funcionariosFiltrados = funcionarios.where(
-                            (f) => f.nome.toLowerCase().contains(query.toLowerCase()),
-                          ).toList();
+                          funcionariosFiltrados =
+                              funcionarios
+                                  .where(
+                                    (f) => f.nome.toLowerCase().contains(
+                                      query.toLowerCase(),
+                                    ),
+                                  )
+                                  .toList();
                         });
                       },
                     ),
@@ -649,7 +718,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ListTile(
                             title: const Text("Visitante"),
                             onTap: () {
-                              ref.read(bluetoothProvider.notifier).selecionarFuncionario("visitante");
+                              ref
+                                  .read(bluetoothProvider.notifier)
+                                  .selecionarFuncionario("visitante");
                               Navigator.pop(context);
                             },
                           ),
@@ -657,7 +728,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                             return ListTile(
                               title: Text(funcionario.nome),
                               onTap: () {
-                                ref.read(bluetoothProvider.notifier).selecionarFuncionario(funcionario.id);
+                                ref
+                                    .read(bluetoothProvider.notifier)
+                                    .selecionarFuncionario(funcionario.id);
                                 Navigator.pop(context);
                               },
                             );

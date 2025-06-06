@@ -37,10 +37,14 @@ class BluetoothState {
     return BluetoothState(
       isConnected: isConnected ?? this.isConnected,
       connectedDevice: connectedDevice ?? this.connectedDevice,
-      writableCharacteristic: writableCharacteristic ?? this.writableCharacteristic,
-      notifiableCharacteristic: notifiableCharacteristic ?? this.notifiableCharacteristic,
-      selectedFuncionarioId: selectedFuncionarioId ?? this.selectedFuncionarioId,
-      lastCapturedPhotoPath: lastCapturedPhotoPath ?? this.lastCapturedPhotoPath,
+      writableCharacteristic:
+          writableCharacteristic ?? this.writableCharacteristic,
+      notifiableCharacteristic:
+          notifiableCharacteristic ?? this.notifiableCharacteristic,
+      selectedFuncionarioId:
+          selectedFuncionarioId ?? this.selectedFuncionarioId,
+      lastCapturedPhotoPath:
+          lastCapturedPhotoPath ?? this.lastCapturedPhotoPath,
     );
   }
 }
@@ -51,15 +55,16 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
   final Ref ref;
 
   BluetoothNotifier(this.ref)
-      : _bluetoothManager = BluetoothManager(ref),
-        super(BluetoothState(isConnected: false));
+    : _bluetoothManager = BluetoothManager(ref),
+      super(BluetoothState(isConnected: false));
 
   /// 🔹 Método para selecionar um funcionário antes de iniciar o teste
   void selecionarFuncionario(String? funcionarioId) {
     state = state.copyWith(selectedFuncionarioId: funcionarioId);
   }
 
-  String get funcionarioSelecionado => state.selectedFuncionarioId ?? "Visitante";
+  String get funcionarioSelecionado =>
+      state.selectedFuncionarioId ?? "Visitante";
 
   /// 🔹 Conecta a um dispositivo e atualiza o estado
   Future<bool> connectToDevice(BluetoothDevice device) async {
@@ -69,10 +74,7 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
 
       // ✅ Agora usamos a função de callback para atualizar características BLE
       _bluetoothManager.discoverCharacteristics(device, (writable, notifiable) {
-        setCharacteristics(
-          writable: writable,
-          notifiable: notifiable,
-        );
+        setCharacteristics(writable: writable, notifiable: notifiable);
         listenToNotifications();
       });
     }
@@ -85,12 +87,16 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     BluetoothCharacteristic? notifiable,
   }) {
     if (notifiable != null && notifiable != state.notifiableCharacteristic) {
-      print("🔄 [bluetoothProvider] Atualizando característica de notificação global: ${notifiable.uuid}");
+      print(
+        "🔄 [bluetoothProvider] Atualizando característica de notificação global: ${notifiable.uuid}",
+      );
       state = state.copyWith(notifiableCharacteristic: notifiable);
     }
 
     if (writable != null && writable != state.writableCharacteristic) {
-      print("✍️ [bluetoothProvider] Atualizando característica de escrita global: ${writable.uuid}");
+      print(
+        "✍️ [bluetoothProvider] Atualizando característica de escrita global: ${writable.uuid}",
+      );
       state = state.copyWith(writableCharacteristic: writable);
     }
   }
@@ -100,7 +106,9 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       await state.notifiableCharacteristic!.setNotifyValue(true);
       print("🔔 Notificações BLE reativadas!");
     } else {
-      print("⚠️ Nenhuma característica de notificação encontrada no BluetoothProvider!");
+      print(
+        "⚠️ Nenhuma característica de notificação encontrada no BluetoothProvider!",
+      );
     }
   }
 
@@ -116,17 +124,20 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       _processarTeste(parsed);
     });
   }
-  
+
   Future<void> _reiniciarIBlow() async {
     final device = state.connectedDevice;
     if (device != null) {
       await disconnect();
-      await Future.delayed(const Duration(seconds: 1)); // Pequeno delay antes de reconectar
+      await Future.delayed(
+        const Duration(seconds: 1),
+      ); // Pequeno delay antes de reconectar
       await connectToDevice(device);
     }
   }
 
-  String? _ultimoResultadoSalvo; // Variável para rastrear o último resultado salvo
+  String?
+  _ultimoResultadoSalvo; // Variável para rastrear o último resultado salvo
 
   void _processarTeste(Map<String, dynamic> parsed) {
     final command = parsed["command"];
@@ -140,19 +151,21 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
 
       String unidade = _converterUnidade(partes[1]);
       String valor = partes[2];
-      String statusCalibracao = partes.length > 3 && partes[3] == "1"
-          ? "Modo Calibração"
-          : "Modo Normal";
+      String statusCalibracao =
+          partes.length > 3 && partes[3] == "1"
+              ? "Modo Calibração"
+              : "Modo Normal";
 
       final resultadoFinal = "$valor $unidade";
 
-      // 🔹 Se for o mesmo resultado que já foi salvo, ignoramos  
+      // 🔹 Se for o mesmo resultado que já foi salvo, ignoramos
       if (_ultimoResultadoSalvo == resultadoFinal) {
         print("⚠️ Teste duplicado ignorado!");
         return;
       }
 
-      _ultimoResultadoSalvo = resultadoFinal; // Atualiza o último resultado salvo
+      _ultimoResultadoSalvo =
+          resultadoFinal; // Atualiza o último resultado salvo
 
       // 🔹 Pegamos a lista de funcionários
       final funcionarios = ref.read(funcionarioProvider);
@@ -183,7 +196,8 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         funcionarioNome: funcionario.nome,
         photoPath: state.lastCapturedPhotoPath,
         deviceName: state.connectedDevice?.name,
-        isFavorito: isAcima, // ✅ Isso aqui faz ele já ir como favorito se passar o limite
+        isFavorito:
+            isAcima, // ✅ Isso aqui faz ele já ir como favorito se passar o limite
       );
 
       state = state.copyWith(lastCapturedPhotoPath: null);
@@ -207,7 +221,9 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
   /// 🔹 Obtém informações do dispositivo após conexão
   Future<void> fetchDeviceInfo() async {
     if (!state.isConnected || state.writableCharacteristic == null) {
-      print("❌ Dispositivo não conectado ou característica de escrita indisponível!");
+      print(
+        "❌ Dispositivo não conectado ou característica de escrita indisponível!",
+      );
       return;
     }
 
@@ -235,11 +251,11 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
   Future<void> restoreCharacteristics() async {
     if (state.connectedDevice != null) {
       print("♻️ Restaurando características BLE...");
-      await _bluetoothManager.discoverCharacteristics(state.connectedDevice!, (writable, notifiable) {
-        setCharacteristics(
-          writable: writable,
-          notifiable: notifiable,
-        );
+      await _bluetoothManager.discoverCharacteristics(state.connectedDevice!, (
+        writable,
+        notifiable,
+      ) {
+        setCharacteristics(writable: writable, notifiable: notifiable);
         listenToNotifications();
       });
     }
@@ -253,12 +269,30 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
 
   /// 🔹 Converte o código da unidade para string legível
   String _converterUnidade(String unidade) {
-    List<String> unidades = ["g/L", "‰", "%BAC", "mg/L", "Dec %BAC", "mg/100mL", "µg/100mL", "µg/L"];
+    List<String> unidades = [
+      "g/L",
+      "‰",
+      "%BAC",
+      "mg/L",
+      "Dec %BAC",
+      "mg/100mL",
+      "µg/100mL",
+      "µg/L",
+    ];
     int index = int.tryParse(unidade) ?? 0;
-    return (index >= 0 && index < unidades.length) ? unidades[index] : "Unidade desconhecida";
+    return (index >= 0 && index < unidades.length)
+        ? unidades[index]
+        : "Unidade desconhecida";
+  }
+
+  // Adiciona método público para processar dados recebidos
+  Map<String, dynamic>? processReceivedData(List<int> rawData) {
+    return _bluetoothManager.processReceivedData(rawData);
   }
 }
-  /// 🔹 Criamos um provider global para o Bluetooth
-final bluetoothProvider = StateNotifierProvider<BluetoothNotifier, BluetoothState>(
-  (ref) => BluetoothNotifier(ref),
-);
+
+/// 🔹 Criamos um provider global para o Bluetooth
+final bluetoothProvider =
+    StateNotifierProvider<BluetoothNotifier, BluetoothState>(
+      (ref) => BluetoothNotifier(ref),
+    );
