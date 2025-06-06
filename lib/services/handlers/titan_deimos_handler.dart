@@ -50,7 +50,9 @@ class TitanDeimosHandler implements BluetoothHandler {
     });
 
     // Antes do callback dentro de discoverCharacteristics:
-    print('[HANDLER] Discover callback: writable=$_writeChar, notifiable=$_notifyChar');
+    print(
+      '[HANDLER] Discover callback: writable=$_writeChar, notifiable=$_notifyChar',
+    );
     callback(_writeChar, _notifyChar!);
   }
 
@@ -88,7 +90,8 @@ class TitanDeimosHandler implements BluetoothHandler {
     packet.add(0x02); // comprimento: 2 bytes
     packet.add(commandCode & 0xFF); // CMD_L
     packet.add((commandCode >> 8) & 0xFF); // CMD_H
-    int checksum = 0x01 + 0x02 + (commandCode & 0xFF) + ((commandCode >> 8) & 0xFF);
+    int checksum =
+        0x01 + 0x02 + (commandCode & 0xFF) + ((commandCode >> 8) & 0xFF);
     checksum = checksum & 0xFF;
     packet.add(checksum);
     packet.add(0x16); // end
@@ -98,47 +101,136 @@ class TitanDeimosHandler implements BluetoothHandler {
   @override
   Map<String, dynamic>? processReceivedData(List<int> data) {
     // Protocolo Titan:
-    // 0x68, [A0-A5], 0x68, C, L, [DATA], CS, 0x16
+    // 68 A0 A1 A2 A3 A4 A5 68 Control Length_low Length_high SubCmd Data... CS 16
+
     if (data.length < 12) {
       print('[TitanDeimosHandler] Pacote muito curto para protocolo Titan.');
       return null;
     }
+
+    // Verificando os dois Start Bits
     if (data[0] != 0x68 || data[7] != 0x68) {
-      print('[TitanDeimosHandler] Start bits inválidos: data[0]=0x${data[0].toRadixString(16)}, data[7]=0x${data[7].toRadixString(16)}');
+      print(
+        '[TitanDeimosHandler] Start bits inválidos: data[0]=0x${data[0].toRadixString(16)}, data[7]=0x${data[7].toRadixString(16)}',
+      );
       return null;
     }
+
+    // End bit
+    if (data.last != 0x16) {
+      print(
+        '[TitanDeimosHandler] End bit inválido: 0x${data.last.toRadixString(16)}',
+      );
+      return null;
+    }
+
+    // Endereço
     final address = data.sublist(1, 7);
+
     final control = data[8];
-    final length = data[9];
-    if (data.length < 10 + length + 2) {
-      print('[TitanDeimosHandler] Pacote incompleto: esperado ${10 + length + 2} bytes, recebido ${data.length}.');
+    final lengthLow = data[9];
+    final lengthHigh = data[10];
+    final length = (lengthHigh << 8) + lengthLow;
+
+    // Tamanho mínimo esperado para o restante do pacote
+    if (data.length < 11 + length + 2) {
+      print(
+        '[TitanDeimosHandler] Pacote incompleto: esperado ${11 + length + 2} bytes, recebido ${data.length}.',
+      );
       return null;
     }
-    final payload = data.sublist(10, 10 + length);
-    final receivedChecksum = data[10 + length];
-    final endBit = data[11 + length];
-    if (endBit != 0x16) {
-      print('[TitanDeimosHandler] End bit inválido: 0x${endBit.toRadixString(16)}');
-      return null;
-    }
-    // Checksum: soma de [control, length, payload...]
-    int checksum = control + length;
+
+    final subCommand = data[11];
+    final payload = data.sublist(12, 12 + length - 1);
+    final receivedChecksum = data[data.length - 2];
+
+    // Checksum: do Control até o último byte de payload (inclusive subCommand)
+    int checksum = control + lengthLow + lengthHigh + subCommand;
     for (final b in payload) checksum += b;
     checksum = checksum & 0xFF;
+
     if (checksum != receivedChecksum) {
-      print('[TitanDeimosHandler] Checksum inválido! Calculado: 0x${checksum.toRadixString(16)}, recebido: 0x${receivedChecksum.toRadixString(16)}');
+      print(
+        '[TitanDeimosHandler] Checksum inválido! Calculado: 0x${checksum.toRadixString(16)}, recebido: 0x${receivedChecksum.toRadixString(16)}',
+      );
       return null;
     }
-    print('[TitanDeimosHandler] Pacote Titan válido. Endereço: ${address.map((b) => b.toRadixString(16)).join(":")}, Controle: 0x${control.toRadixString(16)}, Length: $length, Payload: $payload');
+
+    print(
+      '[TitanDeimosHandler] Pacote válido: Controle=0x${control.toRadixString(16)}, SubComando=0x${subCommand.toRadixString(16)}, Payload=${payload.map((e) => e.toRadixString(16)).toList()}',
+    );
+
+    // Agora tratamos cada subcomando/documentado
     switch (control) {
-      case 0x02:
-        return _handleFirmwareVersion(payload);
-      case 0x03:
-        return _handleUsageCounter(payload);
-      case 0x04:
-        return _handleTestResult(payload);
+      case 0x81: // Resposta normal
+        return _handleNormalResponse(subCommand, payload);
+      case 0xC1: // Resposta de erro
+        print(
+          '[TitanDeimosHandler] Dispositivo retornou erro. Subcomando: 0x${subCommand.toRadixString(16)}',
+        );
+        return null;
       default:
-        print('[TitanDeimosHandler] Controle desconhecido: 0x${control.toRadixString(16)}');
+        print(
+          '[TitanDeimosHandler] Controle desconhecido: 0x${control.toRadixString(16)}',
+        );
+        return null;
+    }
+  }
+
+  // Separando o parser de cada subcomando
+  Map<String, dynamic>? _handleNormalResponse(int subCmd, List<int> payload) {
+    switch (subCmd) {
+      case 0x00: // Software version
+        final version = String.fromCharCodes(payload);
+        print('[TitanDeimosHandler] Firmware version: $version');
+        return {'firmware': version};
+
+      case 0x05: // Sensor Module Address
+        final sensor =
+            payload.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+        print('[TitanDeimosHandler] Sensor SN: $sensor');
+        return {'sensor': sensor};
+
+      case 0x07: // Last Calibration Date
+        if (payload.length >= 3) {
+          final year = payload[0];
+          final month = payload[1];
+          final day = payload[2];
+          print('[TitanDeimosHandler] Calibração: $year/$month/$day');
+          return {'calibration': '$year/$month/$day'};
+        }
+        return null;
+
+      case 0x04: // Device Battery
+        if (payload.length >= 2) {
+          final bat = (payload[1] << 8) + payload[0];
+          print('[TitanDeimosHandler] Bateria: $bat%');
+          return {'battery': bat};
+        }
+        return null;
+
+      case 0x03: // Alcohol Test Result
+        if (payload.length >= 2) {
+          final result = (payload[1] << 8) + payload[0];
+          print('[TitanDeimosHandler] Teste: ${result / 1000} mg/L');
+          return {'result': result / 1000};
+        }
+        return null;
+
+      case 0x01: // Device status
+        print('[TitanDeimosHandler] Status do aparelho: ${payload[0]}');
+        return {'status': payload[0]};
+
+      case 0x02: // Device Address
+        final address =
+            payload.map((b) => b.toRadixString(16).padLeft(2, '0')).join();
+        print('[TitanDeimosHandler] Device SN: $address');
+        return {'address': address};
+
+      default:
+        print(
+          '[TitanDeimosHandler] Subcomando não tratado: 0x${subCmd.toRadixString(16)}',
+        );
         return null;
     }
   }
