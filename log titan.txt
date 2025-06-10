@@ -1,0 +1,64 @@
+I/flutter (13070): 📤 Enviando comandos para obter informações...
+D/[FBP-Android](13070): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](13070): [FBP] onCharacteristicWrite:
+D/[FBP-Android](13070): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](13070): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android](13070): [FBP] onCharacteristicChanged:
+D/[FBP-Android](13070): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter (13070): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 3, 80, 104, 193, 1, 0, 32, 197, 22, 13, 10]
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 3, 80, 104, 193, 1, 0, 32, 197, 22, 13, 10]
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Pacote Titan puro isolado: 035068C1010020C5160D0A683030
+I/flutter (13070): [TitanDeimosHandler] Pacote com delimitadores inválidos.
+I/flutter (13070): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 3, 80, 104, 193, 1, 0, 32, 197, 22, 13, 10]
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Pacote Titan puro isolado: 035068C1010020C5160D0A683030
+I/flutter (13070): [TitanDeimosHandler] Pacote com delimitadores inválidos.
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Pacote Titan puro isolado: 035068C1010020C5160D0A683030
+I/flutter (13070): [TitanDeimosHandler] Pacote com delimitadores inválidos.
+D/[FBP-Android](13070): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](13070): [FBP] onCharacteristicChanged:
+D/[FBP-Android](13070): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](13070): [FBP] onCharacteristicWrite:
+D/[FBP-Android](13070): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](13070): [FBP]   status: GATT_SUCCESS (0)
+I/flutter (13070): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 3, 80, 104, 193, 1, 0, 32, 197, 22, 13, 10]
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 3, 80, 104, 193, 1, 0, 32, 197, 22, 13, 10]
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Pacote Titan puro isolado: 035068C1010020C5160D0A683030
+I/flutter (13070): [TitanDeimosHandler] Pacote com delimitadores inválidos.
+I/flutter (13070): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 3, 80, 104, 193, 1, 0, 32, 197, 22, 13, 10]
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Pacote Titan puro isolado: 035068C1010020C5160D0A683030
+I/flutter (13070): [TitanDeimosHandler] Pacote com delimitadores inválidos.
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Pacote Titan puro isolado: 035068C1010020C5160D0A683030
+I/flutter (13070): [TitanDeimosHandler] Pacote com delimitadores inválidos.
+D/[FBP-Android](13070): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](13070): [FBP] onCharacteristicWrite:
+D/[FBP-Android](13070): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](13070): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android](13070): [FBP] onCharacteristicChanged:
+D/[FBP-Android](13070): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter (13070): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 3, 80, 104, 193, 1, 0, 32, 197, 22, 13, 10]
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 3, 80, 104, 193, 1, 0, 32, 197, 22, 13, 10]
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Pacote Titan puro isolado: 035068C1010020C5160D0A683030
+I/flutter (13070): [TitanDeimosHandler] Pacote com delimitadores inválidos.
+I/flutter (13070): [TitanDeimosHandler] Dados recebidos automaticamente: \[104, 48, 48, 48, 48, 3, 80, 104, 193, 1, 0, 32, 197, 22, 13, 10]
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Pacote Titan puro isolado: 035068C1010020C5160D0A683030
+I/flutter (13070): [TitanDeimosHandler] Pacote com delimitadores inválidos.
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Buffer atual: 6830303030035068C1010020C5160D0A6830303030035068C1010020C5160D0A
+I/flutter (13070): [TitanDeimosHandler] Pacote Titan puro isolado: 035068C1010020C5160D0A683030
+I/flutter (13070): [TitanDeimosHandler] Pacote com delimitadores inválidos.
