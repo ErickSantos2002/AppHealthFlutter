@@ -1,0 +1,311 @@
+Titan Bluetooth Communication Protocol
+
+1. Communication Protocol
+
+1.1 Format
+
+Desc            | Value
+----------------|------
+Start bit       | 68H
+Address         | A0 A1 A2 A3 A4 A5
+Start bit       | 68H
+Control bit     | C
+Data length     | L
+Data            | DATA
+Checksum        | CS
+End bit         | 16H
+
+1. The frame start character 68H: identifies the beginning of a frame of information, one byte, the value 68H = 01101000B.
+2. Address A0~A5: address consists of six bytes, each byte two BCD code. Address length is 12 decimal numbers indicating the device number, which is the device serial number.
+    (1) The broadcast address is 999999999999H.
+    (2) When the mobile app starts to communicate with the device, it will use broadcast address to send the device address acquisition command. It will use the actual device address for communication.
+3. Control bit C: Control command type and transmission direction, one byte.
+4. Data Length L: L is the number of bytes of the data field. Two bytes, L = 0 means no data fields.
+5. Checksum CS: From the FSC began to die in all checksum bytes 256 before and that each byte binary arithmetic and, excluding the overflow value exceeding 256, one byte.
+6. End bit 16H: identifies the end of a frame of information, one byte, the value 16H = 00010110B.
+
+1.2 Transmission Control
+
+1. Turn on Bluetooth on the phone. Deimos will show a Bluetooth icon when connected. The phone will send a broadcast address to acquire the actual device address. After that, it will send the command 2.1.5 (connection status), which means the phone is connected with Deimos. After the data communication icon shows on the main menu of Deimos, the mobile app can start to send command to the device.
+2. Modification of Device SN and Sensor module SN can only be done in factory mode.
+
+2. Communication command
+
+2.1 Command
+
+2.1.1 Software version
+- Function: Read the current software version of the device, e.g., V1.00
+- Data type: ASCII
+- Command: FF00H
+
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 00H FFH CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 07H 00H 00H FFH N1 ... Nm CS 16H
+Data N1...Nm is the software version: V1.00
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00H ERR CS 16H
+
+2.1.2 Device Time
+- Function: Read and write device time
+- Data type: HEX
+- Command: FF01H
+
+Read device time
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 01H FFH CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 08H 00H 01H FFH N1 ... Nm CS 16H
+Data N1...Nm is the device time: YearMonthDayHourMinuteSecond
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00H ERR CS 16H
+
+Write device time
+Mobile app send data format:
+68H A0 ... A5 68H 04H 08H 00H 01H FFH N1 ... Nm CS 16H
+Data N1...Nm is the device time: YearMonthDayHourMinuteSecond
+
+Device response data format:
+68H A0 ... A5 68H 84H 00H 00H CS 16H
+
+Device abnormal response data format:
+68H A0 ... A5 68H C4H 01H 00 ERR CS 16H
+
+2.1.3 Device Address
+- Function: Read and write the device serial number (address)
+- Data type: BCD
+- Command: FF02H
+
+Read Device Address
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 02H FFH CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 08H 00H 02H FFH N1 ... Nm CS 16H
+Data N1...Nm is the device address: 12 digit device address A0~A5
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00H ERR CS 16H
+
+Write Device Address
+Mobile app send data format:
+68H A0 ... A5 68H 04H 08H 00H 02H FFH N1 ... Nm CS 16H
+Data N1...Nm is the device address, 12 digit device address A0~A5
+
+Device response data format:
+68H A0 ... A5 68H 84H 00H 00H CS 16H
+
+Device abnormal response data format:
+68H A0 ... A5 68H C4H 01H 00 ERR CS 16H
+
+2.1.4 Device Mode
+- Function: Set device mode (operating/factory)
+- Data type: HEX
+- Command: FF03H
+
+Read device mode
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 03H FFH CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 03H 00H 03H FFH mode CS 16H
+mode=0: Factory Mode; mode=1: Operating Mode
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00H ERR CS 16H
+
+Write Device Mode
+Mobile app send data format:
+68H A0 ... A5 68H 04H 03H 00H 03H FFH mode CS 16H
+mode=0: Factory Mode; mode=1: Operating Mode
+
+Device response data format:
+68H A0 ... A5 68H 84H 00H 00H CS 16H
+
+Device abnormal response data format:
+68H A0 ... A5 68H C4H 01H 00 ERR CS 16H
+
+2.1.5 Connection Status
+- Function: Device will send the command to check connection status
+- Command: FF04H
+
+Write the connection status
+Mobile app send data format:
+68H A0 ... A5 68H 04H 03H 00H 04H FFH Status CS 16H
+Status=1: connected; Status=0: disconnected
+
+Device response data format:
+68H A0 ... A5 68H 84H 00H 00H CS 16H
+
+Device abnormal response data format:
+68H A0 ... A5 68H C4H 01H 00 ERR CS 16H
+
+2.1.6 Sensor module address
+- Function: Read/write sensor module serial number (address)
+- Data type: BCD
+- Command: FF05H
+
+Read the sensor module address
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 05H FFH CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 08H 00H 05H FFH N1 ... Nm CS 16H
+Data N1...Nm is the sensor module address (12 digits)
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00H ERR CS 16H
+
+Write the sensor module address
+Mobile app send data format:
+68H A0 ... A5 68H 04H 08H 00H 05H FFH N1 ... Nm CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 84H 00H 00H CS 16H
+
+Device abnormal response data format:
+68H A0 ... A5 68H C4H 01H 00 ERR CS 16H
+
+2.2 Data command
+
+2.2.1 Device Status
+- Function: Read the device current working status
+- Data type: HEX
+- Command: 9001H
+
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 01H 90H CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 03H 00H 01H 90H 00H CS 16H
+Data 00H means the device is ready
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00 ERR CS 16H
+
+2.2.2 Alcohol testing
+- Function: Start alcohol testing
+- Data type: HEX
+- Command: 9002H
+
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 02H 90H CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 03H 00H 02H 90H STA CS 16H
+STA = 1: start blowing
+STA = 2: finish blowing
+STA = 3: blowing discontinue
+STA = 4: refuse blowing
+STA = 5: measurement result calculation complete
+STA = 6: detect whether calibration date is expired or not.
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00 ERR CS 16H
+
+2.2.3 Alcohol testing result
+- Function: Send the measurement result to the app
+- Data type: HEX
+- Command: 9003H
+
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 03H 90H CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 04H 00H 03H 90H Val_L Val_H CS 16H
+Alcohol content: (Val_H*256+Val_L) mg/100ml
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00 ERR CS 16H
+
+2.2.4 Device battery
+- Function: Read device battery level
+- Data type: HEX
+- Command: 9004H
+
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 04H 90H CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 04H 00H 04H 90H Bat_L Bat_H CS 16H
+Battery Level: (Bat_H*256+Bat_L) %
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00 ERR CS 16H
+
+2.2.5 Number of Record
+- Function: Read the device total number of record
+- Data type: HEX
+- Command: 9005H
+
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 05H 90H CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 04H 00H 05H 90H Time_L Time_H CS 16H
+Number of record: (Time_H*256+Time_L)
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00 ERR CS 16H
+
+2.2.6 Last Calibration Date
+- Function: Read last calibration date
+- Data type: HEX
+- Command: 9007H
+
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 07H 90H CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 08H 00H 07H 90H N1 ... Nm CS 16H
+Data N1...Nm is the last calibration date YearMonthDay
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00 ERR CS 16H
+
+2.2.7 Temperature
+- Function: Read device temperature
+- Command: 9008H
+
+Mobile app send data format:
+68H A0 ... A5 68H 01H 02H 00H 08H 90H CS 16H
+
+Device response data format:
+68H A0 ... A5 68H 81H 03H 00H 08H 90H Temp CS 16H
+Temperature: Temp lower 7 bit is temperature, higher 1 bit is the sign (1 is negative temperature, 0 is positive temperature)
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00 ERR CS 16H
+
+2.2.8 Test Record
+- Function: Read the device test record
+- Command: 900AH
+
+Mobile app send data format:
+68H A0 ... A5 68H 01H 03H 00H 0AH 90H Num CS
+Record: Num is the record number (1-100; device can store 100 records)
+
+Device response data format:
+68H A0 ... A5 68H 81H 12H 00H 0AH 90H N1 ... Nm CS 16H
+Data N1...Nm is the data of corresponding record
+
+Device abnormal response data format:
+68H A0 ... A5 68H C1H 01H 00 ERR CS 16H
+
+Appendix A - Error message word ERR
+
+bit7 bit6 bit5 bit4 bit3 bit2 bit1 bit0
+
+Desc:
+- bit0: Illegal data, the data is not in a valid range
+- bit1: Data identification error, invalid data identification
+- bit2: Data check error
+- bit3: Illegal access
+- bit4: Device address error
+- bit5: Reserved
+- bit6: Reserved
+- bit7: Unknown error

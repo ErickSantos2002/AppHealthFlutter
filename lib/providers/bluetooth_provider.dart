@@ -6,6 +6,7 @@ import '../services/bluetooth_manager.dart';
 import '../models/test_model.dart';
 import '../providers/historico_provider.dart';
 import 'funcionario_provider.dart';
+import '../models/device_info.dart';
 
 /// 🔹 Estado global para gerenciar a conexão Bluetooth
 class BluetoothState {
@@ -15,6 +16,7 @@ class BluetoothState {
   final BluetoothCharacteristic? notifiableCharacteristic;
   final String? selectedFuncionarioId;
   final String? lastCapturedPhotoPath; // 📸 Caminho da última foto tirada
+  final DeviceInfo? deviceInfo;
 
   BluetoothState({
     required this.isConnected,
@@ -23,6 +25,7 @@ class BluetoothState {
     this.notifiableCharacteristic,
     this.selectedFuncionarioId,
     this.lastCapturedPhotoPath,
+    this.deviceInfo,
   });
 
   /// 🔄 Atualiza o estado sem modificar a referência do provider
@@ -33,6 +36,7 @@ class BluetoothState {
     BluetoothCharacteristic? notifiableCharacteristic,
     String? selectedFuncionarioId,
     String? lastCapturedPhotoPath,
+    DeviceInfo? deviceInfo,
   }) {
     return BluetoothState(
       isConnected: isConnected ?? this.isConnected,
@@ -45,6 +49,7 @@ class BluetoothState {
           selectedFuncionarioId ?? this.selectedFuncionarioId,
       lastCapturedPhotoPath:
           lastCapturedPhotoPath ?? this.lastCapturedPhotoPath,
+      deviceInfo: deviceInfo ?? this.deviceInfo,
     );
   }
 }
@@ -120,7 +125,10 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       final parsed = _bluetoothManager.processReceivedData(rawData);
       if (parsed == null) return;
 
-      // Aqui processamos e salvamos os testes
+      // Atualiza DeviceInfo centralizado
+      updateDeviceInfo(parsed);
+
+      // Mantém processamento de teste para iBlow
       _processarTeste(parsed);
     });
   }
@@ -283,6 +291,42 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     return (index >= 0 && index < unidades.length)
         ? unidades[index]
         : "Unidade desconhecida";
+  }
+
+  /// Atualiza o DeviceInfo com novos dados processados
+  void updateDeviceInfo(Map<String, dynamic> parsed) {
+    final current = state.deviceInfo ?? DeviceInfo();
+    DeviceInfo updated = current;
+
+    if (parsed.containsKey('battery')) {
+      updated = updated.copyWith(battery: parsed['battery']);
+    }
+    if (parsed.containsKey('usageCounter')) {
+      updated = updated.copyWith(usageCounter: parsed['usageCounter']);
+    }
+    if (parsed.containsKey('calibrationDate') ||
+        parsed.containsKey('lastCalibrationDate')) {
+      updated = updated.copyWith(
+        lastCalibrationDate:
+            parsed['calibrationDate'] ?? parsed['lastCalibrationDate'],
+      );
+    }
+    if (parsed.containsKey('testResult')) {
+      updated = updated.copyWith(
+        testResult:
+            parsed['testResult'] is double
+                ? parsed['testResult']
+                : double.tryParse(parsed['testResult'].toString()),
+      );
+    }
+    if (parsed.containsKey('firmware')) {
+      updated = updated.copyWith(firmware: parsed['firmware']);
+    }
+    if (parsed.containsKey('temperature')) {
+      updated = updated.copyWith(temperature: parsed['temperature']);
+    }
+
+    state = state.copyWith(deviceInfo: updated);
   }
 
   // Adiciona método público para processar dados recebidos

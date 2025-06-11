@@ -210,30 +210,7 @@ class _InformacoesDispositivoScreenState
       );
 
       if (value.isNotEmpty && mounted) {
-        // Usa o método público do provider para processar os dados
-        final processedData = ref
-            .read(bluetoothProvider.notifier)
-            .processReceivedData(value);
-        print(
-          "📩 [InformacoesDispositivoScreen] Dados recebidos: $processedData",
-        );
-
         setState(() {
-          if (processedData == null) return;
-          // AL88/iBlow
-          if (processedData["command"] == "B01")
-            versaoFirmware = processedData["data"];
-          if (processedData["command"] == "B03")
-            contagemUso = "${processedData["data"]} testes";
-          if (processedData["command"] == "B04")
-            ultimaCalibracao = processedData["data"];
-          // Deimos/HLX
-          if (processedData["firmware"] != null)
-            versaoFirmware = processedData["firmware"].toString();
-          if (processedData["usageCounter"] != null)
-            contagemUso = "${processedData["usageCounter"]} testes";
-          if (processedData["testResult"] != null)
-            ultimaCalibracao = processedData["testResult"].toString();
           verificarAvisos();
         });
       }
@@ -249,8 +226,10 @@ class _InformacoesDispositivoScreenState
     final bluetoothNotifier = ref.read(bluetoothProvider.notifier);
     final bluetoothState = ref.read(bluetoothProvider);
 
-    if (bluetoothState.isConnected && bluetoothState.writableCharacteristic != null) {
-      final deviceName = bluetoothState.connectedDevice?.name.toLowerCase() ?? "";
+    if (bluetoothState.isConnected &&
+        bluetoothState.writableCharacteristic != null) {
+      final deviceName =
+          bluetoothState.connectedDevice?.name.toLowerCase() ?? "";
       print("📤 Enviando comandos para obter informações...");
       if (deviceName.contains("al88") || deviceName.contains("iblow")) {
         bluetoothNotifier.sendCommand("A01", "INFORMATION");
@@ -268,41 +247,10 @@ class _InformacoesDispositivoScreenState
         print("❌ Tipo de dispositivo desconhecido para envio de comandos!");
       }
     } else {
-      print("❌ Dispositivo não está conectado ou característica de escrita indisponível!");
-    }
-  }
-
-  /// 🔹 Processa os dados recebidos do Bluetooth
-  Map<String, dynamic> processReceivedData(List<int> rawData) {
-    print(
-      "📩 Pacote recebido (bruto): ${rawData.map((e) => e.toRadixString(16)).join(" ")}",
-    );
-
-    if (rawData.length < 5) {
       print(
-        "⚠️ Pacote muito curto para ser válido! Tamanho: ${rawData.length}",
+        "❌ Dispositivo não está conectado ou característica de escrita indisponível!",
       );
-      return {"command": "Erro", "data": "Pacote inválido", "battery": 0};
     }
-
-    String commandCode = String.fromCharCodes(rawData.sublist(1, 4)).trim();
-    String receivedData =
-        String.fromCharCodes(rawData.sublist(4, 17)).replaceAll("#", "").trim();
-
-    // Substituir vírgulas por pontos para números
-    if (receivedData.contains(",")) {
-      receivedData = receivedData.replaceAll(",", ".");
-    }
-
-    print(
-      "✅ Dados processados corretamente: Comando: $commandCode | Dados: $receivedData",
-    );
-
-    return {
-      "command": commandCode,
-      "data": receivedData.isNotEmpty ? receivedData : "Indisponível",
-      "battery": rawData.length > 5 ? rawData[4] : 0,
-    };
   }
 
   String _formatarData(String data) {
@@ -329,30 +277,35 @@ class _InformacoesDispositivoScreenState
   }
 
   Widget _buildDeviceInfo() {
+    final deviceInfo = ref.watch(bluetoothProvider).deviceInfo;
     final deviceName =
         ref.watch(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
     final isIBlow = deviceName.contains("iblow");
+
+    // Fallbacks para exibição
+    final versao = deviceInfo?.firmware ?? "Carregando...";
+    final uso =
+        deviceInfo?.usageCounter != null
+            ? deviceInfo!.usageCounter.toString()
+            : "Carregando...";
+    final calibracao = deviceInfo?.lastCalibrationDate ?? "Carregando...";
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildInfoCard(
-            Icons.device_hub,
-            "Versão do Firmware",
-            versaoFirmware,
-          ),
+          _buildInfoCard(Icons.device_hub, "Versão do Firmware", versao),
           _buildInfoCard(
             Icons.bar_chart,
             "Contagem de Uso",
-            _formatarQuantidadeTestes(contagemUso),
+            _formatarQuantidadeTestes(uso),
           ),
           if (isIBlow)
             _buildInfoCard(
               Icons.date_range,
               "Última Calibração",
-              _formatarData(ultimaCalibracao),
+              _formatarData(calibracao),
             ),
           const SizedBox(height: 20),
           Center(

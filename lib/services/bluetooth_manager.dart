@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'handlers/al88_iblow_handler.dart';
 import 'handlers/bluetooth_handler.dart';
+import '../providers/bluetooth_provider.dart';
 
 class BluetoothManager {
   final Ref ref;
@@ -20,7 +21,11 @@ class BluetoothManager {
       if (name.contains("AL88") || name.contains("IBLOW")) {
         _handler = Al88IblowHandler(ref);
       } else if (name.contains("DEIMOS") || name.contains("HLX")) {
-        _handler = TitanDeimosHandler();
+        _handler = TitanDeimosHandler(
+          onData: (parsed) {
+            ref.read(bluetoothProvider.notifier).updateDeviceInfo(parsed);
+          },
+        );
       } else {
         throw UnsupportedError("Dispositivo não suportado: ${device.name}");
       }

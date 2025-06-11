@@ -5,7 +5,8 @@ abstract class BluetoothHandler {
 
   Future<void> discoverCharacteristics(
     BluetoothDevice device,
-    Function(BluetoothCharacteristic?, BluetoothCharacteristic?) onCharacteristicsDiscovered,
+    Function(BluetoothCharacteristic?, BluetoothCharacteristic?)
+    onCharacteristicsDiscovered,
   );
 
   Future<void> sendCommand(String comando, String dados);
