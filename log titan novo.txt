@@ -1,105 +1,379 @@
-I/flutter (11011): 🔁 Novo dispositivo conectado detectado!
-I/flutter (11011): 🔄 Chamando _restaurarConexao() para o novo dispositivo...
-I/flutter (11011): ♻️ [InformacoesDispositivoScreen] Restaurando conexão BLE...
-I/flutter (11011): 🔎 [InformacoesDispositivoScreen] Descobrindo características BLE...
-I/flutter (11011): ♻️ Restaurando características BLE...
-D/[FBP-Android](11011): [FBP] onMethodCall: connect
-D/[FBP-Android](11011): [FBP] already connected
-D/[FBP-Android](11011): [FBP] onMethodCall: discoverServices
-D/BluetoothGatt(11011): discoverServices() - device: F5:5B:6D:AA:4B:D4
-D/BluetoothGatt(11011): onSearchComplete() = Device=F5:5B:6D:AA:4B:D4 Status=0
-D/[FBP-Android](11011): [FBP] onServicesDiscovered:
-D/[FBP-Android](11011): [FBP]   count: 3
-D/[FBP-Android](11011): [FBP]   status: 0GATT_SUCCESS
-D/[FBP-Android](11011): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt(11011): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android](11011): [FBP] onDescriptorWrite:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP]   desc: 2902
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-I/flutter (11011): [BluetoothManager] Características recebidas do handler: writable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [], properties: CharacteristicProperties{broadcast: false, read: false, writeWithoutResponse: true, write: true, notify: false, indicate: false, authenticatedSignedWrites: false, extendedProperties: false, notifyEncryptionRequired: false, indicateEncryptionRequired: false}, value: []}, notifiable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [BluetoothDescriptor{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, descriptorUuid: 2902, primaryServiceUuid: nulllastValue: [1, 0]}], properties: Char
-I/flutter (11011): 🔄 [bluetoothProvider] Atualizando característica de notificação global: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (11011): ✍️ [bluetoothProvider] Atualizando característica de escrita global: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP] onMethodCall: requestMtu
-D/BluetoothGatt(11011): configureMTU() - device: F5:5B:6D:AA:4B:D4 mtu: 512
-D/BluetoothGatt(11011): onConfigureMTU() - Device=F5:5B:6D:AA:4B:D4 mtu=23 status=0
-D/[FBP-Android](11011): [FBP] onMtuChanged:
-D/[FBP-Android](11011): [FBP]   mtu: 23
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-I/flutter (11011): ✅ Dispositivo conectado com sucesso!
-I/flutter (11011): 📤 Enviando comandos para obter informações do dispositivo...
-I/flutter (11011): [TitanDeimosHandler] Handshake não realizado, ignorando comando A01
-I/flutter (11011): [TitanDeimosHandler] Handshake não realizado, ignorando comando A03
-I/flutter (11011): [TitanDeimosHandler] Handshake não realizado, ignorando comando A04
-D/[FBP-Android](11011): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt(11011): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android](11011): [FBP] onDescriptorWrite:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP]   desc: 2902
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-I/flutter (11011): [BluetoothManager] Características recebidas do handler: writable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [], properties: CharacteristicProperties{broadcast: false, read: false, writeWithoutResponse: true, write: true, notify: false, indicate: false, authenticatedSignedWrites: false, extendedProperties: false, notifyEncryptionRequired: false, indicateEncryptionRequired: false}, value: []}, notifiable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [BluetoothDescriptor{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, descriptorUuid: 2902, primaryServiceUuid: nulllastValue: [1, 0]}], properties: Char
-D/[FBP-Android](11011): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt(11011): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android](11011): [FBP] onDescriptorWrite:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP]   desc: 2902
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](11011): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](11011): [FBP] onCharacteristicWrite:
-D/[FBP-Android](11011): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](11011): [FBP] onMethodCall: discoverServices
-D/BluetoothGatt(11011): discoverServices() - device: F5:5B:6D:AA:4B:D4
-D/BluetoothGatt(11011): onSearchComplete() = Device=F5:5B:6D:AA:4B:D4 Status=0
-D/[FBP-Android](11011): [FBP] onServicesDiscovered:
-D/[FBP-Android](11011): [FBP]   count: 3
-D/[FBP-Android](11011): [FBP]   status: 0GATT_SUCCESS
-D/[FBP-Android](11011): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt(11011): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android](11011): [FBP] onCharacteristicChanged:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP] onDescriptorWrite:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP]   desc: 2902
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](11011): [FBP] onCharacteristicChanged:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](11011): [FBP] onCharacteristicWrite:
-D/[FBP-Android](11011): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](11011): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt(11011): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android](11011): [FBP] onDescriptorWrite:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP]   desc: 2902
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](11011): [FBP] onCharacteristicChanged:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP] onCharacteristicChanged:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (11011): [BluetoothManager] Características recebidas do handler: writable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [], properties: CharacteristicProperties{broadcast: false, read: false, writeWithoutResponse: true, write: true, notify: false, indicate: false, authenticatedSignedWrites: false, extendedProperties: false, notifyEncryptionRequired: false, indicateEncryptionRequired: false}, value: [104, 153, 153, 153, 153, 153, 153, 104, 1, 2, 0, 2, 255, 106, 22]}, notifiable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [BluetoothDescriptor{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, descriptorUuid: 290
-I/flutter (11011): 🔄 [bluetoothProvider] Atualizando característica de notificação global: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (11011): ✍️ [bluetoothProvider] Atualizando característica de escrita global: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (11011): [TitanDeimosHandler] Frame extraído: 683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a160d0a683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080683030303003506881080002ff30303030035080160d0a160d0a160d0a160d0a160d0a160d0a1
-I/flutter (11011): [TitanDeimosHandler] Checksum inválido
-I/flutter (11011): [TitanDeimosHandler] Resultado do processamento do frame: null
-D/[FBP-Android](11011): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt(11011): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android](11011): [FBP] onDescriptorWrite:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP]   desc: 2902
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](11011): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](11011): [FBP] onCharacteristicWrite:
-D/[FBP-Android](11011): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](11011): [FBP] onCharacteristicChanged:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](11011): [FBP] onCharacteristicChanged:
-D/[FBP-Android](11011): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (11011): ❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!
-D/BluetoothGatt(11011): onConnectionUpdated() - Device=F5:5B:6D:AA:4B:D4 interval=36 latency=0 timeout=400 status=0
-D/[FBP-Android](11011): [FBP] onMethodCall: stopScan
-D/BluetoothAdapter(11011): isLeEnabled(): ON
-I/flutter (11011): 🛑 Escaneamento finalizado.
+I/flutter ( 7144): 📤 Enviando comandos para obter informações...
+I/flutter ( 7144): [TitanDeimosHandler] Montando pacote para comando: FF00, valor: 
+I/flutter ( 7144): [TitanDeimosHandler] Enviando comando: FF00, valor:
+I/flutter ( 7144): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 00 ff e5 16
+D/[FBP-Android]( 7144): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android]( 7144): [FBP] onCharacteristicWrite:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 7144): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android]( 7144): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 7144): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 54 79 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 54 79
+I/flutter ( 7144): [TitanDeimosHandler] Frame tamanho inesperado! data.length=\323, esperado=\21
+I/flutter ( 7144): [TitanDeimosHandler] Frame inválido ou checksum incorreto!
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Montando pacote para comando: 9005, valor: 
+I/flutter ( 7144): [TitanDeimosHandler] Enviando comando: 9005, valor: 
+I/flutter ( 7144): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 05 90 7b 16
+D/[FBP-Android]( 7144): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android]( 7144): [FBP] onCharacteristicWrite:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 7144): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android]( 7144): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \05 90 53 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{usageCounter: 83, command: 9005}
+I/flutter ( 7144): [TitanDeimosHandler] Montando pacote para comando: 9007, valor: 
+I/flutter ( 7144): [TitanDeimosHandler] Enviando comando: 9007, valor: 
+I/flutter ( 7144): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 07 90 7d 16
+D/[FBP-Android]( 7144): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android]( 7144): [FBP] onCharacteristicWrite:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 7144): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android]( 7144): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 7144): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 16
+I/flutter ( 7144): [TitanDeimosHandler] Frame tamanho inesperado! data.length=\321, esperado=\21
+I/flutter ( 7144): [TitanDeimosHandler] Frame inválido ou checksum incorreto!
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Montando pacote para comando: 9004, valor: 
+I/flutter ( 7144): [TitanDeimosHandler] Enviando comando: 9004, valor: 
+I/flutter ( 7144): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 04 90 7a 16
+D/[FBP-Android]( 7144): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android]( 7144): [FBP] onCharacteristicWrite:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 7144): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android]( 7144): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 7144): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}
+I/flutter ( 7144): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16 0d 0a
+I/flutter ( 7144): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 33 00 2f 16
+I/flutter ( 7144): [TitanDeimosHandler] Checksum recebido: \47, calculado: \47
+I/flutter ( 7144): [TitanDeimosHandler] Payload extraído: \04 90 33 00
+I/flutter ( 7144): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 7144): [TitanDeimosHandler] Frame processado com sucesso: \{battery: 51, command: 9004}

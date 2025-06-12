@@ -1,448 +1,382 @@
-I/flutter ( 6473): 🔁 Novo dispositivo conectado detectado!
-I/flutter ( 6473): 🔄 Chamando _restaurarConexao() para o novo dispositivo...
-I/flutter ( 6473): ♻️ [InformacoesDispositivoScreen] Restaurando conexão BLE...
-I/flutter ( 6473): 🔎 [InformacoesDispositivoScreen] Descobrindo características BLE...
-I/flutter ( 6473): ♻️ Restaurando características BLE...
-D/[FBP-Android]( 6473): [FBP] onMethodCall: connect
-D/[FBP-Android]( 6473): [FBP] already connected
-D/[FBP-Android]( 6473): [FBP] onMethodCall: discoverServices
-D/BluetoothGatt( 6473): discoverServices() - device: F5:5B:6D:AA:4B:D4
-D/BluetoothGatt( 6473): onSearchComplete() = Device=F5:5B:6D:AA:4B:D4 Status=0
-D/[FBP-Android]( 6473): [FBP] onServicesDiscovered:
-D/[FBP-Android]( 6473): [FBP]   count: 3
-D/[FBP-Android]( 6473): [FBP]   status: 0GATT_SUCCESS
-D/[FBP-Android]( 6473): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt( 6473): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android]( 6473): [FBP] onDescriptorWrite:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 6473): [FBP]   desc: 2902
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-I/flutter ( 6473): [BluetoothManager] Características recebidas do handler: writable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [], properties: CharacteristicProperties{broadcast: false, read: false, writeWithoutResponse: true, write: true, notify: false, indicate: false, authenticatedSignedWrites: false, extendedProperties: false, notifyEncryptionRequired: false, indicateEncryptionRequired: false}, value: []}, notifiable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [BluetoothDescriptor{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, descriptorUuid: 2902, primaryServiceUuid: nulllastValue: [1, 0]}], properties: Char
-I/flutter ( 6473): 🔄 [bluetoothProvider] Atualizando característica de notificação global: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter ( 6473): ✍️ [bluetoothProvider] Atualizando característica de escrita global: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data:
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar:
-I/flutter ( 6473): [TitanDeimosHandler] Nenhum frame válido processado.
-D/[FBP-Android]( 6473): [FBP] onMethodCall: requestMtu
-D/BluetoothGatt( 6473): configureMTU() - device: F5:5B:6D:AA:4B:D4 mtu: 512
-D/BluetoothGatt( 6473): onConfigureMTU() - Device=F5:5B:6D:AA:4B:D4 mtu=23 status=0
-D/[FBP-Android]( 6473): [FBP] onMtuChanged:
-D/[FBP-Android]( 6473): [FBP]   mtu: 23
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-I/flutter ( 6473): ✅ Dispositivo conectado com sucesso!
-I/flutter ( 6473): 📤 Enviando comandos para obter informações do dispositivo...
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: UnimplementedError: Comando não suportado: A01
-E/flutter ( 6473): #0      TitanDeimosHandler.sendCommand (package:Health_App/services/handlers/titan_deimos_handler.dart:100:9)
-E/flutter ( 6473): #1      BluetoothManager.sendCommand (package:Health_App/services/bluetooth_manager.dart:56:21)
-E/flutter ( 6473): #2      BluetoothNotifier.sendCommand (package:Health_App/providers/bluetooth_provider.dart:250:29)
-E/flutter ( 6473): #3      BluetoothNotifier.fetchDeviceInfo (package:Health_App/providers/bluetooth_provider.dart:239:5)
-E/flutter ( 6473): #4      _HomeScreenState.connectToDevice.<anonymous closure> (package:Health_App/screens/home_screen.dart:275:48)
-E/flutter ( 6473): #5      Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:951:45)
-E/flutter ( 6473): #6      Future._propagateToListeners (dart:async/future_impl.dart:980:13)
-E/flutter ( 6473): #7      Future._completeWithValue (dart:async/future_impl.dart:723:5)
-E/flutter ( 6473): <asynchronous suspension>
-E/flutter ( 6473):
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: UnimplementedError: Comando não suportado: A03
-E/flutter ( 6473): #0      TitanDeimosHandler.sendCommand (package:Health_App/services/handlers/titan_deimos_handler.dart:100:9)
-E/flutter ( 6473): #1      BluetoothManager.sendCommand (package:Health_App/services/bluetooth_manager.dart:56:21)
-E/flutter ( 6473): #2      BluetoothNotifier.sendCommand (package:Health_App/providers/bluetooth_provider.dart:250:29)
-E/flutter ( 6473): #3      BluetoothNotifier.fetchDeviceInfo (package:Health_App/providers/bluetooth_provider.dart:240:5)
-E/flutter ( 6473): #4      _HomeScreenState.connectToDevice.<anonymous closure> (package:Health_App/screens/home_screen.dart:275:48)
-E/flutter ( 6473): #5      Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:951:45)
-E/flutter ( 6473): #6      Future._propagateToListeners (dart:async/future_impl.dart:980:13)
-E/flutter ( 6473): #7      Future._completeWithValue (dart:async/future_impl.dart:723:5)
-E/flutter ( 6473): <asynchronous suspension>
-E/flutter ( 6473):
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: UnimplementedError: Comando não suportado: A04
-E/flutter ( 6473): #0      TitanDeimosHandler.sendCommand (package:Health_App/services/handlers/titan_deimos_handler.dart:100:9)
-E/flutter ( 6473): #1      BluetoothManager.sendCommand (package:Health_App/services/bluetooth_manager.dart:56:21)
-E/flutter ( 6473): #2      BluetoothNotifier.sendCommand (package:Health_App/providers/bluetooth_provider.dart:250:29)
-E/flutter ( 6473): #3      BluetoothNotifier.fetchDeviceInfo (package:Health_App/providers/bluetooth_provider.dart:241:5)
-E/flutter ( 6473): #4      _HomeScreenState.connectToDevice.<anonymous closure> (package:Health_App/screens/home_screen.dart:275:48)
-E/flutter ( 6473): #5      Future._propagateToListeners.handleValueCallback (dart:async/future_impl.dart:951:45)
-E/flutter ( 6473): #6      Future._propagateToListeners (dart:async/future_impl.dart:980:13)
-E/flutter ( 6473): #7      Future._completeWithValue (dart:async/future_impl.dart:723:5)
-E/flutter ( 6473): <asynchronous suspension>
-E/flutter ( 6473):
-D/[FBP-Android]( 6473): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt( 6473): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android]( 6473): [FBP] onDescriptorWrite:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 6473): [FBP]   desc: 2902
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-I/flutter ( 6473): [BluetoothManager] Características recebidas do handler: writable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [], properties: CharacteristicProperties{broadcast: false, read: false, writeWithoutResponse: true, write: true, notify: false, indicate: false, authenticatedSignedWrites: false, extendedProperties: false, notifyEncryptionRequired: false, indicateEncryptionRequired: false}, value: []}, notifiable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [BluetoothDescriptor{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, descriptorUuid: 2902, primaryServiceUuid: nulllastValue: [1, 0]}], properties: Char
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data:
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar:
-I/flutter ( 6473): [TitanDeimosHandler] Nenhum frame válido processado.
-D/[FBP-Android]( 6473): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt( 6473): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android]( 6473): [FBP] onDescriptorWrite:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 6473): [FBP]   desc: 2902
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android]( 6473): [FBP] onMethodCall: discoverServices
-D/BluetoothGatt( 6473): discoverServices() - device: F5:5B:6D:AA:4B:D4
-D/BluetoothGatt( 6473): onSearchComplete() = Device=F5:5B:6D:AA:4B:D4 Status=0
-D/[FBP-Android]( 6473): [FBP] onServicesDiscovered:
-D/[FBP-Android]( 6473): [FBP]   count: 3
-D/[FBP-Android]( 6473): [FBP]   status: 0GATT_SUCCESS
-D/[FBP-Android]( 6473): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt( 6473): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android]( 6473): [FBP] onDescriptorWrite:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 6473): [FBP]   desc: 2902
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android]( 6473): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt( 6473): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android]( 6473): [FBP] onDescriptorWrite:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 6473): [FBP]   desc: 2902
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-I/flutter ( 6473): [BluetoothManager] Características recebidas do handler: writable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [], properties: CharacteristicProperties{broadcast: false, read: false, writeWithoutResponse: true, write: true, notify: false, indicate: false, authenticatedSignedWrites: false, extendedProperties: false, notifyEncryptionRequired: false, indicateEncryptionRequired: false}, value: []}, notifiable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [BluetoothDescriptor{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, descriptorUuid: 2902, primaryServiceUuid: nulllastValue: [1, 0]}], properties: Char
-I/flutter ( 6473): 🔄 [bluetoothProvider] Atualizando característica de notificação global: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter ( 6473): ✍️ [bluetoothProvider] Atualizando característica de escrita global: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data:
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar:
-I/flutter ( 6473): [TitanDeimosHandler] Nenhum frame válido processado.
-D/[FBP-Android]( 6473): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt( 6473): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android]( 6473): [FBP] onDescriptorWrite:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 6473): [FBP]   desc: 2902
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-I/flutter ( 6473): ❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!
-D/BluetoothGatt( 6473): onConnectionUpdated() - Device=F5:5B:6D:AA:4B:D4 interval=36 latency=0 timeout=400 status=0
-I/flutter ( 6473): 📤 Enviando comandos para obter informações...
-D/[FBP-Android]( 6473): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android]( 6473): [FBP] onCharacteristicWrite:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android]( 6473): [FBP] onCharacteristicChanged:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=1, endIndex=14
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Not in inclusive range 1..2: 15    
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:70:26)
-E/flutter ( 6473): #4      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #6      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #7      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #9      _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #10     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=3, endIndex=16
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (start): Invalid value: Not in inclusive range 0..2: 3   
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:387:7)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:72:22)
-E/flutter ( 6473): #4      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:125:40)
-E/flutter ( 6473): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=3, endIndex=16
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (start): Invalid value: Not in inclusive range 0..2: 3   
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:387:7)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:70:26)
-E/flutter ( 6473): #4      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #6      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #7      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #9      _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #10     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=3, endIndex=16
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (start): Invalid value: Not in inclusive range 0..2: 3   
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:387:7)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:72:22)
-E/flutter ( 6473): #4      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:125:40)
-E/flutter ( 6473): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=3, endIndex=16
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (start): Invalid value: Not in inclusive range 0..2: 3   
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:387:7)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:70:26)
-E/flutter ( 6473): #4      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #6      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #7      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #9      _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #10     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473): 
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 00 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=3, endIndex=16
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (start): Invalid value: Not in inclusive range 0..2: 3   
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:387:7)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:72:22)
-E/flutter ( 6473): #4      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:125:40)
-E/flutter ( 6473): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-D/[FBP-Android]( 6473): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android]( 6473): [FBP] onCharacteristicWrite:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android]( 6473): [FBP] onCharacteristicChanged:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:70:26)
-E/flutter ( 6473): #4      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #6      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #7      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #9      _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #10     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:72:22)
-E/flutter ( 6473): #4      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:125:40)
-E/flutter ( 6473): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:70:26)
-E/flutter ( 6473): #4      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #6      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #7      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #9      _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #10     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:72:22)
-E/flutter ( 6473): #4      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:125:40)
-E/flutter ( 6473): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:70:26)
-E/flutter ( 6473): #4      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #6      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #7      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #9      _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #10     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:72:22)
-E/flutter ( 6473): #4      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:125:40)
-E/flutter ( 6473): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-D/[FBP-Android]( 6473): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android]( 6473): [FBP] onCharacteristicWrite:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 6473): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android]( 6473): [FBP] onCharacteristicChanged:
-D/[FBP-Android]( 6473): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:70:26)
-E/flutter ( 6473): #4      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #6      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #7      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #9      _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #10     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:72:22)
-E/flutter ( 6473): #4      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:125:40)
-E/flutter ( 6473): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:70:26)
-E/flutter ( 6473): #4      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #6      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #7      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #9      _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #10     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:72:22)
-E/flutter ( 6473): #4      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:125:40)
-E/flutter ( 6473): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:70:26)
-E/flutter ( 6473): #4      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #5      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #6      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #7      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #8      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #9      _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #10     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
-I/flutter ( 6473): [TitanDeimosHandler] processReceivedData chamado com data: 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Buffer após adicionar: 0d 0a 68 30 30 30 30 03 50 68 c1 01 00 10 b5 16 0d 0a
-I/flutter ( 6473): [TitanDeimosHandler] Procurando frame: startIndex=2, endIndex=15
-I/flutter ( 6473): [TitanDeimosHandler] Erro no parsing: RangeError (end): Invalid value: Not in inclusive range 13..14: 12
-E/flutter ( 6473): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: RangeError (end): Invalid value: Only valid value is 2: 16
-E/flutter ( 6473): #0      RangeError.checkValidRange (dart:core/errors.dart:392:9)
-E/flutter ( 6473): #1      List.sublist (dart:core-patch/growable_array.dart:84:38)
-E/flutter ( 6473): #2      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:175:40)
-E/flutter ( 6473): #3      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:72:22)
-E/flutter ( 6473): #4      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:125:40)
-E/flutter ( 6473): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
-E/flutter ( 6473): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
-E/flutter ( 6473): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
-E/flutter ( 6473): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
-E/flutter ( 6473): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
-E/flutter ( 6473): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
-E/flutter ( 6473): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
-E/flutter ( 6473):
+I/flutter (31283): 📤 Enviando comandos para obter informações...
+I/flutter (31283): [TitanDeimosHandler] Montando pacote para comando: FF00, valor: 
+I/flutter (31283): [TitanDeimosHandler] Enviando comando: FF00, valor:
+I/flutter (31283): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 00 ff e5 16
+D/[FBP-Android](31283): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](31283): [FBP] onCharacteristicWrite:
+D/[FBP-Android](31283): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](31283): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android](31283): [FBP] onCharacteristicChanged:
+D/[FBP-Android](31283): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](31283): [FBP] onCharacteristicChanged:
+D/[FBP-Android](31283): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 54 79 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 54 79
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \95, calculado: \198
+I/flutter (31283): [TitanDeimosHandler] Checksum inválido!
+I/flutter (31283): [TitanDeimosHandler] Frame inválido ou checksum incorreto!
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 54 79 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Montando pacote para comando: 9005, valor: 
+I/flutter (31283): [TitanDeimosHandler] Enviando comando: 9005, valor: 
+I/flutter (31283): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 05 90 7b 16
+D/[FBP-Android](31283): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](31283): [FBP] onCharacteristicWrite:
+D/[FBP-Android](31283): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](31283): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android](31283): [FBP] onCharacteristicChanged:
+D/[FBP-Android](31283): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 52 00 4f 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \79, calculado: \79
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \05 90 52 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005, realPayload=[52 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {usageCounter: 82, command: 9005}
+I/flutter (31283): [TitanDeimosHandler] Montando pacote para comando: 9007, valor: 
+I/flutter (31283): [TitanDeimosHandler] Enviando comando: 9007, valor: 
+I/flutter (31283): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 07 90 7d 16
+D/[FBP-Android](31283): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](31283): [FBP] onCharacteristicWrite:
+D/[FBP-Android](31283): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](31283): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android](31283): [FBP] onCharacteristicChanged:
+D/[FBP-Android](31283): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](31283): [FBP] onCharacteristicChanged:
+D/[FBP-Android](31283): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \150, calculado: \150
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \07 90 24 11 19 10 15 20
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9007, realPayload=[24 11 19 10 15 20]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {lastCalibrationDate: 2036.17.25, command: 9007}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Montando pacote para comando: 9004, valor: 
+I/flutter (31283): [TitanDeimosHandler] Enviando comando: 9004, valor: 
+I/flutter (31283): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 04 90 7a 16
+D/[FBP-Android](31283): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android](31283): [FBP] onCharacteristicWrite:
+D/[FBP-Android](31283): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android](31283): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android](31283): [FBP] onCharacteristicChanged:
+D/[FBP-Android](31283): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}
+I/flutter (31283): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16 0d 0a
+I/flutter (31283): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 36 00 32 16
+I/flutter (31283): [TitanDeimosHandler] Checksum recebido: \50, calculado: \50
+I/flutter (31283): [TitanDeimosHandler] Payload extraído: \04 90 36 00
+I/flutter (31283): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004, realPayload=[36 0]
+I/flutter (31283): [TitanDeimosHandler] Frame processado com sucesso: {battery: 54, command: 9004}

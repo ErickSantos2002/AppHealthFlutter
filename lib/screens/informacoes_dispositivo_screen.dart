@@ -237,12 +237,17 @@ class _InformacoesDispositivoScreenState
         bluetoothNotifier.sendCommand("A03", "0");
         await Future.delayed(const Duration(milliseconds: 500));
         bluetoothNotifier.sendCommand("A04", "0");
-      } else if (deviceName.contains("deimos") || deviceName.contains("hlx")) {
-        bluetoothNotifier.sendCommand("9002", "");
+      } else if (deviceName.contains("deimos") ||
+          deviceName.contains("hlx") ||
+          deviceName.contains("titan")) {
+        // Comandos corretos para Titan/Deimos/HLX
+        bluetoothNotifier.sendCommand("FF00", ""); // Firmware
         await Future.delayed(const Duration(milliseconds: 500));
-        bluetoothNotifier.sendCommand("9003", "");
+        bluetoothNotifier.sendCommand("9005", ""); // Contagem de uso
         await Future.delayed(const Duration(milliseconds: 500));
-        bluetoothNotifier.sendCommand("9004", "");
+        bluetoothNotifier.sendCommand("9007", ""); // Última calibração
+        await Future.delayed(const Duration(milliseconds: 500));
+        bluetoothNotifier.sendCommand("9004", ""); // Bateria
       } else {
         print("❌ Tipo de dispositivo desconhecido para envio de comandos!");
       }
@@ -278,11 +283,7 @@ class _InformacoesDispositivoScreenState
 
   Widget _buildDeviceInfo() {
     final deviceInfo = ref.watch(bluetoothProvider).deviceInfo;
-    final deviceName =
-        ref.watch(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
-    final isIBlow = deviceName.contains("iblow");
-
-    // Fallbacks para exibição
+    // Exibe sempre as três informações principais para todos os dispositivos
     final versao = deviceInfo?.firmware ?? "Carregando...";
     final uso =
         deviceInfo?.usageCounter != null
@@ -301,12 +302,11 @@ class _InformacoesDispositivoScreenState
             "Contagem de Uso",
             _formatarQuantidadeTestes(uso),
           ),
-          if (isIBlow)
-            _buildInfoCard(
-              Icons.date_range,
-              "Última Calibração",
-              _formatarData(calibracao),
-            ),
+          _buildInfoCard(
+            Icons.date_range,
+            "Última Calibração",
+            _formatarData(calibracao),
+          ),
           const SizedBox(height: 20),
           Center(
             child: ElevatedButton.icon(
