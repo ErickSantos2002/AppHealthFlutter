@@ -241,6 +241,7 @@ class TitanDeimosHandler implements BluetoothHandler {
         print(
           '[TitanDeimosHandler] Frame detectado: \\${frame.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
         );
+        print('[TitanDeimosHandler] Frame decimal: ${frame}');
         _receiveBuffer.clear();
         _lastNotification = [];
         final result = _processCompleteFrame(frame);
@@ -303,9 +304,15 @@ class TitanDeimosHandler implements BluetoothHandler {
     }
     List<int> payload = data.sublist(payloadStart, payloadEnd);
     int receivedChecksum = data[checksumPos];
-    int calculatedChecksum = data
-        .sublist(0, checksumPos)
-        .fold(0, (sum, b) => (sum + b) & 0xFF);
+    int _calculateChecksum(List<int> data, int checksumPos) {
+      int sum = 0;
+      for (int i = 0; i < checksumPos; i++) {
+        sum += data[i];
+      }
+      return sum & 0xFF;
+    }
+
+    int calculatedChecksum = _calculateChecksum(data, checksumPos);
     print(
       '[TitanDeimosHandler] Checksum recebido: \\${receivedChecksum}, calculado: \\${calculatedChecksum}',
     );

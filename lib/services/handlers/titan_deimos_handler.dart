@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'bluetooth_handler.dart';
+import 'package:collection/collection.dart';
 
 class TitanDeimosHandler implements BluetoothHandler {
   BluetoothDevice? _device;
@@ -223,55 +224,66 @@ class TitanDeimosHandler implements BluetoothHandler {
     return frame;
   }
 
-  // ATENÇÃO: Todo processamento de frame deve ser feito APENAS neste loop!
-  // Nunca chame _processCompleteFrame fora deste contexto e nunca manipule _receiveBuffer fora daqui.
+  List<int> _lastNotification = [];
+
   @override
   Map<String, dynamic>? processReceivedData(List<int> data) {
     print(
       '[TitanDeimosHandler] processReceivedData chamada com: \\${data.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
     );
-    _receiveBuffer.addAll(data);
-    bool foundFrame = false;
-    while (true) {
-      int startIndex = _receiveBuffer.indexWhere((e) => e == 0x68);
-      if (startIndex == -1) break;
-      int endIndex = _receiveBuffer.indexWhere((e) => e == 0x16, startIndex + 1);
-      if (endIndex == -1) break;
-      // Frame mínimo: pelo menos 12 bytes (protocolo)
-      if (endIndex - startIndex + 1 < 12) {
-        _receiveBuffer.removeAt(startIndex);
-        continue;
-      }
-      final frame = _receiveBuffer.sublist(startIndex, endIndex + 1);
-      print('[TitanDeimosHandler] Frame detectado: \\${frame.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}');
-      _receiveBuffer.removeRange(startIndex, endIndex + 1);
-      final result = _processCompleteFrame(frame);
-      if (result != null) {
-        foundFrame = true;
-        if (result['deviceAddress'] != null) {
-          setDeviceAddress(result['deviceAddress']);
-          _handshakeComplete = true;
-          print('[TitanDeimosHandler] Handshake completo! Endereço atualizado: \\${_deviceAddress.map((b) => b.toRadixString(16)).join(' ')}');
+    // Se a notificação contém 0x16, processa o frame acumulado
+    if (data.contains(0x16)) {
+      _receiveBuffer.addAll(data);
+      int startIndex = _receiveBuffer.indexOf(0x68);
+      int endIndex = _receiveBuffer.indexOf(0x16, startIndex);
+      if (startIndex != -1 && endIndex != -1 && endIndex > startIndex) {
+        final frame = _receiveBuffer.sublist(startIndex, endIndex + 1);
+        print(
+          '[TitanDeimosHandler] Frame detectado: \\${frame.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
+        );
+        print('[TitanDeimosHandler] Frame decimal: ${frame}');
+        _receiveBuffer.clear();
+        _lastNotification = [];
+        final result = _processCompleteFrame(frame);
+        if (result != null) {
+          if (result['deviceAddress'] != null) {
+            setDeviceAddress(result['deviceAddress']);
+            _handshakeComplete = true;
+            print(
+              '[TitanDeimosHandler] Handshake completo! Endereço atualizado: \\${_deviceAddress.map((b) => b.toRadixString(16)).join(' ')}',
+            );
+          }
+          if (onData != null) onData!(result);
+          return result;
+        } else {
+          print('[TitanDeimosHandler] Frame inválido ou checksum incorreto!');
         }
-        if (result['command'] == 'FF04') {
-          // Não faz nada, só aguarda FF02
-        }
-        print('[TitanDeimosHandler] Frame processado com sucesso: \\${result.toString()}');
-        if (onData != null) onData!(result);
       } else {
-        print('[TitanDeimosHandler] Frame inválido ou checksum incorreto!');
-        // Descarta só o 0x68 atual e tenta do próximo
-        _receiveBuffer.removeAt(startIndex);
+        print(
+          '[TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.',
+        );
+        _receiveBuffer.clear();
+        _lastNotification = [];
+      }
+    } else {
+      // Só acumula se for diferente da última notificação
+      if (!ListEquality().equals(data, _lastNotification)) {
+        _receiveBuffer.addAll(data);
+        _lastNotification = List<int>.from(data);
+        print(
+          '[TitanDeimosHandler] Dados acumulados aguardando 0x16. Buffer: \\${_receiveBuffer.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
+        );
+      } else {
+        print('[TitanDeimosHandler] Notificação repetida ignorada.');
       }
     }
-    return foundFrame ? {} : null;
+    return null;
   }
 
   Map<String, dynamic>? _processCompleteFrame(List<int> data) {
     print(
       '[TitanDeimosHandler] _processCompleteFrame chamada com: \\${data.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
     );
-    // O frame já deve vir do 0x68 ao 0x16 (inclusive)
     if (data.length < 12 ||
         data[0] != 0x68 ||
         data[7] != 0x68 ||
@@ -282,18 +294,25 @@ class TitanDeimosHandler implements BluetoothHandler {
     int length = data[9] + (data[10] << 8);
     int payloadStart = 11;
     int payloadEnd = payloadStart + length;
-    int checksumPos = payloadEnd;
-    // O frame já está delimitado, então o tamanho máximo é data.length
-    // O frame deve terminar exatamente em 0x16
-    if (data.length != checksumPos + 2) { // +1 checksum, +1 0x16
-      print('[TitanDeimosHandler] Frame tamanho inesperado! data.length=\\${data.length}, esperado=\\${checksumPos + 2}');
+    int checksumPos = data.length - 2;
+    int endPos = checksumPos + 1;
+    if (data.length < endPos + 1) {
+      print(
+        '[TitanDeimosHandler] Frame menor que o esperado para o payload! data.length=\\${data.length}, esperado=\\${endPos + 1}',
+      );
       return null;
     }
     List<int> payload = data.sublist(payloadStart, payloadEnd);
     int receivedChecksum = data[checksumPos];
-    int calculatedChecksum = data
-        .sublist(0, checksumPos)
-        .fold(0, (sum, b) => (sum + b) & 0xFF);
+    int _calculateChecksum(List<int> data, int checksumPos) {
+      int sum = 0;
+      for (int i = 0; i < checksumPos; i++) {
+        sum += data[i];
+      }
+      return sum & 0xFF;
+    }
+
+    int calculatedChecksum = _calculateChecksum(data, checksumPos);
     print(
       '[TitanDeimosHandler] Checksum recebido: \\${receivedChecksum}, calculado: \\${calculatedChecksum}',
     );
@@ -306,32 +325,34 @@ class TitanDeimosHandler implements BluetoothHandler {
     );
 
     int control = data[8];
-    // Se for resposta de dados (0x81), o comando está nos dois primeiros bytes do payload (sempre little-endian: LSB, MSB)
+    // Se for resposta de dados (0x81), o comando está nos dois primeiros bytes do payload
     if (control == 0x81 && payload.length >= 2) {
       int cmdL = payload[0];
       int cmdH = payload[1];
-      String cmdHex = (cmdH << 8 | cmdL).toRadixString(16).padLeft(4, '0').toUpperCase();
+      String cmdHex =
+          (cmdH << 8 | cmdL).toRadixString(16).padLeft(4, '0').toUpperCase();
       List<int> realPayload = payload.length > 2 ? payload.sublist(2) : [];
-      print('[TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: $cmdHex');
+      print(
+        '[TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: $cmdHex',
+      );
       // --- HANDSHAKE ---
       if (!_handshakeComplete && cmdHex == 'FF02' && realPayload.length == 6) {
-        print('[TitanDeimosHandler] [Handshake] Endereço extraído do payload FF02: \\${realPayload.map((b) => b.toRadixString(16)).join(' ')}');
+        print(
+          '[TitanDeimosHandler] [Handshake] Endereço extraído do payload FF02: \\${realPayload.map((b) => b.toRadixString(16)).join(' ')}',
+        );
         return {'deviceAddress': realPayload, 'command': cmdHex};
       }
       // --- RESPOSTAS DE DADOS ---
       if (cmdHex == 'FF00') {
-        // Versão do firmware (ASCII, pode ter bytes nulos/lixo/0xFF)
-        // Decodifica apenas bytes ASCII válidos, ignora nulos e 0xFF
-        String fw = String.fromCharCodes(
-          realPayload.where((b) => b >= 32 && b <= 126),
-        );
-        print('[TitanDeimosHandler] Firmware extraído: ' + fw);
-        return {'firmware': fw, 'command': cmdHex};
+        // Versão do firmware
+        return {'firmware': utf8.decode(realPayload), 'command': cmdHex};
       } else if (cmdHex == 'FF02') {
+        // Endereço do dispositivo
         if (realPayload.length == 6) {
           return {'deviceAddress': realPayload, 'command': cmdHex};
         }
       } else if (cmdHex == '9004') {
+        // Bateria
         if (realPayload.length >= 2) {
           int batL = realPayload[0];
           int batH = realPayload[1];
@@ -339,6 +360,7 @@ class TitanDeimosHandler implements BluetoothHandler {
           return {'battery': battery, 'command': cmdHex};
         }
       } else if (cmdHex == '9005') {
+        // Contador de uso
         if (realPayload.length >= 2) {
           int recL = realPayload[0];
           int recH = realPayload[1];
@@ -346,16 +368,18 @@ class TitanDeimosHandler implements BluetoothHandler {
           return {'usageCounter': records, 'command': cmdHex};
         }
       } else if (cmdHex == '9007') {
+        // Data de calibração
         if (realPayload.length >= 3) {
           int year = 2000 + realPayload[0];
           String month = realPayload[1].toString().padLeft(2, '0');
           String day = realPayload[2].toString().padLeft(2, '0');
-          String date = ' 2$year.$month.$day';
+          String date = '$year.$month.$day';
           return {'lastCalibrationDate': date, 'command': cmdHex};
         }
       } else if (cmdHex == 'FF04') {
         return {'command': cmdHex};
       } else if (cmdHex == 'FF01') {
+        // Data/hora do dispositivo
         if (realPayload.length >= 6) {
           int year = 2000 + realPayload[0];
           String month = realPayload[1].toString().padLeft(2, '0');
@@ -367,11 +391,13 @@ class TitanDeimosHandler implements BluetoothHandler {
           return {'deviceDateTime': dateTime, 'command': cmdHex};
         }
       } else if (cmdHex == '9002') {
+        // Status do teste de álcool
         if (realPayload.isNotEmpty) {
           int status = realPayload[0];
           return {'testStatus': status, 'command': cmdHex};
         }
       } else if (cmdHex == '9003') {
+        // Resultado do teste de álcool
         if (realPayload.length >= 2) {
           int valL = realPayload[0];
           int valH = realPayload[1];
