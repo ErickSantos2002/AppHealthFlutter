@@ -22,7 +22,8 @@ String? ultimoComandoRecebido;
 
 class Al88IblowHandler implements BluetoothHandler {
   final Ref ref;
-  Al88IblowHandler(this.ref);
+  void Function(Map<String, dynamic>)? onData;
+  Al88IblowHandler(this.ref, {this.onData});
 
   BluetoothDevice? _connectedDevice;
   BluetoothCharacteristic? _writableCharacteristic;
@@ -110,6 +111,8 @@ class Al88IblowHandler implements BluetoothHandler {
         if (parsed != null) {
           // Notifica o provider centralizado
           ref.read(bluetoothProvider.notifier).updateDeviceInfo(parsed);
+          // Chama o callback unificado, se existir
+          if (onData != null) onData!(parsed);
         }
       }
     });
@@ -147,7 +150,14 @@ class Al88IblowHandler implements BluetoothHandler {
     final hasBattery = rawData.length == 20;
     int? battery = hasBattery ? rawData[rawData.length - 2] : null;
 
-    return {"command": commandCode, "data": receivedData, "battery": battery};
+    final result = {
+      "command": commandCode,
+      "payload": receivedData,
+      if (battery != null) "battery": battery,
+    };
+    // Chama o callback unificado, se existir
+    if (onData != null) onData!(result);
+    return result;
   }
 
   @override

@@ -1,244 +1,185 @@
-I/flutter ( 9085): [TitanDeimosHandler] Enviando comando: FF02, valor:
-I/flutter ( 9085): [TitanDeimosHandler] Pacote enviado (HEX): 68 99 99 99 99 99 99 68 01 02 00 02 ff 6a 16
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
-D/[FBP-Android]( 9085): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt( 9085): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android]( 9085): [FBP] onDescriptorWrite:
-D/[FBP-Android]( 9085): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 9085): [FBP]   desc: 2902
-D/[FBP-Android]( 9085): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android]( 9085): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android]( 9085): [FBP] onCharacteristicWrite:
-D/[FBP-Android]( 9085): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 9085): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android]( 9085): [FBP] onCharacteristicChanged:
-D/[FBP-Android]( 9085): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android]( 9085): [FBP] onCharacteristicChanged:
-D/[FBP-Android]( 9085): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Dados acumulados aguardando fim do frame. Buffer: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Dados acumulados aguardando fim do frame. Buffer: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter ( 9085): ❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \02 90 05
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter (15200): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \02 90 05
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \02 90 05
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+D/[FBP-Android](15200): [FBP] onCharacteristicChanged:
+D/[FBP-Android](15200): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter (15200): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+E/flutter (15200): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: type 'Null' is not a subtype of type 'int'
+E/flutter (15200): #0      BluetoothNotifier._processarTeste (package:Health_App/providers/bluetooth_provider.dart:257:23)
+E/flutter (15200): #1      BluetoothNotifier.onDataFromHandler (package:Health_App/providers/bluetooth_provider.dart:429:5)
+E/flutter (15200): #2      BluetoothManager._handleData (package:Health_App/services/bluetooth_manager.dart:18:42)
+E/flutter (15200): #3      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:297:36)
+E/flutter (15200): #4      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:149:9)
+E/flutter (15200): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
+E/flutter (15200): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
+E/flutter (15200): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
+E/flutter (15200): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
+E/flutter (15200): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
+E/flutter (15200): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
+E/flutter (15200): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
+E/flutter (15200):
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter (15200): ! Teste duplicado ignorado!
+E/flutter (15200): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: type 'Null' is not a subtype of type 'int'
+E/flutter (15200): #0      BluetoothNotifier._processarTeste (package:Health_App/providers/bluetooth_provider.dart:257:23)
+E/flutter (15200): #1      BluetoothNotifier.onDataFromHandler (package:Health_App/providers/bluetooth_provider.dart:429:5)
+E/flutter (15200): #2      BluetoothManager._handleData (package:Health_App/services/bluetooth_manager.dart:18:42)
+E/flutter (15200): #3      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:297:36)
+E/flutter (15200): #4      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:75:22)
+E/flutter (15200): #5      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:156:40)
+E/flutter (15200): #6      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
+E/flutter (15200): #7      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
+E/flutter (15200): #8      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
+E/flutter (15200): #9      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
+E/flutter (15200): #10     _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
+E/flutter (15200): #11     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
+E/flutter (15200): #12     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
+E/flutter (15200):
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter (15200): ! Teste duplicado ignorado!
+E/flutter (15200): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: type 'Null' is not a subtype of type 'int'
+E/flutter (15200): #0      BluetoothNotifier._processarTeste (package:Health_App/providers/bluetooth_provider.dart:257:23)
+E/flutter (15200): #1      BluetoothNotifier.onDataFromHandler (package:Health_App/providers/bluetooth_provider.dart:429:5)
+E/flutter (15200): #2      BluetoothManager._handleData (package:Health_App/services/bluetooth_manager.dart:18:42)
+E/flutter (15200): #3      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:297:36)
+E/flutter (15200): #4      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:75:22)
+E/flutter (15200): #5      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:156:40)
+E/flutter (15200): #6      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
+E/flutter (15200): #7      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
+E/flutter (15200): #8      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
+E/flutter (15200): #9      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
+E/flutter (15200): #10     _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
+E/flutter (15200): #11     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
+E/flutter (15200): #12     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
+E/flutter (15200):
+I/flutter (15200): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter (15200): ! Teste duplicado ignorado!
+E/flutter (15200): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: type 'Null' is not a subtype of type 'int'
+E/flutter (15200): #0      BluetoothNotifier._processarTeste (package:Health_App/providers/bluetooth_provider.dart:257:23)
+E/flutter (15200): #1      BluetoothNotifier.onDataFromHandler (package:Health_App/providers/bluetooth_provider.dart:429:5)
+E/flutter (15200): #2      BluetoothManager._handleData (package:Health_App/services/bluetooth_manager.dart:18:42)
+E/flutter (15200): #3      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:297:36)
+E/flutter (15200): #4      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:149:9)
+E/flutter (15200): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
+E/flutter (15200): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
+E/flutter (15200): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
+E/flutter (15200): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
+E/flutter (15200): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
+E/flutter (15200): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
+E/flutter (15200): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
+E/flutter (15200):
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter (15200): ! Teste duplicado ignorado!
+E/flutter (15200): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: type 'Null' is not a subtype of type 'int'
+E/flutter (15200): #0      BluetoothNotifier._processarTeste (package:Health_App/providers/bluetooth_provider.dart:257:23)
+E/flutter (15200): #1      BluetoothNotifier.onDataFromHandler (package:Health_App/providers/bluetooth_provider.dart:429:5)
+E/flutter (15200): #2      BluetoothManager._handleData (package:Health_App/services/bluetooth_manager.dart:18:42)
+E/flutter (15200): #3      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:297:36)
+E/flutter (15200): #4      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:75:22)
+E/flutter (15200): #5      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:156:40)
+E/flutter (15200): #6      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
+E/flutter (15200): #7      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
+E/flutter (15200): #8      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
+E/flutter (15200): #9      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
+E/flutter (15200): #10     _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
+E/flutter (15200): #11     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
+E/flutter (15200): #12     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
+E/flutter (15200):
+I/flutter (15200): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter (15200): ! Teste duplicado ignorado!
+E/flutter (15200): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: type 'Null' is not a subtype of type 'int'
+E/flutter (15200): #0      BluetoothNotifier._processarTeste (package:Health_App/providers/bluetooth_provider.dart:257:23)
+E/flutter (15200): #1      BluetoothNotifier.onDataFromHandler (package:Health_App/providers/bluetooth_provider.dart:429:5)
+E/flutter (15200): #2      BluetoothManager._handleData (package:Health_App/services/bluetooth_manager.dart:18:42)
+E/flutter (15200): #3      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:297:36)
+E/flutter (15200): #4      TitanDeimosHandler.discoverCharacteristics.<anonymous closure> (package:Health_App/services/handlers/titan_deimos_handler.dart:149:9)
+E/flutter (15200): #5      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
+E/flutter (15200): #6      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
+E/flutter (15200): #7      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
+E/flutter (15200): #8      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
+E/flutter (15200): #9      _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
+E/flutter (15200): #10     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
+E/flutter (15200): #11     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
+E/flutter (15200):
+I/flutter (15200): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter (15200): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter (15200): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter (15200): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter (15200): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter (15200): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter (15200): ! Teste duplicado ignorado!
+E/flutter (15200): [ERROR:flutter/runtime/dart_vm_initializer.cc(40)] Unhandled Exception: type 'Null' is not a subtype of type 'int'
+E/flutter (15200): #0      BluetoothNotifier._processarTeste (package:Health_App/providers/bluetooth_provider.dart:257:23)
+E/flutter (15200): #1      BluetoothNotifier.onDataFromHandler (package:Health_App/providers/bluetooth_provider.dart:429:5)
+E/flutter (15200): #2      BluetoothManager._handleData (package:Health_App/services/bluetooth_manager.dart:18:42)
+E/flutter (15200): #3      TitanDeimosHandler.processReceivedData (package:Health_App/services/handlers/titan_deimos_handler.dart:297:36)
+E/flutter (15200): #4      BluetoothManager.processReceivedData (package:Health_App/services/bluetooth_manager.dart:75:22)
+E/flutter (15200): #5      BluetoothNotifier.listenToNotifications.<anonymous closure> (package:Health_App/providers/bluetooth_provider.dart:156:40)
+E/flutter (15200): #6      _RootZone.runUnaryGuarded (dart:async/zone.dart:1778:10)
+E/flutter (15200): #7      _BufferingStreamSubscription._sendData (dart:async/stream_impl.dart:381:11)
+E/flutter (15200): #8      _DelayedData.perform (dart:async/stream_impl.dart:573:14)
+E/flutter (15200): #9      _PendingEvents.handleNext (dart:async/stream_impl.dart:678:11)
+E/flutter (15200): #10     _PendingEvents.schedule.<anonymous closure> (dart:async/stream_impl.dart:649:7)
+E/flutter (15200): #11     _microtaskLoop (dart:async/schedule_microtask.dart:40:21)
+E/flutter (15200): #12     _startMicrotaskLoop (dart:async/schedule_microtask.dart:49:5)
+E/flutter (15200):

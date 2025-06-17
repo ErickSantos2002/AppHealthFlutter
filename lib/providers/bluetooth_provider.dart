@@ -7,6 +7,8 @@ import '../models/test_model.dart';
 import '../providers/historico_provider.dart';
 import 'funcionario_provider.dart';
 import '../models/device_info.dart';
+import '../services/bluetooth_scan_service.dart';
+import 'dart:async';
 
 /// 🔹 Estado global para gerenciar a conexão Bluetooth
 class BluetoothState {
@@ -58,6 +60,36 @@ class BluetoothState {
 class BluetoothNotifier extends StateNotifier<BluetoothState> {
   final BluetoothManager _bluetoothManager;
   final Ref ref;
+
+  // Getters para facilitar o consumo na tela
+  String get lastCommand {
+    // Retorna apenas o último comando processado recebido do handler
+    return _lastParsedCommand ?? "-";
+  }
+
+  String get lastData {
+    // Retorna apenas o último dado processado recebido do handler
+    return _lastParsedData ?? "-";
+  }
+
+  int get lastBatteryLevel {
+    return state.deviceInfo?.battery ?? 0;
+  }
+
+  double? get testResult => state.deviceInfo?.testResult;
+
+  String get statusTeste {
+    // Exemplo: pode ser "Aguardando", "Analisando", etc, conforme lógica do handler
+    return _lastStatusTeste ?? "-";
+  }
+
+  int get soproProgress => _lastSoproProgress ?? 0;
+
+  // Variáveis internas para armazenar últimos dados recebidos
+  String? _lastParsedCommand;
+  String? _lastParsedData;
+  String? _lastStatusTeste;
+  int? _lastSoproProgress;
 
   BluetoothNotifier(this.ref)
     : _bluetoothManager = BluetoothManager(ref),
@@ -120,14 +152,26 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
   void listenToNotifications() {
     final characteristic = state.notifiableCharacteristic;
     if (characteristic == null) return;
-
     characteristic.value.listen((rawData) {
       final parsed = _bluetoothManager.processReceivedData(rawData);
       if (parsed == null) return;
-
       // Atualiza DeviceInfo centralizado
       updateDeviceInfo(parsed);
-
+      // Atualiza variáveis para UI
+      _lastParsedCommand = parsed["command"]?.toString();
+      _lastParsedData =
+          parsed["data"]?.toString() ?? parsed["payload"]?.toString();
+      if (parsed["command"] == "T07" && parsed["data"] != null) {
+        // Progresso do sopro
+        _lastSoproProgress = int.tryParse(parsed["data"].toString());
+      }
+      if (parsed["command"] == "T10") {
+        _lastStatusTeste = "Analisando";
+      } else if (parsed["command"] == "T12") {
+        _lastStatusTeste = "Aguardando";
+      } else if (parsed["command"] == "T11") {
+        _lastStatusTeste = "Resultado";
+      }
       // Mantém processamento de teste para iBlow
       _processarTeste(parsed);
     });
@@ -151,73 +195,130 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     final command = parsed["command"];
     final data = parsed["data"];
     final battery = parsed["battery"];
+    final testResult = parsed["testResult"];
+    final deviceName =
+        state.connectedDevice != null
+            ? state.connectedDevice!.name.toLowerCase()
+            : "";
+    final agora = DateTime.now();
+    final funcionarios = ref.read(funcionarioProvider);
+    final funcionario = funcionarios.firstWhere(
+      (f) => f.id == state.selectedFuncionarioId,
+      orElse: () => FuncionarioModel(id: "visitante", nome: "Visitante"),
+    );
+    String resultadoFinal = "";
+    String unidade = "";
+    String statusCalibracao = "N/A";
+    bool isDuplicado = false;
+    bool isFavorito = false;
 
-    if (command == "T11") {
-      final agora = DateTime.now();
+    // --- iBlow/AL88 ---
+    if ((deviceName.contains("iblow") || deviceName.contains("al88")) &&
+        command == "T11") {
+      // Exemplo de data: "123,3,0.05,1"
+      if (data == null) return;
       final partes = data.split(",");
       if (partes.length < 3) return;
-
-      String unidade = _converterUnidade(partes[1]);
-      String valor = partes[2];
-      String statusCalibracao =
+      unidade = _converterUnidade(partes[1]);
+      resultadoFinal = "${partes[2]} $unidade";
+      statusCalibracao =
           partes.length > 3 && partes[3] == "1"
               ? "Modo Calibração"
               : "Modo Normal";
-
-      final resultadoFinal = "$valor $unidade";
-
-      // 🔹 Se for o mesmo resultado que já foi salvo, ignoramos
       if (_ultimoResultadoSalvo == resultadoFinal) {
         print("⚠️ Teste duplicado ignorado!");
-        return;
+        isDuplicado = true;
       }
-
-      _ultimoResultadoSalvo =
-          resultadoFinal; // Atualiza o último resultado salvo
-
-      // 🔹 Pegamos a lista de funcionários
-      final funcionarios = ref.read(funcionarioProvider);
-
-      // 🔹 Encontramos o funcionário correspondente ao ID selecionado
-      final funcionario = funcionarios.firstWhere(
-        (f) => f.id == state.selectedFuncionarioId,
-        orElse: () => FuncionarioModel(id: "visitante", nome: "Visitante"),
-      );
-
-      final isAcima = TestModel(
+      _ultimoResultadoSalvo = resultadoFinal;
+      isFavorito = TestModel(
         timestamp: agora,
         command: resultadoFinal,
         statusCalibracao: statusCalibracao,
-        batteryLevel: battery,
+        batteryLevel: 0,
         funcionarioId: funcionario.id,
         funcionarioNome: funcionario.nome,
         photoPath: state.lastCapturedPhotoPath,
         deviceName: state.connectedDevice?.name,
       ).isAcimaDaTolerancia(ref.read(configuracoesProvider).tolerancia);
-
-      final novoTeste = TestModel(
+    }
+    // --- HLX/Deimos ---
+    else if ((deviceName.contains("hlx") || deviceName.contains("deimos")) &&
+        command == "9003") {
+      if (testResult == null || (testResult is! num)) {
+        print(
+          "[BluetoothProvider] Comando 9003 recebido, mas testResult é null ou não numérico. Ignorando. parsed: $parsed",
+        );
+        return;
+      }
+      unidade = "mg/L";
+      resultadoFinal = "${testResult.toString()} $unidade";
+      if (_ultimoResultadoSalvo == resultadoFinal) {
+        print("⚠️ Teste duplicado ignorado!");
+        isDuplicado = true;
+      }
+      _ultimoResultadoSalvo = resultadoFinal;
+      isFavorito = TestModel(
         timestamp: agora,
         command: resultadoFinal,
         statusCalibracao: statusCalibracao,
-        batteryLevel: battery,
+        batteryLevel: 0,
         funcionarioId: funcionario.id,
         funcionarioNome: funcionario.nome,
         photoPath: state.lastCapturedPhotoPath,
         deviceName: state.connectedDevice?.name,
-        isFavorito:
-            isAcima, // ✅ Isso aqui faz ele já ir como favorito se passar o limite
-      );
-
-      state = state.copyWith(lastCapturedPhotoPath: null);
-
-      ref.read(historicoProvider.notifier).adicionarTeste(novoTeste);
-      print("✅ Teste salvo com sucesso: $resultadoFinal");
-      // Se for iBlow, desconecta e reconecta para resetar interface
-      final deviceName = state.connectedDevice?.name.toLowerCase() ?? "";
-      if (deviceName.contains("iblow")) {
-        print("🔁 iBlow detectado: reiniciando via reconexão...");
-        _reiniciarIBlow();
+      ).isAcimaDaTolerancia(ref.read(configuracoesProvider).tolerancia);
+    }
+    // --- Outros aparelhos: tenta lógica genérica ---
+    else if (command == "9003") {
+      if (testResult == null || (testResult is! num)) {
+        print(
+          "[BluetoothProvider] Comando 9003 recebido (genérico), mas testResult é null ou não numérico. Ignorando. parsed: $parsed",
+        );
+        return;
       }
+      unidade = "mg/L";
+      resultadoFinal = "${testResult.toString()} $unidade";
+      if (_ultimoResultadoSalvo == resultadoFinal) {
+        print("⚠️ Teste duplicado ignorado!");
+        isDuplicado = true;
+      }
+      _ultimoResultadoSalvo = resultadoFinal;
+      isFavorito = TestModel(
+        timestamp: agora,
+        command: resultadoFinal,
+        statusCalibracao: statusCalibracao,
+        batteryLevel: 0,
+        funcionarioId: funcionario.id,
+        funcionarioNome: funcionario.nome,
+        photoPath: state.lastCapturedPhotoPath,
+        deviceName: state.connectedDevice?.name,
+      ).isAcimaDaTolerancia(ref.read(configuracoesProvider).tolerancia);
+    }
+    // --- Se não for resultado de teste, não armazena ---
+    else {
+      return;
+    }
+
+    if (isDuplicado) return;
+
+    final novoTeste = TestModel(
+      timestamp: agora,
+      command: resultadoFinal,
+      statusCalibracao: statusCalibracao,
+      batteryLevel: 0,
+      funcionarioId: funcionario.id,
+      funcionarioNome: funcionario.nome,
+      photoPath: state.lastCapturedPhotoPath,
+      deviceName: state.connectedDevice?.name ?? '',
+      isFavorito: isFavorito,
+    );
+    state = state.copyWith(lastCapturedPhotoPath: null);
+    ref.read(historicoProvider.notifier).adicionarTeste(novoTeste);
+    print("✅ Teste salvo com sucesso: $resultadoFinal");
+    // Reinicia iBlow após teste
+    if (deviceName.contains("iblow")) {
+      print("🔁 iBlow detectado: reiniciando via reconexão...");
+      _reiniciarIBlow();
     }
   }
 
@@ -329,6 +430,15 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     state = state.copyWith(deviceInfo: updated);
   }
 
+  /// Método unificado para receber dados dos handlers
+  void onDataFromHandler(Map<String, dynamic> data) {
+    // Atualiza DeviceInfo se aplicável
+    updateDeviceInfo(data);
+    // Processa teste se aplicável (ex: comando de resultado)
+    _processarTeste(data);
+    // Pode adicionar outros tratamentos centralizados aqui
+  }
+
   // Adiciona método público para processar dados recebidos
   Map<String, dynamic>? processReceivedData(List<int> rawData) {
     return _bluetoothManager.processReceivedData(rawData);
@@ -339,4 +449,34 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
 final bluetoothProvider =
     StateNotifierProvider<BluetoothNotifier, BluetoothState>(
       (ref) => BluetoothNotifier(ref),
+    );
+
+class BluetoothScanNotifier extends StateNotifier<List<BluetoothDevice>> {
+  final BluetoothScanService _scanService = BluetoothScanService();
+  StreamSubscription<List<BluetoothDevice>>? _subscription;
+
+  BluetoothScanNotifier() : super([]) {
+    _subscription = _scanService.scannedDevicesStream.listen((devices) {
+      state = devices;
+    });
+  }
+
+  Future<void> startScan() async {
+    await _scanService.startScan();
+  }
+
+  Future<void> stopScan() async {
+    await _scanService.stopScan();
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
+  }
+}
+
+final bluetoothScanProvider =
+    StateNotifierProvider<BluetoothScanNotifier, List<BluetoothDevice>>(
+      (ref) => BluetoothScanNotifier(),
     );

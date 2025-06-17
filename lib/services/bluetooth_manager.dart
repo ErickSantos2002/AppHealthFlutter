@@ -13,24 +13,27 @@ class BluetoothManager {
 
   BluetoothHandler? _handler;
 
+  // Centraliza o recebimento dos dados dos handlers
+  void _handleData(Map<String, dynamic> data) {
+    ref.read(bluetoothProvider.notifier).onDataFromHandler(data);
+  }
+
   Future<bool> connectToDevice(BluetoothDevice device) async {
     final name = device.name.toUpperCase();
 
     // Evita reinicializar o handler se ele já existe
     if (_handler == null) {
       if (name.contains("AL88") || name.contains("IBLOW")) {
-        _handler = Al88IblowHandler(ref);
+        _handler = Al88IblowHandler(ref, onData: _handleData);
       } else if (name.contains("DEIMOS") || name.contains("HLX")) {
         _handler = TitanDeimosHandler(
-          onData: (parsed) {
-            ref.read(bluetoothProvider.notifier).updateDeviceInfo(parsed);
-          },
+          onData: _handleData,
         );
       } else {
-        throw UnsupportedError("Dispositivo não suportado: ${device.name}");
+        throw UnsupportedError("Dispositivo não suportado: \\${device.name}");
       }
     } else {
-      debugPrint("BluetoothHandler já inicializado para ${device.name}");
+      debugPrint("BluetoothHandler já inicializado para \\${device.name}");
     }
 
     return await _handler!.connectToDevice(device);
