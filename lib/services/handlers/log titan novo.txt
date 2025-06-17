@@ -1,201 +1,244 @@
-I/flutter (16129): 📤 Enviando comandos para obter informações...
-I/flutter (16129): [TitanDeimosHandler] Montando pacote para comando: FF00, valor: 
-I/flutter (16129): [TitanDeimosHandler] Enviando comando: FF00, valor:
-I/flutter (16129): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 00 ff e5 16
-D/[FBP-Android](16129): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](16129): [FBP] onCharacteristicWrite:
-D/[FBP-Android](16129): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](16129): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](16129): [FBP] onCharacteristicChanged:
-D/[FBP-Android](16129): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-I/flutter (16129): [TitanDeimosHandler] Dados acumulados aguardando 0x16. Buffer: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-D/[FBP-Android](16129): [FBP] onCharacteristicChanged:
-D/[FBP-Android](16129): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 54 79 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 8, 0, 0, 255, 86, 49, 46, 48, 52, 66, 95, 84, 121, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 08 00 00 ff 56 31 2e 30 34 42 5f 54 79 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \121, calculado: \121
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \00 ff 56 31 2e 30 34 42
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: FF00
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 54 79 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \54 79 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] Montando pacote para comando: 9005, valor: 
-I/flutter (16129): [TitanDeimosHandler] Enviando comando: 9005, valor: 
-I/flutter (16129): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 05 90 7b 16
-D/[FBP-Android](16129): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](16129): [FBP] onCharacteristicWrite:
-D/[FBP-Android](16129): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](16129): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](16129): [FBP] onCharacteristicChanged:
-D/[FBP-Android](16129): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 5, 144, 83, 0, 80, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \05 90 53 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 5, 144, 83, 0, 80, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \05 90 53 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 5, 144, 83, 0, 80, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \05 90 53 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 5, 144, 83, 0, 80, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \05 90 53 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 5, 144, 83, 0, 80, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \05 90 53 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 5, 144, 83, 0, 80, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 05 90 53 00 50 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \80, calculado: \80
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \05 90 53 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9005
-I/flutter (16129): [TitanDeimosHandler] Montando pacote para comando: 9007, valor: 
-I/flutter (16129): [TitanDeimosHandler] Enviando comando: 9007, valor: 
-I/flutter (16129): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 07 90 7d 16
-D/[FBP-Android](16129): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](16129): [FBP] onCharacteristicWrite:
-D/[FBP-Android](16129): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](16129): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](16129): [FBP] onCharacteristicChanged:
-D/[FBP-Android](16129): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](16129): [FBP] onCharacteristicChanged:
-D/[FBP-Android](16129): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] Dados acumulados aguardando 0x16. Buffer: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96
-I/flutter (16129): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 8, 0, 7, 144, 36, 17, 25, 16, 21, 32, 150, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 08 00 07 90 24 11 19 10 15 20 96 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \150, calculado: \150
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \07 90 24 11 19 10 15 20
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9007
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.
-I/flutter (16129): [TitanDeimosHandler] Montando pacote para comando: 9004, valor: 
-I/flutter (16129): [TitanDeimosHandler] Enviando comando: 9004, valor: 
-I/flutter (16129): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 04 90 7a 16
-D/[FBP-Android](16129): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](16129): [FBP] onCharacteristicWrite:
-D/[FBP-Android](16129): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](16129): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](16129): [FBP] onCharacteristicChanged:
-D/[FBP-Android](16129): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 4, 144, 41, 0, 37, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \37, calculado: \37
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \04 90 29 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 4, 144, 41, 0, 37, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \37, calculado: \37
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \04 90 29 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 4, 144, 41, 0, 37, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \37, calculado: \37
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \04 90 29 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 4, 144, 41, 0, 37, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \37, calculado: \37
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \04 90 29 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
-I/flutter (16129): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 4, 144, 41, 0, 37, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \37, calculado: \37
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \04 90 29 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
-I/flutter (16129): [TitanDeimosHandler] processReceivedData chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16 0d 0a
-I/flutter (16129): [TitanDeimosHandler] Frame detectado: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 4, 144, 41, 0, 37, 22]
-I/flutter (16129): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 04 90 29 00 25 16
-I/flutter (16129): [TitanDeimosHandler] Checksum recebido: \37, calculado: \37
-I/flutter (16129): [TitanDeimosHandler] Payload extraído: \04 90 29 00
-I/flutter (16129): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9004
+I/flutter ( 9085): [TitanDeimosHandler] Enviando comando: FF02, valor:
+I/flutter ( 9085): [TitanDeimosHandler] Pacote enviado (HEX): 68 99 99 99 99 99 99 68 01 02 00 02 ff 6a 16
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
+D/[FBP-Android]( 9085): [FBP] onMethodCall: setNotifyValue
+D/BluetoothGatt( 9085): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
+D/[FBP-Android]( 9085): [FBP] onDescriptorWrite:
+D/[FBP-Android]( 9085): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 9085): [FBP]   desc: 2902
+D/[FBP-Android]( 9085): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android]( 9085): [FBP] onMethodCall: writeCharacteristic
+D/[FBP-Android]( 9085): [FBP] onCharacteristicWrite:
+D/[FBP-Android]( 9085): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 9085): [FBP]   status: GATT_SUCCESS (0)
+D/[FBP-Android]( 9085): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 9085): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 9085): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 9085): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Dados acumulados aguardando fim do frame. Buffer: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Dados acumulados aguardando fim do frame. Buffer: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
+I/flutter ( 9085): [TitanDeimosHandler] Notificação repetida ignorada.
+I/flutter ( 9085): ❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!

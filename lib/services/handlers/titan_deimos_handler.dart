@@ -36,15 +36,22 @@ class TitanDeimosHandler implements BluetoothHandler {
 
   Future<void> handshakeAfterConnect() async {
     _handshakeComplete = false;
+
+    // 🔧 Limpa buffers antes de iniciar novo handshake
+    _receiveBuffer.clear();
+    _lastNotification = [];
+
     // 1. Envia FF02 (ler endereço do dispositivo) com endereço broadcast
     await sendCommand('FF02', '');
     await Future.delayed(const Duration(milliseconds: 400));
+
     // Aguarda handshake completar (receber resposta FF02 ou 5003)
     int tentativas = 0;
     while (!_handshakeComplete && tentativas < 10) {
       await Future.delayed(const Duration(milliseconds: 200));
       tentativas++;
     }
+
     // Após handshake, envia FF04 (status de conexão) para liberar o dispositivo
     if (_handshakeComplete) {
       print(
@@ -228,55 +235,77 @@ class TitanDeimosHandler implements BluetoothHandler {
 
   @override
   Map<String, dynamic>? processReceivedData(List<int> data) {
-    print(
-      '[TitanDeimosHandler] processReceivedData chamada com: \\${data.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
-    );
-    // Se a notificação contém 0x16, processa o frame acumulado
-    if (data.contains(0x16)) {
-      _receiveBuffer.addAll(data);
-      int startIndex = _receiveBuffer.indexOf(0x68);
-      int endIndex = _receiveBuffer.indexOf(0x16, startIndex);
-      if (startIndex != -1 && endIndex != -1 && endIndex > startIndex) {
-        final frame = _receiveBuffer.sublist(startIndex, endIndex + 1);
-        print(
-          '[TitanDeimosHandler] Frame detectado: \\${frame.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
-        );
-        print('[TitanDeimosHandler] Frame decimal: ${frame}');
-        _receiveBuffer.clear();
-        _lastNotification = [];
-        final result = _processCompleteFrame(frame);
-        if (result != null) {
-          if (result['deviceAddress'] != null) {
-            setDeviceAddress(result['deviceAddress']);
-            _handshakeComplete = true;
-            print(
-              '[TitanDeimosHandler] Handshake completo! Endereço atualizado: \\${_deviceAddress.map((b) => b.toRadixString(16)).join(' ')}',
-            );
-          }
-          if (onData != null) onData!(result);
-          return result;
-        } else {
-          print('[TitanDeimosHandler] Frame inválido ou checksum incorreto!');
+    final hexData = data
+        .map((b) => b.toRadixString(16).padLeft(2, '0'))
+        .join(' ');
+    print('[TitanDeimosHandler] processReceivedData chamada com: $hexData');
+
+    if (data.isEmpty) {
+      print('[TitanDeimosHandler] Notificação vazia descartada.');
+      return null;
+    }
+
+    if (ListEquality().equals(data, _lastNotification)) {
+      print('[TitanDeimosHandler] Notificação repetida ignorada.');
+      return null;
+    }
+
+    if (data.first != 0x68 && _receiveBuffer.isEmpty) {
+      print(
+        '[TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.',
+      );
+      return null;
+    }
+
+    _receiveBuffer.addAll(data);
+    _lastNotification = List<int>.from(data);
+
+    // Verifica se termina com 16 0D 0A
+    final endsWith16_0D_0A =
+        _receiveBuffer.length >= 3 &&
+        _receiveBuffer[_receiveBuffer.length - 3] == 0x16 &&
+        _receiveBuffer[_receiveBuffer.length - 2] == 0x0D &&
+        _receiveBuffer[_receiveBuffer.length - 1] == 0x0A;
+
+    // Verifica se termina apenas com 16
+    final endsWith16 = _receiveBuffer.isNotEmpty && _receiveBuffer.last == 0x16;
+
+    if (endsWith16_0D_0A || endsWith16) {
+      // Determina onde termina o frame real
+      int frameEndIndex =
+          endsWith16_0D_0A ? _receiveBuffer.length - 2 : _receiveBuffer.length;
+
+      final frame = _receiveBuffer.sublist(0, frameEndIndex);
+
+      print(
+        '[TitanDeimosHandler] Frame detectado: ${frame.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
+      );
+      print('[TitanDeimosHandler] Frame decimal: $frame');
+
+      _receiveBuffer.clear();
+      _lastNotification = [];
+
+      final result = _processCompleteFrame(frame);
+      if (result != null) {
+        if (result['deviceAddress'] != null) {
+          setDeviceAddress(result['deviceAddress']);
+          _handshakeComplete = true;
+          print(
+            '[TitanDeimosHandler] Handshake completo! Endereço atualizado: ${_deviceAddress.map((b) => b.toRadixString(16)).join(' ')}',
+          );
         }
+        if (onData != null) onData!(result);
+        return result;
       } else {
-        print(
-          '[TitanDeimosHandler] Não foi possível encontrar frame válido no buffer. Limpando.',
-        );
-        _receiveBuffer.clear();
-        _lastNotification = [];
-      }
-    } else {
-      // Só acumula se for diferente da última notificação
-      if (!ListEquality().equals(data, _lastNotification)) {
-        _receiveBuffer.addAll(data);
-        _lastNotification = List<int>.from(data);
-        print(
-          '[TitanDeimosHandler] Dados acumulados aguardando 0x16. Buffer: \\${_receiveBuffer.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
-        );
-      } else {
-        print('[TitanDeimosHandler] Notificação repetida ignorada.');
+        print('[TitanDeimosHandler] Frame inválido ou checksum incorreto!');
+        return null;
       }
     }
+
+    // Ainda não chegou ao fim de frame
+    print(
+      '[TitanDeimosHandler] Dados acumulados aguardando fim do frame. Buffer: ${_receiveBuffer.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' ')}',
+    );
     return null;
   }
 
@@ -368,13 +397,20 @@ class TitanDeimosHandler implements BluetoothHandler {
           return {'usageCounter': records, 'command': cmdHex};
         }
       } else if (cmdHex == '9007') {
-        // Data de calibração
+        // Data de calibração (exibição em HEX)
         if (realPayload.length >= 3) {
-          int year = 2000 + realPayload[0];
-          String month = realPayload[1].toString().padLeft(2, '0');
-          String day = realPayload[2].toString().padLeft(2, '0');
-          String date = '$year.$month.$day';
-          return {'lastCalibrationDate': date, 'command': cmdHex};
+          String yHex = realPayload[0].toRadixString(16).padLeft(2, '0');
+          String mHex = realPayload[1].toRadixString(16).padLeft(2, '0');
+          String dHex = realPayload[2].toRadixString(16).padLeft(2, '0');
+
+          // Exibe como "DD/MM/20YY" usando os hexadecimais diretamente
+          String date = '$dHex/$mHex/20$yHex'.toUpperCase();
+
+          return {
+            'lastCalibrationDate': date,
+            'lastCalibrationRaw': realPayload,
+            'command': cmdHex,
+          };
         }
       } else if (cmdHex == 'FF04') {
         return {'command': cmdHex};
