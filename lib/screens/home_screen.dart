@@ -397,6 +397,51 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
+  String _translateStatus(String command, String data, String statusTeste) {
+    // Tradução iBlow/AL88
+    if (commandTranslations.containsKey(command)) {
+      return commandTranslations[command]!;
+    }
+    // Tradução Titan/Deimos (com base no protocolo)
+    if (command == "9001") {
+      if (data == "00") return "Pronto para uso";
+    } else if (command == "9002") {
+      // Extrai o último byte do data (pode vir como string de bytes)
+      String statusByte = data.trim();
+      if (statusByte.contains(" ")) {
+        // Separa por espaço e pega o último
+        statusByte = statusByte.split(" ").last;
+      }
+      // Tenta converter de hex para int
+      int? statusInt;
+      try {
+        statusInt = int.parse(statusByte, radix: 16);
+      } catch (_) {
+        statusInt = int.tryParse(statusByte);
+      }
+      switch (statusInt) {
+        case 0:
+          return "Soprar";
+        case 1:
+          return "Assoprando";
+        case 2:
+          return "Sopro finalizado";
+        case 3:
+          return "Sopro interrompido";
+        case 4:
+          return "Sopro recusado";
+        case 5:
+          return "Calculando resultado";
+        case 6:
+          return "Verificando calibração";
+      }
+    } else if (command == "9003") {
+      return "Resultado do teste";
+    }
+    // Fallback: mostra statusTeste
+    return statusTeste;
+  }
+
   Widget _buildConnectedUI(
     String command,
     String data,
@@ -407,6 +452,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final funcionarios = ref.watch(funcionarioProvider);
     final selectedFuncionarioId =
         ref.watch(bluetoothProvider).selectedFuncionarioId;
+    final respostaTraduzida = _translateStatus(command, data, statusTeste);
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -419,11 +465,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         const SizedBox(height: 20),
         _buildFuncionarioSelector(funcionarios, selectedFuncionarioId),
         const SizedBox(height: 20),
-        _infoCard(
-          "🔹 Resposta",
-          statusTeste,
-        ), // Mostra o status do teste como resposta
-        _infoCard("📊 Dados", data), // Mostra os dados recebidos do aparelho
+        _infoCard("🔹 Resposta", respostaTraduzida),
+        _infoCard("📊 Dados", data),
         const SizedBox(height: 30),
         ElevatedButton.icon(
           onPressed: podeIniciarTeste ? _iniciarTeste : null,
@@ -639,9 +682,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
 
     // Se a câmera está aberta para ajuste e chegou o sinal para capturar foto, tira a foto
-    if (isCapturingPhoto &&
-        bluetoothState.precisaCapturarFoto &&
-        bluetoothNotifier.testePendente != null) {
+    if (isCapturingPhoto && bluetoothState.precisaCapturarFoto) {
       print('[UI] Chamando _tirarFoto() por precisaCapturarFoto...');
       Future.microtask(() async {
         await _tirarFoto();

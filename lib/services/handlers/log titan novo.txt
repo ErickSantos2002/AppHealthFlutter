@@ -1,764 +1,350 @@
-/flutter (25361): 🔄 [bluetoothProvider] Atualizando característica de notificação global: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): ✍️ [bluetoothProvider] Atualizando característica de escrita global: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Montando pacote para comando: FF02, valor:
-I/flutter (25361): [TitanDeimosHandler] Enviando comando: FF02, valor:
-I/flutter (25361): [TitanDeimosHandler] Pacote enviado (HEX): 68 99 99 99 99 99 99 68 01 02 00 02 ff 6a 16
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida:
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com:
-I/flutter (25361): [TitanDeimosHandler] Notificação vazia descartada.
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 
-I/flutter (25361): [TitanDeimosHandler] Notificação vazia descartada.
-D/[FBP-Android](25361): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt(25361): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false        
-D/[FBP-Android](25361): [FBP] onDescriptorWrite:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP]   desc: 2902
-D/[FBP-Android](25361): [FBP]   status: GATT_SUCCESS (0)
-I/flutter (25361): [TitanDeimosHandler] Descritor 0x2902 não encontrado!
-I/flutter (25361): [BluetoothManager] Características recebidas do handler: writable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400002-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [], properties: CharacteristicProperties{broadcast: false, read: false, writeWithoutResponse: true, write: true, notify: false, indicate: false, authenticatedSignedWrites: false, extendedProperties: false, notifyEncryptionRequired: false, indicateEncryptionRequired: false}, value: []}, notifiable=BluetoothCharacteristic{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, primaryServiceUuid: null, descriptors: [BluetoothDescriptor{remoteId: F5:5B:6D:AA:4B:D4, serviceUuid: 6e400001-b5a3-f393-e0a9-e50e24dcca9e, characteristicUuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e, descriptorUuid: 2902, primaryServiceUuid: nulllastValue: [1, 0]}], properties: Char
-I/flutter (25361): [TitanDeimosHandler] Montando pacote para comando: FF02, valor:
-I/flutter (25361): [TitanDeimosHandler] Enviando comando: FF02, valor:
-I/flutter (25361): [TitanDeimosHandler] Pacote enviado (HEX): 68 99 99 99 99 99 99 68 01 02 00 02 ff 6a 16
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida:
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com:
-I/flutter (25361): [TitanDeimosHandler] Notificação vazia descartada.
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com:
-I/flutter (25361): [TitanDeimosHandler] Notificação vazia descartada.
-D/[FBP-Android](25361): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt(25361): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android](25361): [FBP] onDescriptorWrite:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP]   desc: 2902
-D/[FBP-Android](25361): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](25361): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](25361): [FBP] onCharacteristicWrite:
-D/[FBP-Android](25361): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](25361): [FBP] onMethodCall: setNotifyValue
-D/BluetoothGatt(25361): setCharacteristicNotification() - uuid: 6e400003-b5a3-f393-e0a9-e50e24dcca9e enable: true
-D/[FBP-Android](25361): [FBP] onDescriptorWrite:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP]   desc: 2902
-D/[FBP-Android](25361): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] Dados acumulados aguardando fim do frame. Buffer: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 8, 0, 2, 255, 48, 48, 48, 48, 3, 80, 128, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \128, calculado: \128
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 ff 30 30 30 30 03 50
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: FF02
-I/flutter (25361): [TitanDeimosHandler] [Handshake] Endereço extraído do payload FF02: \30 30 30 30 3 50
-I/flutter (25361): [TitanDeimosHandler] Handshake completo! Endereço atualizado: 30 30 30 30 3 50
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
-D/[FBP-Android](25361): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](25361): [FBP] onCharacteristicWrite:
-D/[FBP-Android](25361): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP]   status: GATT_SUCCESS (0)
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false        
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] Dados acumulados aguardando fim do frame. Buffer: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80
-I/flutter (25361): [TitanDeimosHandler] Notificação repetida ignorada.
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 8, 0, 2, 255, 48, 48, 48, 48, 3, 80, 128, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 08 00 02 ff 30 30 30 30 03 50 80 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \128, calculado: \128
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 ff 30 30 30 30 03 50
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: FF02
-I/flutter (25361): [TitanDeimosHandler] Handshake completo! Endereço atualizado: 30 30 30 30 3 50
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Notificação descartada: não começa com 0x68 e buffer está vazio.
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false
-I/flutter (25361): [TitanDeimosHandler] Handshake completo, enviando FF04 para liberar o dispositivo...
-I/flutter (25361): [TitanDeimosHandler] Montando pacote para comando: FF04, valor: 01
-I/flutter (25361): [TitanDeimosHandler] Enviando comando: FF04, valor: 01
-I/flutter (25361): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 04 03 00 04 ff 01 ee 16
-D/[FBP-Android](25361): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](25361): [FBP] onCharacteristicWrite:
-D/[FBP-Android](25361): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 132, 0, 0, 103, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \103, calculado: \103
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 132, 0, 0, 103, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \103, calculado: \103
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 132, 0, 0, 103, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \103, calculado: \103
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 132, 0, 0, 103, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \103, calculado: \103
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false        
-I/flutter (25361): [TitanDeimosHandler] Handshake completo, enviando FF04 para liberar o dispositivo...
-I/flutter (25361): [TitanDeimosHandler] Montando pacote para comando: FF04, valor: 01
-I/flutter (25361): [TitanDeimosHandler] Enviando comando: FF04, valor: 01
-I/flutter (25361): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 04 03 00 04 ff 01 ee 16
-D/[FBP-Android](25361): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](25361): [FBP] onCharacteristicWrite:
-D/[FBP-Android](25361): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP]   status: GATT_SUCCESS (0)
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 132, 0, 0, 103, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \103, calculado: \103
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 132, 0, 0, 103, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \103, calculado: \103
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 132, 0, 0, 103, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \103, calculado: \103
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 84 00 00 67 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 132, 0, 0, 103, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 84 00 00 67 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \103, calculado: \103
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false        
-I/flutter (25361): ❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!
-I/flutter (25361): 🔄 Novo teste iniciado! Resetando controle de duplicação.
-I/flutter (25361): [TitanDeimosHandler] Montando pacote para comando: 9002, valor: START
-I/flutter (25361): [TitanDeimosHandler] Enviando comando: 9002, valor: START
-I/flutter (25361): [TitanDeimosHandler] Pacote enviado (HEX): 68 30 30 30 30 03 50 68 01 02 00 02 90 78 16
-D/[FBP-Android](25361): [FBP] onMethodCall: writeCharacteristic
-D/[FBP-Android](25361): [FBP] onCharacteristicWrite:
-D/[FBP-Android](25361): [FBP]   chr: 6e400002-b5a3-f393-e0a9-e50e24dcca9e
-D/[FBP-Android](25361): [FBP]   status: GATT_SUCCESS (0)
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 0, 249, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \249, calculado: \249
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 00
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 0, 249, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \249, calculado: \249
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 00
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 0, 249, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \249, calculado: \249
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 00
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 0, 249, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 00 f9 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \249, calculado: \249
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 00
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
-D/BluetoothGatt(25361): onConnectionUpdated() - Device=F5:5B:6D:AA:4B:D4 interval=36 latency=0 timeout=400 status=0
-D/[FBP-Android](25361): [FBP] onMethodCall: stopScan
-D/BluetoothAdapter(25361): isLeEnabled(): ON
-I/flutter (25361): 🛑 Escaneamento finalizado.
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-3](id:631100000005,api:4,p:1696,c:25361) queueBuffer: BufferQueue has been abandoned
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-3](id:631100000005,api:4,p:1696,c:25361) dequeueBuffer: BufferQueue has been abandoned
-W/CameraDevice-JV-0(25361): Device error received, code 3, frame number 323, request ID 0, subseq ID 0
-W/CameraDevice-JV-0(25361): got error frame 323
-W/CameraDevice-JV-0(25361): Repeating request error received. Last frame number is 323
-Another exception was thrown: CameraException(Disposed CameraController, buildPreview() was called on a disposed CameraController.)
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-3](id:631100000005,api:4,p:1696,c:25361) queueBuffer: BufferQueue has been abandoned
-D/DeferrableSurface(25361): surface closed,  useCount=2 closed=true androidx.camera.core.SurfaceRequest$2@b62eb96
-D/DeferrableSurface(25361): surface closed,  useCount=0 closed=true androidx.camera.core.processing.SurfaceEdge$SettableSurface@4dcccca
-D/DeferrableSurface(25361): Surface terminated[total_surfaces=3, used_surfaces=3](androidx.camera.core.processing.SurfaceEdge$SettableSurface@4dcccca}
-D/DeferrableSurface(25361): use count-1,  useCount=1 closed=true androidx.camera.core.SurfaceRequest$2@b62eb96
-W/ScreenFlashWrapper(25361): completePendingScreenFlashClear: none pending!
-D/ImageCapture(25361): clearPipeline
-D/DeferrableSurface(25361): surface closed,  useCount=1 closed=true androidx.camera.core.impl.ImmediateSurface@20b9ee9
-D/DeferrableSurface(25361): surface closed,  useCount=1 closed=true androidx.camera.core.impl.ImmediateSurface@9b39e9c
-W/ScreenFlashWrapper(25361): completePendingScreenFlashClear: none pending!
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} Use cases [androidx.camera.core.Preview-b7f29c30-3fa2-451c-8453-03bfa750e1d4196337123, androidx.camera.core.ImageCapture-7cbc63eb-017f-4435-bba5-2aee35363f3163088281, androidx.camera.core.ImageAnalysis-c15b4f8e-f216-44d5-b08d-099147a668c096236863] now DETACHED for camera
-D/UseCaseAttachState(25361): All use case: [] for camera: 0
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} Resetting Capture Session
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@1e1503d] Session call close()
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} Releasing session in state OPENED
-D/Camera2CameraControlImp(25361): setActive: isActive = false
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 0
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 0
-D/VideoUsageControl(25361): resetDirectly: mVideoUsage reset!
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} Closing camera.
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} Transitioning camera internal state: OPENED --> CLOSING
-D/CameraStateRegistry(25361): Recalculating open cameras:
-D/CameraStateRegistry(25361): Camera                                       State
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Camera@fce0c6[id=0]                          CLOSING
-D/CameraStateRegistry(25361): Camera@7a9d623[id=1]                         UNKNOWN
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Open count: 1 (Max allowed: 1)
-D/CameraStateMachine(25361): New public camera state CameraState{type=CLOSING, error=null} from CLOSING and null
-D/CameraStateMachine(25361): Publishing new public camera state CameraState{type=CLOSING, error=null}
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} Resetting Capture Session
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} Skipping Capture Session state check due to current camera state: CLOSING and previous session status: false
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} Releasing session in state CLOSING
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@1e1503d] Session call super.close()
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 0
-D/CaptureSession(25361): onSessionFinished()
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} closing camera
-D/CameraExtImplXiaoMi(25361): releaseCameraDevice: 0
-D/CameraDevice-JV-0(25361): close: E. id = 0
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-3](id:631100000005,api:4,p:1696,c:25361) queueBuffer: BufferQueue has been abandoned
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-3](id:631100000005,api:4,p:1696,c:25361) cancelBuffer: BufferQueue has been abandoned
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-3](id:631100000005,api:4,p:1696,c:25361) cancelBuffer: BufferQueue has been abandoned
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-3](id:631100000005,api:4,p:1696,c:25361) cancelBuffer: BufferQueue has been abandoned
-D/DynamicRangeResolver(25361): Resolved dynamic range for use case androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c to no compatible HDR dynamic ranges.
-D/DynamicRangeResolver(25361): DynamicRange@c36579{encoding=UNSPECIFIED, bitDepth=0}
-D/DynamicRangeResolver(25361): ->
-D/DynamicRangeResolver(25361): DynamicRange@a25c240{encoding=SDR, bitDepth=8}
-D/CameraQuirks(25361): camera2 CameraQuirks =
-D/CameraQuirks(25361): camera2 CameraQuirks =
-D/CameraQuirks(25361): camera2 CameraQuirks =
-D/DeferrableSurface(25361): Surface created[total_surfaces=4, used_surfaces=3](androidx.camera.core.processing.SurfaceEdge$SettableSurface@ff1eb6c}
-D/DeferrableSurface(25361): Surface created[total_surfaces=5, used_surfaces=3](androidx.camera.core.SurfaceRequest$2@5c85258}
-D/DeferrableSurface(25361): New surface in use[total_surfaces=5, used_surfaces=4](androidx.camera.core.SurfaceRequest$2@5c85258}
-D/DeferrableSurface(25361): use count+1, useCount=1 androidx.camera.core.SurfaceRequest$2@5c85258
-D/ImageCapture(25361): createPipeline(cameraId: 1, streamSpec: StreamSpec{resolution=720x480, dynamicRange=DynamicRange@a25c240{encoding=SDR, bitDepth=8}, expectedFrameRateRange=[0, 0], implementationOptions=androidx.camera.camera2.impl.Camera2ImplConfig@6e6f5ed, zslDisabled=false})
-D/DeferrableSurface(25361): Surface created[total_surfaces=6, used_surfaces=4](androidx.camera.core.impl.ImmediateSurface@1931c22}
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779 ACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/DeferrableSurface(25361): Surface created[total_surfaces=7, used_surfaces=4](androidx.camera.core.impl.ImmediateSurface@9a31470}
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621 ACTIVE
-D/ImageCapture(25361): onCameraControlReady
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/Camera2CameraControlImp(25361): setFlashMode: mFlashMode = 2
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779 ACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageAnalysis-c9eb626a-db6a-4669-99ce-65a06403709e58496065 INACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use cases [androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621, androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.ImageAnalysis-c9eb626a-db6a-4669-99ce-65a06403709e58496065] now ATTACHED
-D/Camera2CameraControlImp(25361): setActive: isActive = true
-D/UseCaseAttachState(25361): All use case: [androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621, androidx.camera.core.ImageAnalysis-c9eb626a-db6a-4669-99ce-65a06403709e58496065] for camera: 1
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Resetting Capture Session
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Skipping Capture Session state check due to current camera state: INITIALIZED and previous session status: false
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Releasing session in state INITIALIZED
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Attempting to force open the camera.
-D/CameraStateRegistry(25361): tryOpenCamera(Camera@7a9d623[id=1]) [Available Cameras: 0, Already Open: false (Previous state: null)] --> FAIL
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} No cameras available. Waiting for available camera before opening camera.
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Transitioning camera internal state: INITIALIZED --> PENDING_OPEN
-D/CameraStateRegistry(25361): Recalculating open cameras:
-D/CameraStateRegistry(25361): Camera                                       State
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Camera@fce0c6[id=0]                          CLOSING
-D/CameraStateRegistry(25361): Camera@7a9d623[id=1]                         PENDING_OPEN
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Open count: 1 (Max allowed: 1)
-D/CameraStateMachine(25361): New public camera state CameraState{type=OPENING, error=null} from PENDING_OPEN and null
-D/CameraStateMachine(25361): Publishing new public camera state CameraState{type=OPENING, error=null}
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621 ACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779 ACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageAnalysis-c9eb626a-db6a-4669-99ce-65a06403709e58496065 INACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621] for camera: 1
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621] for camera: 1
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
-D/CameraInjector(25361): updateCloudCameraControllerInfoAsync: has aleardy start update task.
-D/CameraInjector(25361): waitForResult: 
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelist"
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelistext"
-W/CameraManagerGlobal(25361): ignore the torch status update of camera: 2
-D/CameraInjector(25361): updateCloudCameraControllerInfoAsync: has aleardy start update task.
-D/CameraInjector(25361): waitForResult:
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelist"
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelistext"
-W/CameraManagerGlobal(25361): ignore the torch status update of camera: 3
-D/CameraInjector(25361): updateCloudCameraControllerInfoAsync: has aleardy start update task.
-D/CameraInjector(25361): waitForResult:
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelist"
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelistext"
-W/CameraManagerGlobal(25361): ignore the torch status update of camera: 4
-D/CameraInjector(25361): updateCloudCameraControllerInfoAsync: has aleardy start update task.
-D/CameraInjector(25361): waitForResult:
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelist"
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelistext"
-W/CameraManagerGlobal(25361): ignore the torch status update of camera: 5
-D/CameraInjector(25361): updateCloudCameraControllerInfoAsync: has aleardy start update task.
-D/CameraInjector(25361): waitForResult:
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelist"
-W/libc    (25361): Access denied finding property "vendor.camera.aux.packagelistext"
-W/CameraManagerGlobal(25361): ignore the torch status update of camera: 6
-E/CameraManagerGlobal(25361): Camera 4 is not available. Ignore physical camera status change
-E/CameraManagerGlobal(25361): Camera 5 is not available. Ignore physical camera status change
-D/CameraDevice-JV-0(25361): close: X
-D/DeferrableSurface(25361): use count-1,  useCount=0 closed=true androidx.camera.core.SurfaceRequest$2@b62eb96
-D/DeferrableSurface(25361): Surface no longer in use[total_surfaces=7, used_surfaces=3](androidx.camera.core.SurfaceRequest$2@b62eb96}
-W/CameraDevice-JV-0(25361): Device error received, code 4, frame number 320, request ID 0, subseq ID 0
-D/DeferrableSurface(25361): Surface terminated[total_surfaces=6, used_surfaces=3](androidx.camera.core.SurfaceRequest$2@b62eb96}
-D/DeferrableSurface(25361): use count-1,  useCount=0 closed=true androidx.camera.core.impl.ImmediateSurface@20b9ee9
-D/DeferrableSurface(25361): Surface no longer in use[total_surfaces=6, used_surfaces=2](androidx.camera.core.impl.ImmediateSurface@20b9ee9}
-D/DeferrableSurface(25361): Surface terminated[total_surfaces=5, used_surfaces=2](androidx.camera.core.impl.ImmediateSurface@20b9ee9}
-D/DeferrableSurface(25361): use count-1,  useCount=0 closed=true androidx.camera.core.impl.ImmediateSurface@9b39e9c
-D/DeferrableSurface(25361): Surface no longer in use[total_surfaces=5, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@9b39e9c}
-D/DeferrableSurface(25361): Surface terminated[total_surfaces=4, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@9b39e9c}
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} CameraDevice.onClosed()
-D/Camera2CameraImpl(25361): {Camera@fce0c6[id=0]} Transitioning camera internal state: CLOSING --> INITIALIZED
-D/CameraStateRegistry(25361): Recalculating open cameras:
-D/CameraStateRegistry(25361): Camera                                       State
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Camera@fce0c6[id=0]                          CLOSED
-D/CameraStateRegistry(25361): Camera@7a9d623[id=1]                         PENDING_OPEN
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Open count: 0 (Max allowed: 1)
-W/CameraDevice-JV-0(25361): Device error received, code 5, frame number 320, request ID 0, subseq ID 0
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Attempting to open the camera.
-W/CameraDevice-JV-0(25361): Device error received, code 4, frame number 322, request ID 0, subseq ID 0
-W/CameraDevice-JV-0(25361): Device error received, code 4, frame number 321, request ID 0, subseq ID 0
-D/CameraStateRegistry(25361): tryOpenCamera(Camera@7a9d623[id=1]) [Available Cameras: 1, Already Open: false (Previous state: PENDING_OPEN)] --> SUCCESS
-W/CameraDevice-JV-0(25361): Device error received, code 5, frame number 321, request ID 0, subseq ID 0
-D/CameraStateMachine(25361): New public camera state CameraState{type=CLOSED, error=null} from CLOSED and null
-W/CameraDevice-JV-0(25361): Device error received, code 5, frame number 322, request ID 0, subseq ID 0
-D/CameraStateMachine(25361): Publishing new public camera state CameraState{type=CLOSED, error=null}
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@1e1503d] onClosed()
-D/CameraStateRegistry(25361): Recalculating open cameras:
-D/CameraStateRegistry(25361): Camera                                       State
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Camera@fce0c6[id=0]                          CLOSED
-D/CameraStateRegistry(25361): Camera@7a9d623[id=1]                         OPENING
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Open count: 1 (Max allowed: 1)
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Opening camera.
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Transitioning camera internal state: PENDING_OPEN --> OPENING
-D/CameraStateMachine(25361): New public camera state CameraState{type=OPENING, error=null} from OPENING and null
-D/UseCaseAttachState(25361): All use case: [androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621, androidx.camera.core.ImageAnalysis-c9eb626a-db6a-4669-99ce-65a06403709e58496065] for camera: 1
-W/libc    (25361): Access denied finding property "persist.vendor.camera.privapp.list"
-D/CameraExtImplXiaoMi(25361): initCameraDevice: 1
-I/CameraManager(25361): Open camera top activityName is com.healthsafety.app.MainActivity
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} CameraDevice.onOpened()
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Transitioning camera internal state: OPENING --> OPENED
-D/CameraStateRegistry(25361): Recalculating open cameras:
-D/CameraStateRegistry(25361): Camera                                       State
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Camera@fce0c6[id=0]                          CLOSED
-D/CameraStateRegistry(25361): Camera@7a9d623[id=1]                         OPEN
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Open count: 1 (Max allowed: 1)
-D/CameraStateMachine(25361): New public camera state CameraState{type=OPEN, error=null} from OPEN and null
-D/CameraStateMachine(25361): Publishing new public camera state CameraState{type=OPEN, error=null}
-D/UseCaseAttachState(25361): All use case: [androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621, androidx.camera.core.ImageAnalysis-c9eb626a-db6a-4669-99ce-65a06403709e58496065] for camera: 1
-D/SyncCaptureSessionBase(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@1454800] getSurface done with results: [Surface(name=null)/@0xd1ed1d2, Surface(name=null)/@0x2d3a132, Surface(name=null)/@0xde50e83]
-D/CaptureSession(25361): Opening capture session.
-D/Camera2CaptureRequestBuilder(25361): template type = 1
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@1454800] start openCaptureSession
-D/DeferrableSurface(25361): use count+1, useCount=2 androidx.camera.core.SurfaceRequest$2@5c85258
-D/DeferrableSurface(25361): New surface in use[total_surfaces=4, used_surfaces=2](androidx.camera.core.impl.ImmediateSurface@1931c22}
-D/DeferrableSurface(25361): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@1931c22
-D/DeferrableSurface(25361): New surface in use[total_surfaces=4, used_surfaces=3](androidx.camera.core.impl.ImmediateSurface@9a31470}
-D/DeferrableSurface(25361): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@9a31470
-D/CameraDevice-JV-1(25361): waitUntilIdle: E. id = 1
-D/CameraDevice-JV-1(25361): waitUntilIdle: X
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@1454800] Session onConfigured()
-D/CaptureSession(25361): Attempting to send capture request onConfigured
-D/CaptureSession(25361): Issuing request for session.
-D/Camera2CaptureRequestBuilder(25361): createCaptureRequest
-D/CaptureSession(25361): CameraCaptureSession.onConfigured() mState=OPENED
-D/CaptureSession(25361): CameraCaptureSession.onReady() OPENED
-I/BpBinder(25361): onLastStrongRef automatically unlinking death recipients: <uncached descriptor>
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 1, 250, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \250, calculado: \250
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 01
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 1, 250, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \250, calculado: \250
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 01
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 1, 250, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \250, calculado: \250
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 01
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 1, 250, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \250, calculado: \250
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 01
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 2, 251, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 02
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 2, 251, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 02
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 2, 251, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 02
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 2, 251, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 02
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 05
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 05
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 05
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \02 90 05
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
-D/[FBP-Android](25361): [FBP] onCharacteristicChanged:
-D/[FBP-Android](25361): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \03 90 00 00
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
-I/flutter (25361): 🕓 Teste pendente aguardando foto: 0.0 mg/L
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \03 90 00 00
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
-I/flutter (25361): ! Teste duplicado ignorado!
-I/flutter (25361): ! Teste duplicado ignorado!
-I/flutter (25361): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \03 90 00 00
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
-I/flutter (25361): ! Teste duplicado ignorado!
-I/flutter (25361): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
-I/flutter (25361): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
-I/flutter (25361): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
-I/flutter (25361): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
-I/flutter (25361): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
-I/flutter (25361): [TitanDeimosHandler] Payload extraído: \03 90 00 00
-I/flutter (25361): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
-I/flutter (25361): ! Teste duplicado ignorado!
-I/flutter (25361): ! Teste duplicado ignorado!
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
-I/flutter (25361): [UI] Chamando _tirarFoto() por precisaCapturarFoto...
-I/flutter (25361): [UI] _tirarFoto: Camera pronta, capturando...
-D/ImageCapture(25361): takePictureInternal
-D/TakePictureManager(25361): Issue the next TakePictureRequest.
-D/Camera2CapturePipeline(25361): createPipeline: captureMode = 1, flashMode = 2, flashType = 0, pipeline tasks = []
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Issue capture request
-D/CaptureSession(25361): Issuing capture request.
-D/Camera2CaptureRequestBuilder(25361): createCaptureRequest
-D/qdgralloc(25361): GetYUVPlaneInfo: Invalid format passed: 0x21
-D/TakePictureManager(25361): Issue the next TakePictureRequest.
-D/TakePictureManager(25361): No new request.
-I/flutter (25361): 📸 Foto capturada e salva em: /data/user/0/com.healthsafety.app/app_flutter/foto_teste_1750254813807.jpg
-I/flutter (25361): ✅ Teste salvo no histórico com foto: /data/user/0/com.healthsafety.app/app_flutter/foto_teste_1750254813807.jpg
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false        
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-7](id:631100000009,api:4,p:1696,c:25361) queueBuffer: BufferQueue has been abandoned
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-7](id:631100000009,api:4,p:1696,c:25361) dequeueBuffer: BufferQueue has been abandoned
-W/CameraDevice-JV-1(25361): Device error received, code 3, frame number 279, request ID 0, subseq ID 0
-W/CameraDevice-JV-1(25361): got error frame 279
-W/CameraDevice-JV-1(25361): Repeating request error received. Last frame number is 279
-D/DeferrableSurface(25361): surface closed,  useCount=2 closed=true androidx.camera.core.SurfaceRequest$2@5c85258
-D/DeferrableSurface(25361): surface closed,  useCount=0 closed=true androidx.camera.core.processing.SurfaceEdge$SettableSurface@ff1eb6c
-D/DeferrableSurface(25361): Surface terminated[total_surfaces=3, used_surfaces=3](androidx.camera.core.processing.SurfaceEdge$SettableSurface@ff1eb6c}
-D/DeferrableSurface(25361): use count-1,  useCount=1 closed=true androidx.camera.core.SurfaceRequest$2@5c85258
-W/ScreenFlashWrapper(25361): completePendingScreenFlashClear: none pending!
-D/ImageCapture(25361): clearPipeline
-D/DeferrableSurface(25361): surface closed,  useCount=1 closed=true androidx.camera.core.impl.ImmediateSurface@1931c22
-D/DeferrableSurface(25361): surface closed,  useCount=1 closed=true androidx.camera.core.impl.ImmediateSurface@9a31470
-W/ScreenFlashWrapper(25361): completePendingScreenFlashClear: none pending!
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use cases [androidx.camera.core.Preview-cdf8fd24-f065-4ce1-94f4-c247bf44682c117223621, androidx.camera.core.ImageCapture-43ed9a6e-7afc-42a6-bcaf-8b669e031dab176232779, androidx.camera.core.ImageAnalysis-c9eb626a-db6a-4669-99ce-65a06403709e58496065] now DETACHED for camera
-D/UseCaseAttachState(25361): All use case: [] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Resetting Capture Session
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@1454800] Session call close()
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Releasing session in state OPENED
-D/Camera2CameraControlImp(25361): setActive: isActive = false
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/VideoUsageControl(25361): resetDirectly: mVideoUsage reset!
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Closing camera.
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Transitioning camera internal state: OPENED --> CLOSING
-D/CameraStateRegistry(25361): Recalculating open cameras:
-D/CameraStateRegistry(25361): Camera                                       State
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Camera@fce0c6[id=0]                          CLOSED
-D/CameraStateRegistry(25361): Camera@7a9d623[id=1]                         CLOSING
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Open count: 1 (Max allowed: 1)
-D/CameraStateMachine(25361): New public camera state CameraState{type=CLOSING, error=null} from CLOSING and null
-D/CameraStateMachine(25361): Publishing new public camera state CameraState{type=CLOSING, error=null}
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Resetting Capture Session
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Skipping Capture Session state check due to current camera state: CLOSING and previous session status: false
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Releasing session in state CLOSING
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@1454800] Session call super.close()
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/CaptureSession(25361): onSessionFinished()
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} closing camera
-D/CameraExtImplXiaoMi(25361): releaseCameraDevice: 1
-D/CameraDevice-JV-1(25361): close: E. id = 1
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-7](id:631100000009,api:4,p:1696,c:25361) queueBuffer: BufferQueue has been abandoned
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-7](id:631100000009,api:4,p:1696,c:25361) cancelBuffer: BufferQueue has been abandoned
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-7](id:631100000009,api:4,p:1696,c:25361) cancelBuffer: BufferQueue has been abandoned
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-7](id:631100000009,api:4,p:1696,c:25361) cancelBuffer: BufferQueue has been abandoned
-E/BufferQueueProducer(25361): [ImageReader-720x480f22m6-25361-7](id:631100000009,api:4,p:1696,c:25361) cancelBuffer: BufferQueue has been abandoned
-D/CameraDevice-JV-1(25361): close: X
-D/DeferrableSurface(25361): use count-1,  useCount=0 closed=true androidx.camera.core.SurfaceRequest$2@5c85258
-D/DeferrableSurface(25361): Surface no longer in use[total_surfaces=3, used_surfaces=2](androidx.camera.core.SurfaceRequest$2@5c85258}
-D/DeferrableSurface(25361): Surface terminated[total_surfaces=2, used_surfaces=2](androidx.camera.core.SurfaceRequest$2@5c85258}
-D/DeferrableSurface(25361): use count-1,  useCount=0 closed=true androidx.camera.core.impl.ImmediateSurface@1931c22
-D/DeferrableSurface(25361): Surface no longer in use[total_surfaces=2, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@1931c22}
-D/DeferrableSurface(25361): Surface terminated[total_surfaces=1, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@1931c22}
-D/DeferrableSurface(25361): use count-1,  useCount=0 closed=true androidx.camera.core.impl.ImmediateSurface@9a31470
-D/DeferrableSurface(25361): Surface no longer in use[total_surfaces=1, used_surfaces=0](androidx.camera.core.impl.ImmediateSurface@9a31470}
-D/DeferrableSurface(25361): Surface terminated[total_surfaces=0, used_surfaces=0](androidx.camera.core.impl.ImmediateSurface@9a31470}
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} CameraDevice.onClosed()
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Transitioning camera internal state: CLOSING --> INITIALIZED
-D/CameraStateRegistry(25361): Recalculating open cameras:
-D/CameraStateRegistry(25361): Camera                                       State
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Camera@fce0c6[id=0]                          CLOSED
-D/CameraStateRegistry(25361): Camera@7a9d623[id=1]                         CLOSED
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Open count: 0 (Max allowed: 1)
-D/CameraStateMachine(25361): New public camera state CameraState{type=CLOSED, error=null} from CLOSED and null
-D/CameraStateMachine(25361): Publishing new public camera state CameraState{type=CLOSED, error=null}
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@1454800] onClosed()
-W/CameraDevice-JV-1(25361): Device error received, code 4, frame number 277, request ID 0, subseq ID 0
-W/CameraDevice-JV-1(25361): Device error received, code 4, frame number 275, request ID 0, subseq ID 0
-W/CameraDevice-JV-1(25361): Device error received, code 4, frame number 276, request ID 0, subseq ID 0
-W/CameraDevice-JV-1(25361): Device error received, code 5, frame number 275, request ID 0, subseq ID 0
-W/CameraDevice-JV-1(25361): Device error received, code 4, frame number 278, request ID 0, subseq ID 0
-W/CameraDevice-JV-1(25361): Device error received, code 5, frame number 276, request ID 0, subseq ID 0
-W/CameraDevice-JV-1(25361): Device error received, code 5, frame number 277, request ID 0, subseq ID 0
-W/CameraDevice-JV-1(25361): Device error received, code 5, frame number 278, request ID 0, subseq ID 0
-D/DynamicRangeResolver(25361): Resolved dynamic range for use case androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a21 to no compatible HDR dynamic ranges.       
-D/DynamicRangeResolver(25361): DynamicRange@c36579{encoding=UNSPECIFIED, bitDepth=0}
-D/DynamicRangeResolver(25361): ->
-D/DynamicRangeResolver(25361): DynamicRange@a25c240{encoding=SDR, bitDepth=8}
-D/CameraQuirks(25361): camera2 CameraQuirks =
-D/CameraQuirks(25361): camera2 CameraQuirks =
-D/CameraQuirks(25361): camera2 CameraQuirks =
-D/DeferrableSurface(25361): Surface created[total_surfaces=1, used_surfaces=0](androidx.camera.core.processing.SurfaceEdge$SettableSurface@297633}
-D/DeferrableSurface(25361): Surface created[total_surfaces=2, used_surfaces=0](androidx.camera.core.SurfaceRequest$2@9fb428f}
-D/DeferrableSurface(25361): New surface in use[total_surfaces=2, used_surfaces=1](androidx.camera.core.SurfaceRequest$2@9fb428f}
-D/DeferrableSurface(25361): use count+1, useCount=1 androidx.camera.core.SurfaceRequest$2@9fb428f
-D/ImageCapture(25361): createPipeline(cameraId: 1, streamSpec: StreamSpec{resolution=720x480, dynamicRange=DynamicRange@a25c240{encoding=SDR, bitDepth=8}, expectedFrameRateRange=[0, 0], implementationOptions=androidx.camera.camera2.impl.Camera2ImplConfig@a30ab08, zslDisabled=false})
-D/DeferrableSurface(25361): Surface created[total_surfaces=3, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@b0572a1}
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808 ACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/DeferrableSurface(25361): Surface created[total_surfaces=4, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@beef487}
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682 ACTIVE
-D/ImageCapture(25361): onCameraControlReady
-D/Camera2CameraControlImp(25361): setFlashMode: mFlashMode = 2
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808 ACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false        
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageAnalysis-31746a4b-4c68-4514-83e8-31813076273116050357 INACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/UseCaseAttachState(25361): Active and attached use case: [] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use cases [androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682, androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808, androidx.camera.core.ImageAnalysis-31746a4b-4c68-4514-83e8-31813076273116050357] now ATTACHED
-D/Camera2CameraControlImp(25361): setActive: isActive = true
-D/UseCaseAttachState(25361): All use case: [androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808, androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682, androidx.camera.core.ImageAnalysis-31746a4b-4c68-4514-83e8-31813076273116050357] for camera: 1
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808, androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Resetting Capture Session
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Skipping Capture Session state check due to current camera state: INITIALIZED and previous session status: false
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Releasing session in state INITIALIZED
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Attempting to force open the camera.
-D/CameraStateRegistry(25361): tryOpenCamera(Camera@7a9d623[id=1]) [Available Cameras: 1, Already Open: false (Previous state: CLOSED)] --> SUCCESS
-D/CameraStateRegistry(25361): Recalculating open cameras:
-D/CameraStateRegistry(25361): Camera                                       State
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Camera@fce0c6[id=0]                          CLOSED
-D/CameraStateRegistry(25361): Camera@7a9d623[id=1]                         OPENING
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Open count: 1 (Max allowed: 1)
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Opening camera.
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Transitioning camera internal state: INITIALIZED --> OPENING
-D/CameraStateMachine(25361): New public camera state CameraState{type=OPENING, error=null} from OPENING and null
-D/CameraStateMachine(25361): Publishing new public camera state CameraState{type=OPENING, error=null}
-D/UseCaseAttachState(25361): All use case: [androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808, androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682, androidx.camera.core.ImageAnalysis-31746a4b-4c68-4514-83e8-31813076273116050357] for camera: 1
-W/libc    (25361): Access denied finding property "persist.vendor.camera.privapp.list"
-D/CameraExtImplXiaoMi(25361): initCameraDevice: 1
-I/CameraManager(25361): Open camera top activityName is com.healthsafety.app.MainActivity
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682 ACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808, androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808 ACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808, androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Use case androidx.camera.core.ImageAnalysis-31746a4b-4c68-4514-83e8-31813076273116050357 INACTIVE
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808, androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682] for camera: 1
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} CameraDevice.onOpened()
-D/Camera2CameraImpl(25361): {Camera@7a9d623[id=1]} Transitioning camera internal state: OPENING --> OPENED
-D/CameraStateRegistry(25361): Recalculating open cameras:
-D/CameraStateRegistry(25361): Camera                                       State
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Camera@fce0c6[id=0]                          CLOSED
-D/CameraStateRegistry(25361): Camera@7a9d623[id=1]                         OPEN
-D/CameraStateRegistry(25361): -------------------------------------------------------------------
-D/CameraStateRegistry(25361): Open count: 1 (Max allowed: 1)
-D/CameraStateMachine(25361): New public camera state CameraState{type=OPEN, error=null} from OPEN and null
-D/CameraStateMachine(25361): Publishing new public camera state CameraState{type=OPEN, error=null}
-D/UseCaseAttachState(25361): All use case: [androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808, androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682, androidx.camera.core.ImageAnalysis-31746a4b-4c68-4514-83e8-31813076273116050357] for camera: 1
-D/UseCaseAttachState(25361): Active and attached use case: [androidx.camera.core.ImageCapture-ca8e2e3f-f251-4ea3-b539-6cf77fbeeb3e84079808, androidx.camera.core.Preview-e3ac85c2-b79e-4045-a0f1-0c4e2b069a2186429682] for camera: 1
-D/SyncCaptureSessionBase(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@5ba649] getSurface done with results: [Surface(name=null)/@0xc21324d, Surface(name=null)/@0x4760a13, Surface(name=null)/@0xb064450]
-D/CaptureSession(25361): Opening capture session.
-D/Camera2CaptureRequestBuilder(25361): template type = 1
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@5ba649] start openCaptureSession
-D/DeferrableSurface(25361): use count+1, useCount=2 androidx.camera.core.SurfaceRequest$2@9fb428f
-D/DeferrableSurface(25361): New surface in use[total_surfaces=4, used_surfaces=2](androidx.camera.core.impl.ImmediateSurface@b0572a1}
-D/DeferrableSurface(25361): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@b0572a1
-D/DeferrableSurface(25361): New surface in use[total_surfaces=4, used_surfaces=3](androidx.camera.core.impl.ImmediateSurface@beef487}
-D/DeferrableSurface(25361): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@beef487
-D/CameraDevice-JV-1(25361): waitUntilIdle: E. id = 1
-D/CameraDevice-JV-1(25361): waitUntilIdle: X
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false
-D/SyncCaptureSessionImpl(25361): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@5ba649] Session onConfigured()
-D/CaptureSession(25361): Attempting to send capture request onConfigured
-D/CaptureSession(25361): Issuing request for session.
-D/Camera2CaptureRequestBuilder(25361): createCaptureRequest
-D/CaptureSession(25361): CameraCaptureSession.onConfigured() mState=OPENED
-D/CaptureSession(25361): CameraCaptureSession.onReady() OPENED
-I/BpBinder(25361): onLastStrongRef automatically unlinking death recipients: <uncached descriptor>
-I/flutter (25361): [TitanDeimosHandler] Desconectando dispositivo...
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false
-D/[FBP-Android](25361): [FBP] onMethodCall: disconnect
-D/BluetoothGatt(25361): cancelOpen() - device: F5:5B:6D:AA:4B:D4
-D/BluetoothGatt(25361): onClientConnectionState() - status=0 clientIf=14 device=F5:5B:6D:AA:4B:D4
-D/[FBP-Android](25361): [FBP] onConnectionStateChange:disconnected
-D/[FBP-Android](25361): [FBP]   status: SUCCESS
-D/BluetoothGatt(25361): close()
-D/BluetoothGatt(25361): unregisterApp() - mClientIf=14
-I/flutter (25361): [TitanDeimosHandler] Dispositivo desconectado!
-I/flutter (25361): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false
+D/[FBP-Android]( 6629): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter ( 6629): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 1, 250, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \250, calculado: \250
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 01
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \01
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=1, payload=null
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 1, 250, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \250, calculado: \250
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 01
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \01
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=1, payload=null
+I/flutter ( 6629): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 1, 250, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \250, calculado: \250
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 01
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \01
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=1, payload=null
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 1, 250, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 01 fa 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \250, calculado: \250
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 01
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \01
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=1, payload=null
+I/flutter ( 6629): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
+I/BpBinder( 6629): onLastStrongRef automatically unlinking death recipients: <uncached descriptor>
+D/[FBP-Android]( 6629): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 6629): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter ( 6629): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 2, 251, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 02
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \02
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=2, payload=null
+I/flutter ( 6629): 🕓 Status 2 recebido em 9002: disparando captura de foto
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 2, 251, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 02
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \02
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=2, payload=null
+I/flutter ( 6629): 🕓 Status 2 recebido em 9002: disparando captura de foto
+I/flutter ( 6629): 🕓 Status 2 recebido em 9002: disparando captura de foto
+I/flutter ( 6629): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 2, 251, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 02
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \02
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=2, payload=null
+I/flutter ( 6629): 🕓 Status 2 recebido em 9002: disparando captura de foto
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 2, 251, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 02 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 02
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \02
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=2, payload=null
+I/flutter ( 6629): 🕓 Status 2 recebido em 9002: disparando captura de foto
+I/flutter ( 6629): 🕓 Status 2 recebido em 9002: disparando captura de foto
+I/flutter ( 6629): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=true
+I/flutter ( 6629): [UI] Chamando _tirarFoto() por precisaCapturarFoto...
+I/flutter ( 6629): [UI] _tirarFoto: Camera pronta, capturando...
+D/ImageCapture( 6629): takePictureInternal
+D/TakePictureManager( 6629): Issue the next TakePictureRequest.
+D/Camera2CapturePipeline( 6629): createPipeline: captureMode = 1, flashMode = 2, flashType = 0, pipeline tasks = []
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Issue capture request
+D/CaptureSession( 6629): Issuing capture request.
+D/Camera2CaptureRequestBuilder( 6629): createCaptureRequest
+D/qdgralloc( 6629): GetYUVPlaneInfo: Invalid format passed: 0x21
+D/TakePictureManager( 6629): Issue the next TakePictureRequest.
+D/TakePictureManager( 6629): No new request.
+I/flutter ( 6629): 📸 Foto capturada e salva em: /data/user/0/com.healthsafety.app/app_flutter/foto_teste_1750273812882.jpg
+I/flutter ( 6629): ! Nenhum teste pendente para associar foto! Salvando caminho para uso futuro.
+D/DeferrableSurface( 6629): surface closed,  useCount=2 closed=true androidx.camera.core.SurfaceRequest$2@f6634d5
+D/DeferrableSurface( 6629): surface closed,  useCount=0 closed=true androidx.camera.core.processing.SurfaceEdge$SettableSurface@8d3b019
+D/DeferrableSurface( 6629): Surface terminated[total_surfaces=3, used_surfaces=3](androidx.camera.core.processing.SurfaceEdge$SettableSurface@8d3b019}
+D/DeferrableSurface( 6629): use count-1,  useCount=1 closed=true androidx.camera.core.SurfaceRequest$2@f6634d5
+W/ScreenFlashWrapper( 6629): completePendingScreenFlashClear: none pending!
+D/ImageCapture( 6629): clearPipeline
+D/DeferrableSurface( 6629): surface closed,  useCount=1 closed=true androidx.camera.core.impl.ImmediateSurface@e88e2b7
+D/DeferrableSurface( 6629): surface closed,  useCount=1 closed=true androidx.camera.core.impl.ImmediateSurface@831298d
+W/ScreenFlashWrapper( 6629): completePendingScreenFlashClear: none pending!
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Use cases [androidx.camera.core.Preview-75878207-9a74-4a2e-95d2-11e5aa2ac90258769378, androidx.camera.core.ImageCapture-99807b6e-7a2e-4ff9-afad-47aa0b934e97208789455, androidx.camera.core.ImageAnalysis-a7368485-78e2-413c-bfd6-ce137b3f3e04238119013] now DETACHED for camera
+D/UseCaseAttachState( 6629): All use case: [] for camera: 1
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Resetting Capture Session
+D/SyncCaptureSessionImpl( 6629): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@9a53baa] Session call close()
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Releasing session in state OPENED
+D/Camera2CameraControlImp( 6629): setActive: isActive = false
+D/UseCaseAttachState( 6629): Active and attached use case: [] for camera: 1
+D/UseCaseAttachState( 6629): Active and attached use case: [] for camera: 1
+D/VideoUsageControl( 6629): resetDirectly: mVideoUsage reset!
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Closing camera.
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Transitioning camera internal state: OPENED --> CLOSING
+D/CameraStateRegistry( 6629): Recalculating open cameras:
+D/CameraStateRegistry( 6629): Camera                                       State
+D/CameraStateRegistry( 6629): -------------------------------------------------------------------
+D/CameraStateRegistry( 6629): Camera@41763b4[id=1]                         CLOSING
+D/CameraStateRegistry( 6629): Camera@4c47cab[id=0]                         CLOSED
+D/CameraStateRegistry( 6629): -------------------------------------------------------------------
+D/CameraStateRegistry( 6629): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine( 6629): New public camera state CameraState{type=CLOSING, error=null} from CLOSING and null
+D/CameraStateMachine( 6629): Publishing new public camera state CameraState{type=CLOSING, error=null}
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Resetting Capture Session
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Skipping Capture Session state check due to current camera state: CLOSING and previous session status: false
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Releasing session in state CLOSING
+D/SyncCaptureSessionImpl( 6629): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@9a53baa] Session call super.close()
+D/UseCaseAttachState( 6629): Active and attached use case: [] for camera: 1
+D/CaptureSession( 6629): onSessionFinished()
+I/flutter ( 6629): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false        
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} closing camera
+D/CameraExtImplXiaoMi( 6629): releaseCameraDevice: 1
+D/CameraDevice-JV-1( 6629): close: E. id = 1
+W/CameraDevice-JV-1( 6629): Device error received, code 4, frame number 114, request ID 0, subseq ID 0
+E/BufferQueueProducer( 6629): [ImageReader-720x480f22m6-6629-7](id:19e500000009,api:4,p:1696,c:6629) cancelBuffer: BufferQueue has been abandoned
+E/BufferQueueProducer( 6629): [ImageReader-720x480f22m6-6629-7](id:19e500000009,api:4,p:1696,c:6629) cancelBuffer: BufferQueue has been abandoned
+E/BufferQueueProducer( 6629): [ImageReader-720x480f22m6-6629-7](id:19e500000009,api:4,p:1696,c:6629) cancelBuffer: BufferQueue has been abandoned
+E/BufferQueueProducer( 6629): [ImageReader-720x480f22m6-6629-7](id:19e500000009,api:4,p:1696,c:6629) cancelBuffer: BufferQueue has been abandoned
+E/BufferQueueProducer( 6629): [ImageReader-720x480f22m6-6629-7](id:19e500000009,api:4,p:1696,c:6629) cancelBuffer: BufferQueue has been abandoned
+E/BufferQueueProducer( 6629): [ImageReader-720x480f22m6-6629-7](id:19e500000009,api:4,p:1696,c:6629) cancelBuffer: BufferQueue has been abandoned
+I/flutter ( 6629): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false
+D/CameraDevice-JV-1( 6629): close: X
+D/DeferrableSurface( 6629): use count-1,  useCount=0 closed=true androidx.camera.core.SurfaceRequest$2@f6634d5
+D/DeferrableSurface( 6629): Surface no longer in use[total_surfaces=3, used_surfaces=2](androidx.camera.core.SurfaceRequest$2@f6634d5}
+D/DeferrableSurface( 6629): Surface terminated[total_surfaces=2, used_surfaces=2](androidx.camera.core.SurfaceRequest$2@f6634d5}
+D/DeferrableSurface( 6629): use count-1,  useCount=0 closed=true androidx.camera.core.impl.ImmediateSurface@e88e2b7
+D/DeferrableSurface( 6629): Surface no longer in use[total_surfaces=2, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@e88e2b7}
+D/DeferrableSurface( 6629): Surface terminated[total_surfaces=1, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@e88e2b7}
+D/DeferrableSurface( 6629): use count-1,  useCount=0 closed=true androidx.camera.core.impl.ImmediateSurface@831298d
+D/DeferrableSurface( 6629): Surface no longer in use[total_surfaces=1, used_surfaces=0](androidx.camera.core.impl.ImmediateSurface@831298d}
+D/DeferrableSurface( 6629): Surface terminated[total_surfaces=0, used_surfaces=0](androidx.camera.core.impl.ImmediateSurface@831298d}
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} CameraDevice.onClosed()
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Transitioning camera internal state: CLOSING --> INITIALIZED
+D/CameraStateRegistry( 6629): Recalculating open cameras:
+D/CameraStateRegistry( 6629): Camera                                       State
+D/CameraStateRegistry( 6629): -------------------------------------------------------------------
+D/CameraStateRegistry( 6629): Camera@41763b4[id=1]                         CLOSED
+D/CameraStateRegistry( 6629): Camera@4c47cab[id=0]                         CLOSED
+D/CameraStateRegistry( 6629): -------------------------------------------------------------------
+D/CameraStateRegistry( 6629): Open count: 0 (Max allowed: 1)
+D/CameraStateMachine( 6629): New public camera state CameraState{type=CLOSED, error=null} from CLOSED and null
+D/CameraStateMachine( 6629): Publishing new public camera state CameraState{type=CLOSED, error=null}
+D/SyncCaptureSessionImpl( 6629): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@9a53baa] onClosed()
+W/CameraDevice-JV-1( 6629): Device error received, code 4, frame number 113, request ID 0, subseq ID 0
+W/CameraDevice-JV-1( 6629): Device error received, code 4, frame number 115, request ID 0, subseq ID 0
+W/CameraDevice-JV-1( 6629): Device error received, code 4, frame number 116, request ID 0, subseq ID 0
+W/CameraDevice-JV-1( 6629): Device error received, code 4, frame number 112, request ID 0, subseq ID 0
+W/CameraDevice-JV-1( 6629): Device error received, code 5, frame number 112, request ID 0, subseq ID 0
+W/CameraDevice-JV-1( 6629): Device error received, code 5, frame number 113, request ID 0, subseq ID 0
+W/CameraDevice-JV-1( 6629): Device error received, code 5, frame number 114, request ID 0, subseq ID 0
+W/CameraDevice-JV-1( 6629): Device error received, code 5, frame number 115, request ID 0, subseq ID 0
+W/CameraDevice-JV-1( 6629): Device error received, code 5, frame number 116, request ID 0, subseq ID 0
+W/CameraDevice-JV-1( 6629): Device error received, code 3, frame number 117, request ID 0, subseq ID 0
+D/DynamicRangeResolver( 6629): Resolved dynamic range for use case androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b65 to no compatible HDR dynamic ranges.       
+D/DynamicRangeResolver( 6629): DynamicRange@c36579{encoding=UNSPECIFIED, bitDepth=0}
+D/DynamicRangeResolver( 6629): ->
+D/DynamicRangeResolver( 6629): DynamicRange@a25c240{encoding=SDR, bitDepth=8}
+D/CameraQuirks( 6629): camera2 CameraQuirks =
+D/CameraQuirks( 6629): camera2 CameraQuirks =
+D/CameraQuirks( 6629): camera2 CameraQuirks =
+D/DeferrableSurface( 6629): Surface created[total_surfaces=1, used_surfaces=0](androidx.camera.core.processing.SurfaceEdge$SettableSurface@4df8fcc}
+D/DeferrableSurface( 6629): Surface created[total_surfaces=2, used_surfaces=0](androidx.camera.core.SurfaceRequest$2@85bdcb8}
+D/DeferrableSurface( 6629): New surface in use[total_surfaces=2, used_surfaces=1](androidx.camera.core.SurfaceRequest$2@85bdcb8}
+D/DeferrableSurface( 6629): use count+1, useCount=1 androidx.camera.core.SurfaceRequest$2@85bdcb8
+D/ImageCapture( 6629): createPipeline(cameraId: 1, streamSpec: StreamSpec{resolution=720x480, dynamicRange=DynamicRange@a25c240{encoding=SDR, bitDepth=8}, expectedFrameRateRange=[0, 0], implementationOptions=androidx.camera.camera2.impl.Camera2ImplConfig@959eecd, zslDisabled=false})
+D/DeferrableSurface( 6629): Surface created[total_surfaces=3, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@19b5382}
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Use case androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117 ACTIVE
+D/UseCaseAttachState( 6629): Active and attached use case: [] for camera: 1
+D/DeferrableSurface( 6629): Surface created[total_surfaces=4, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@9118ad0}
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Use case androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767 ACTIVE
+D/ImageCapture( 6629): onCameraControlReady
+D/UseCaseAttachState( 6629): Active and attached use case: [] for camera: 1
+D/Camera2CameraControlImp( 6629): setFlashMode: mFlashMode = 2
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Use case androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117 ACTIVE
+D/UseCaseAttachState( 6629): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Use case androidx.camera.core.ImageAnalysis-4b37318d-5e6d-44c9-96de-905b8524211d162339115 INACTIVE
+D/UseCaseAttachState( 6629): Active and attached use case: [] for camera: 1
+D/UseCaseAttachState( 6629): Active and attached use case: [] for camera: 1
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Use cases [androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767, androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117, androidx.camera.core.ImageAnalysis-4b37318d-5e6d-44c9-96de-905b8524211d162339115] now ATTACHED
+D/Camera2CameraControlImp( 6629): setActive: isActive = true
+D/UseCaseAttachState( 6629): All use case: [androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117, androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767, androidx.camera.core.ImageAnalysis-4b37318d-5e6d-44c9-96de-905b8524211d162339115] for camera: 1
+D/UseCaseAttachState( 6629): Active and attached use case: [androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117, androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767] for camera: 1
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Resetting Capture Session
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Skipping Capture Session state check due to current camera state: INITIALIZED and previous session status: false
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Releasing session in state INITIALIZED
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Attempting to force open the camera.
+D/CameraStateRegistry( 6629): tryOpenCamera(Camera@41763b4[id=1]) [Available Cameras: 1, Already Open: false (Previous state: CLOSED)] --> SUCCESS
+D/CameraStateRegistry( 6629): Recalculating open cameras:
+D/CameraStateRegistry( 6629): Camera                                       State
+D/CameraStateRegistry( 6629): -------------------------------------------------------------------
+D/CameraStateRegistry( 6629): Camera@41763b4[id=1]                         OPENING
+D/CameraStateRegistry( 6629): Camera@4c47cab[id=0]                         CLOSED
+D/CameraStateRegistry( 6629): -------------------------------------------------------------------
+D/CameraStateRegistry( 6629): Open count: 1 (Max allowed: 1)
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Opening camera.
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Transitioning camera internal state: INITIALIZED --> OPENING
+D/CameraStateMachine( 6629): New public camera state CameraState{type=OPENING, error=null} from OPENING and null
+D/CameraStateMachine( 6629): Publishing new public camera state CameraState{type=OPENING, error=null}
+D/UseCaseAttachState( 6629): All use case: [androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117, androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767, androidx.camera.core.ImageAnalysis-4b37318d-5e6d-44c9-96de-905b8524211d162339115] for camera: 1
+W/libc    ( 6629): Access denied finding property "persist.vendor.camera.privapp.list"
+D/CameraExtImplXiaoMi( 6629): initCameraDevice: 1
+I/CameraManager( 6629): Open camera top activityName is com.healthsafety.app.MainActivity
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Use case androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767 ACTIVE
+D/UseCaseAttachState( 6629): Active and attached use case: [androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117, androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767] for camera: 1
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Use case androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117 ACTIVE
+D/UseCaseAttachState( 6629): Active and attached use case: [androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117, androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767] for camera: 1
+I/flutter ( 6629): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false        
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Use case androidx.camera.core.ImageAnalysis-4b37318d-5e6d-44c9-96de-905b8524211d162339115 INACTIVE
+D/UseCaseAttachState( 6629): Active and attached use case: [androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117, androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767] for camera: 1
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} CameraDevice.onOpened()
+D/Camera2CameraImpl( 6629): {Camera@41763b4[id=1]} Transitioning camera internal state: OPENING --> OPENED
+D/CameraStateRegistry( 6629): Recalculating open cameras:
+D/CameraStateRegistry( 6629): Camera                                       State
+D/CameraStateRegistry( 6629): -------------------------------------------------------------------
+D/CameraStateRegistry( 6629): Camera@41763b4[id=1]                         OPEN
+D/CameraStateRegistry( 6629): Camera@4c47cab[id=0]                         CLOSED
+D/CameraStateRegistry( 6629): -------------------------------------------------------------------
+D/CameraStateRegistry( 6629): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine( 6629): New public camera state CameraState{type=OPEN, error=null} from OPEN and null
+D/CameraStateMachine( 6629): Publishing new public camera state CameraState{type=OPEN, error=null}
+D/UseCaseAttachState( 6629): All use case: [androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117, androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767, androidx.camera.core.ImageAnalysis-4b37318d-5e6d-44c9-96de-905b8524211d162339115] for camera: 1
+D/UseCaseAttachState( 6629): Active and attached use case: [androidx.camera.core.ImageCapture-1e66dd0e-3bc1-4433-8bc0-9b6ac318519228702117, androidx.camera.core.Preview-eda3b42a-03bc-4f8e-be69-bb22a8325b6584138767] for camera: 1
+D/SyncCaptureSessionBase( 6629): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@551b05c] getSurface done with results: [Surface(name=null)/@0xb80ea01, Surface(name=null)/@0xe5a32e, Surface(name=null)/@0xd12aecf]
+D/CaptureSession( 6629): Opening capture session.
+D/Camera2CaptureRequestBuilder( 6629): template type = 1
+D/SyncCaptureSessionImpl( 6629): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@551b05c] start openCaptureSession
+D/DeferrableSurface( 6629): use count+1, useCount=2 androidx.camera.core.SurfaceRequest$2@85bdcb8
+D/DeferrableSurface( 6629): New surface in use[total_surfaces=4, used_surfaces=2](androidx.camera.core.impl.ImmediateSurface@19b5382}
+D/DeferrableSurface( 6629): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@19b5382
+D/DeferrableSurface( 6629): New surface in use[total_surfaces=4, used_surfaces=3](androidx.camera.core.impl.ImmediateSurface@9118ad0}
+D/DeferrableSurface( 6629): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@9118ad0
+D/CameraDevice-JV-1( 6629): waitUntilIdle: E. id = 1
+D/CameraDevice-JV-1( 6629): waitUntilIdle: X
+D/SyncCaptureSessionImpl( 6629): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@551b05c] Session onConfigured()
+D/CaptureSession( 6629): Attempting to send capture request onConfigured
+D/CaptureSession( 6629): Issuing request for session.
+D/Camera2CaptureRequestBuilder( 6629): createCaptureRequest
+D/CaptureSession( 6629): CameraCaptureSession.onConfigured() mState=OPENED
+D/CaptureSession( 6629): CameraCaptureSession.onReady() OPENED
+I/BpBinder( 6629): onLastStrongRef automatically unlinking death recipients: <uncached descriptor>
+D/[FBP-Android]( 6629): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 6629): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+D/[FBP-Android]( 6629): [FBP] onCharacteristicChanged:
+D/[FBP-Android]( 6629): [FBP]   chr: 6e400003-b5a3-f393-e0a9-e50e24dcca9e
+I/flutter ( 6629): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 05
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \05
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=5, payload=null
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 05
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \05
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=5, payload=null
+I/flutter ( 6629): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 05
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \05
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=5, payload=null
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 3, 0, 2, 144, 5, 254, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 03 00 02 90 05 fe 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \254, calculado: \254
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \02 90 05
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9002
+I/flutter ( 6629): [TitanDeimosHandler] Status do teste de álcool: \05
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9002, data=5, payload=null
+I/flutter ( 6629): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9003, data=00 00, payload=null
+I/flutter ( 6629): 🕓 Teste pendente aguardando foto: 0.0 mg/L
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9003, data=00 00, payload=null
+I/flutter ( 6629): ! Teste duplicado ignorado!
+I/flutter ( 6629): ! Teste duplicado ignorado!
+I/flutter ( 6629): [TitanDeimosHandler] Notificação recebida: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9003, data=00 00, payload=null
+I/flutter ( 6629): ! Teste duplicado ignorado!
+I/flutter ( 6629): [TitanDeimosHandler] processReceivedData chamada com: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16 0d 0a
+I/flutter ( 6629): [TitanDeimosHandler] Frame detectado: 68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Frame decimal: [104, 48, 48, 48, 48, 3, 80, 104, 129, 4, 0, 3, 144, 0, 0, 251, 22]
+I/flutter ( 6629): [TitanDeimosHandler] _processCompleteFrame chamada com: \68 30 30 30 30 03 50 68 81 04 00 03 90 00 00 fb 16
+I/flutter ( 6629): [TitanDeimosHandler] Checksum recebido: \251, calculado: \251
+I/flutter ( 6629): [TitanDeimosHandler] Payload extraído: \03 90 00 00
+I/flutter ( 6629): [TitanDeimosHandler] [0x81] Comando de resposta extraído do payload: 9003
+I/flutter ( 6629): [BluetoothProvider] onDataFromHandler: comando=9003, data=00 00, payload=null
+I/flutter ( 6629): ! Teste duplicado ignorado!
+I/flutter ( 6629): ! Teste duplicado ignorado!
+I/flutter ( 6629): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false 

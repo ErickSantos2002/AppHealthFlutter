@@ -430,15 +430,25 @@ class TitanDeimosHandler implements BluetoothHandler {
         // Status do teste de álcool
         if (realPayload.isNotEmpty) {
           int status = realPayload[0];
-          return {'testStatus': status, 'command': cmdHex};
+          print(
+            '[TitanDeimosHandler] Status do teste de álcool: \\${status.toRadixString(16).padLeft(2, '0').toUpperCase()}',
+          );
+          // Always include 'data' field for status commands
+          return {'testStatus': status, 'data': status, 'command': cmdHex};
         }
       } else if (cmdHex == '9003') {
         // Resultado do teste de álcool
+        String dataStr = realPayload
+            .map((b) => b.toRadixString(16).padLeft(2, '0'))
+            .join(' ');
         if (realPayload.length >= 2) {
           int valL = realPayload[0];
           int valH = realPayload[1];
           double result = (valH * 256 + valL) / 100.0;
-          return {'testResult': result, 'command': cmdHex};
+          return {'testResult': result, 'data': dataStr, 'command': cmdHex};
+        } else {
+          // Payload inesperado, mas envie para debug
+          return {'testResult': null, 'data': dataStr, 'command': cmdHex};
         }
       }
       // Default: retorna payload bruto

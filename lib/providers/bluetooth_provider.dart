@@ -266,7 +266,17 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       ).isAcimaDaTolerancia(ref.read(configuracoesProvider).tolerancia);
       _lastResultadoFinal = resultadoFinal; // Salva resultado processado
     }
-    // --- HLX/Deimos ---
+    // --- Foto para Titan/Deimos: comando 9002 status 2 ---
+    else if (command == "9002" &&
+        (deviceName.contains("hlx") || deviceName.contains("deimos"))) {
+      if (data != null && (data.toString() == "2" || data == 2)) {
+        // Só dispara fluxo de foto, não salva teste nem mexe em histórico
+        state = state.copyWith(precisaCapturarFoto: true);
+        print("🕓 Status 2 recebido em 9002: disparando captura de foto");
+      }
+      return;
+    }
+    // --- HLX/Deimos: comando 9003 ---
     else if ((deviceName.contains("hlx") || deviceName.contains("deimos")) &&
         command == "9003") {
       if (testResult == null || (testResult is! num)) {
@@ -279,7 +289,7 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       resultadoFinal = "${testResult.toString()} $unidade";
       if (_ultimoResultadoSalvo == resultadoFinal) {
         print("⚠️ Teste duplicado ignorado!");
-        isDuplicado = true;
+        return; // <-- Garante que só salva uma vez
       }
       _ultimoResultadoSalvo = resultadoFinal;
       isFavorito = TestModel(
@@ -289,10 +299,34 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         batteryLevel: battery ?? 0,
         funcionarioId: funcionario.id,
         funcionarioNome: funcionario.nome,
-        photoPath: state.lastCapturedPhotoPath,
+        photoPath: state.lastCapturedPhotoPath, // associa a foto capturada
         deviceName: state.connectedDevice?.name,
       ).isAcimaDaTolerancia(ref.read(configuracoesProvider).tolerancia);
       _lastResultadoFinal = resultadoFinal;
+      // Salva imediatamente o teste com a foto e limpa o caminho
+      final testeComFoto = TestModel(
+        timestamp: agora,
+        command: resultadoFinal,
+        statusCalibracao: statusCalibracao,
+        batteryLevel: battery ?? 0,
+        funcionarioId: funcionario.id,
+        funcionarioNome: funcionario.nome,
+        photoPath: state.lastCapturedPhotoPath,
+        deviceName: state.connectedDevice?.name ?? '',
+        isFavorito: isFavorito,
+      );
+      ref.read(historicoProvider.notifier).adicionarTeste(testeComFoto);
+      print(
+        "✅ Teste salvo no histórico com foto (Titan/Deimos): " +
+            (state.lastCapturedPhotoPath ?? ''),
+      );
+      state = state.copyWith(
+        testeSalvo: true,
+        precisaCapturarFoto: false,
+        lastCapturedPhotoPath: null,
+      );
+      _testePendente = null;
+      return;
     }
     // --- Outros aparelhos: tenta lógica genérica ---
     else if (command == "9003") {
@@ -370,14 +404,29 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         precisaCapturarFoto: false,
       );
     } else {
-      print("⚠️ Nenhum teste pendente para associar foto!");
-      state = state.copyWith(precisaCapturarFoto: false);
+      // Não há teste pendente ainda (ex: Titan/Deimos: foto antes do 9003)
+      print(
+        "⚠️ Nenhum teste pendente para associar foto! Salvando caminho para uso futuro.",
+      );
+      state = state.copyWith(
+        lastCapturedPhotoPath: caminhoFoto,
+        precisaCapturarFoto: false,
+      );
     }
   }
 
   Future<void> iniciarNovoTeste() async {
     _ultimoResultadoSalvo = null; // 🔹 Reseta o rastreador de testes duplicados
-    print("🔄 Novo teste iniciado! Resetando controle de duplicação.");
+    _testePendente = null; // 🔹 Garante que não há teste pendente
+    // Resetar flags de foto para evitar estados residuais
+    state = state.copyWith(
+      precisaCapturarFoto: false,
+      lastCapturedPhotoPath: null,
+      testeSalvo: false,
+    );
+    print(
+      "🔄 Novo teste iniciado! Resetando controle de duplicação e flags de foto.",
+    );
   }
 
   /// 🔹 Obtém informações do dispositivo após conexão
@@ -405,7 +454,11 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
   }
 
   void capturarFoto(String caminhoFoto) {
-    state = state.copyWith(lastCapturedPhotoPath: caminhoFoto);
+    // Salva o caminho da foto e reseta o flag para evitar múltiplos disparos
+    state = state.copyWith(
+      lastCapturedPhotoPath: caminhoFoto,
+      precisaCapturarFoto: false,
+    );
     print("📸 Foto salva para o próximo teste: $caminhoFoto");
   }
 
@@ -485,6 +538,10 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
 
   /// Método unificado para receber dados dos handlers
   void onDataFromHandler(Map<String, dynamic> data) {
+    // Log para debug: mostra todos os comandos e dados recebidos do handler
+    print(
+      '[BluetoothProvider] onDataFromHandler: comando=${data['command']}, data=${data['data']}, payload=${data['payload']}',
+    );
     // Atualiza DeviceInfo se aplicável
     updateDeviceInfo(data);
     // Processa teste se aplicável (ex: comando de resultado)
