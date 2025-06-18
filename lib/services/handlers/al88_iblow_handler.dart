@@ -110,9 +110,12 @@ class Al88IblowHandler implements BluetoothHandler {
         final parsed = processReceivedData(value);
         if (parsed != null) {
           // Notifica o provider centralizado
-          ref.read(bluetoothProvider.notifier).updateDeviceInfo(parsed);
-          // Chama o callback unificado, se existir
-          if (onData != null) onData!(parsed);
+          if (onData != null) {
+            onData!(parsed); // 🔹 Envia para o caminho correto, igual ao Titan
+          } else {
+            // fallback: envia para o provider direto (garantia extra)
+            ref.read(bluetoothProvider.notifier).onDataFromHandler(parsed);
+          }
         }
       }
     });
@@ -152,7 +155,7 @@ class Al88IblowHandler implements BluetoothHandler {
 
     final result = {
       "command": commandCode,
-      "payload": receivedData,
+      "data": receivedData, // Corrigido: sempre envia como 'data'
       if (battery != null) "battery": battery,
     };
     // Chama o callback unificado, se existir

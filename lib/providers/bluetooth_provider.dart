@@ -76,7 +76,12 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
   }
 
   String get lastData {
-    // Retorna apenas o último dado processado recebido do handler
+    // Se for comando de teste, retorna o resultado processado
+    if (_lastResultadoFinal != null &&
+        (_lastParsedCommand == "T11" || _lastParsedCommand == "9003")) {
+      return _lastResultadoFinal!;
+    }
+    // Caso contrário, retorna o dado cru
     return _lastParsedData ?? "-";
   }
 
@@ -98,6 +103,7 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
   String? _lastParsedData;
   String? _lastStatusTeste;
   int? _lastSoproProgress;
+  String? _lastResultadoFinal; // Novo: armazena o último resultado processado
 
   BluetoothNotifier(this.ref)
     : _bluetoothManager = BluetoothManager(ref),
@@ -228,11 +234,12 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     String statusCalibracao = "N/A";
     bool isDuplicado = false;
     bool isFavorito = false;
+    final config = ref.read(configuracoesProvider);
+    final fotoAtivada = config.fotoAtivada;
 
     // --- iBlow/AL88 ---
     if ((deviceName.contains("iblow") || deviceName.contains("al88")) &&
         command == "T11") {
-      // Exemplo de data: "123,3,0.05,1"
       if (data == null) return;
       final partes = data.split(",");
       if (partes.length < 3) return;
@@ -251,12 +258,13 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         timestamp: agora,
         command: resultadoFinal,
         statusCalibracao: statusCalibracao,
-        batteryLevel: 0,
+        batteryLevel: battery ?? 0,
         funcionarioId: funcionario.id,
         funcionarioNome: funcionario.nome,
         photoPath: state.lastCapturedPhotoPath,
         deviceName: state.connectedDevice?.name,
       ).isAcimaDaTolerancia(ref.read(configuracoesProvider).tolerancia);
+      _lastResultadoFinal = resultadoFinal; // Salva resultado processado
     }
     // --- HLX/Deimos ---
     else if ((deviceName.contains("hlx") || deviceName.contains("deimos")) &&
@@ -278,12 +286,13 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         timestamp: agora,
         command: resultadoFinal,
         statusCalibracao: statusCalibracao,
-        batteryLevel: 0,
+        batteryLevel: battery ?? 0,
         funcionarioId: funcionario.id,
         funcionarioNome: funcionario.nome,
         photoPath: state.lastCapturedPhotoPath,
         deviceName: state.connectedDevice?.name,
       ).isAcimaDaTolerancia(ref.read(configuracoesProvider).tolerancia);
+      _lastResultadoFinal = resultadoFinal;
     }
     // --- Outros aparelhos: tenta lógica genérica ---
     else if (command == "9003") {
@@ -304,15 +313,14 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         timestamp: agora,
         command: resultadoFinal,
         statusCalibracao: statusCalibracao,
-        batteryLevel: 0,
+        batteryLevel: battery ?? 0,
         funcionarioId: funcionario.id,
         funcionarioNome: funcionario.nome,
         photoPath: state.lastCapturedPhotoPath,
         deviceName: state.connectedDevice?.name,
       ).isAcimaDaTolerancia(ref.read(configuracoesProvider).tolerancia);
-    }
-    // --- Se não for resultado de teste, não armazena ---
-    else {
+      _lastResultadoFinal = resultadoFinal;
+    } else {
       return;
     }
 
@@ -330,13 +338,23 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       isFavorito: isFavorito,
     );
 
-    // Só dispara a captura de foto quando receber o comando 9003 (resultado do teste)
-    if (command == "9003") {
+    // Salvar imediatamente se fotoAtivada == false
+    if (!fotoAtivada) {
+      ref.read(historicoProvider.notifier).adicionarTeste(novoTeste);
+      print("✅ Teste salvo no histórico (sem foto)");
+      state = state.copyWith(testeSalvo: true, precisaCapturarFoto: false);
+      _testePendente = null;
+      return;
+    }
+
+    // Se for Titan/Deimos (9003) OU iBlow/AL88 (T11) e fotoAtivada == true, aguarda foto
+    if ((command == "9003") ||
+        ((deviceName.contains("iblow") || deviceName.contains("al88")) &&
+            command == "T11")) {
       _testePendente = novoTeste;
       state = state.copyWith(testeSalvo: false, precisaCapturarFoto: true);
       print("🕓 Teste pendente aguardando foto: $resultadoFinal");
     }
-    // Para outros comandos, não faz nada!
   }
 
   /// Salva o teste pendente com o caminho da foto

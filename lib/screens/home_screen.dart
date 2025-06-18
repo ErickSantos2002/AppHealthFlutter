@@ -419,10 +419,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         const SizedBox(height: 20),
         _buildFuncionarioSelector(funcionarios, selectedFuncionarioId),
         const SizedBox(height: 20),
-        _infoCard("🔹 Resposta", command),
-        _infoCard("📊 Dados", data),
-        _infoCard("🔋 Bateria", "$batteryLevel%"),
-        _infoCard("🟦 Status do Teste", statusTeste),
+        _infoCard(
+          "🔹 Resposta",
+          statusTeste,
+        ), // Mostra o status do teste como resposta
+        _infoCard("📊 Dados", data), // Mostra os dados recebidos do aparelho
         const SizedBox(height: 30),
         ElevatedButton.icon(
           onPressed: podeIniciarTeste ? _iniciarTeste : null,
