@@ -19,6 +19,8 @@ class BluetoothState {
   final String? selectedFuncionarioId;
   final String? lastCapturedPhotoPath; // 📸 Caminho da última foto tirada
   final DeviceInfo? deviceInfo;
+  final bool testeSalvo; // Flag para notificar a tela
+  final bool precisaCapturarFoto; // Novo flag
 
   BluetoothState({
     required this.isConnected,
@@ -28,7 +30,9 @@ class BluetoothState {
     this.selectedFuncionarioId,
     this.lastCapturedPhotoPath,
     this.deviceInfo,
-  });
+    this.testeSalvo = false,
+    bool? precisaCapturarFoto,
+  }) : precisaCapturarFoto = precisaCapturarFoto ?? false;
 
   /// 🔄 Atualiza o estado sem modificar a referência do provider
   BluetoothState copyWith({
@@ -39,6 +43,8 @@ class BluetoothState {
     String? selectedFuncionarioId,
     String? lastCapturedPhotoPath,
     DeviceInfo? deviceInfo,
+    bool? testeSalvo,
+    bool? precisaCapturarFoto,
   }) {
     return BluetoothState(
       isConnected: isConnected ?? this.isConnected,
@@ -52,6 +58,8 @@ class BluetoothState {
       lastCapturedPhotoPath:
           lastCapturedPhotoPath ?? this.lastCapturedPhotoPath,
       deviceInfo: deviceInfo ?? this.deviceInfo,
+      testeSalvo: testeSalvo ?? this.testeSalvo,
+      precisaCapturarFoto: precisaCapturarFoto ?? this.precisaCapturarFoto,
     );
   }
 }
@@ -102,6 +110,12 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
 
   String get funcionarioSelecionado =>
       state.selectedFuncionarioId ?? "Visitante";
+
+  // Flag para notificar a tela quando um teste for salvo
+  bool get testeSalvo => state.testeSalvo;
+  void resetarTesteSalvo() {
+    state = state.copyWith(testeSalvo: false);
+  }
 
   /// 🔹 Conecta a um dispositivo e atualiza o estado
   Future<bool> connectToDevice(BluetoothDevice device) async {
@@ -190,6 +204,9 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
 
   String?
   _ultimoResultadoSalvo; // Variável para rastrear o último resultado salvo
+  TestModel? _testePendente; // Teste aguardando foto
+
+  TestModel? get testePendente => _testePendente;
 
   void _processarTeste(Map<String, dynamic> parsed) {
     final command = parsed["command"];
@@ -305,20 +322,38 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       timestamp: agora,
       command: resultadoFinal,
       statusCalibracao: statusCalibracao,
-      batteryLevel: 0,
+      batteryLevel: battery ?? 0,
       funcionarioId: funcionario.id,
       funcionarioNome: funcionario.nome,
-      photoPath: state.lastCapturedPhotoPath,
+      photoPath: null, // Foto será associada depois
       deviceName: state.connectedDevice?.name ?? '',
       isFavorito: isFavorito,
     );
-    state = state.copyWith(lastCapturedPhotoPath: null);
-    ref.read(historicoProvider.notifier).adicionarTeste(novoTeste);
-    print("✅ Teste salvo com sucesso: $resultadoFinal");
-    // Reinicia iBlow após teste
-    if (deviceName.contains("iblow")) {
-      print("🔁 iBlow detectado: reiniciando via reconexão...");
-      _reiniciarIBlow();
+
+    // Só dispara a captura de foto quando receber o comando 9003 (resultado do teste)
+    if (command == "9003") {
+      _testePendente = novoTeste;
+      state = state.copyWith(testeSalvo: false, precisaCapturarFoto: true);
+      print("🕓 Teste pendente aguardando foto: $resultadoFinal");
+    }
+    // Para outros comandos, não faz nada!
+  }
+
+  /// Salva o teste pendente com o caminho da foto
+  void salvarTesteComFoto(String caminhoFoto) {
+    if (_testePendente != null) {
+      final testeComFoto = _testePendente!.copyWith(photoPath: caminhoFoto);
+      ref.read(historicoProvider.notifier).adicionarTeste(testeComFoto);
+      print("✅ Teste salvo no histórico com foto: $caminhoFoto");
+      _testePendente = null;
+      state = state.copyWith(
+        testeSalvo: false,
+        lastCapturedPhotoPath: null,
+        precisaCapturarFoto: false,
+      );
+    } else {
+      print("⚠️ Nenhum teste pendente para associar foto!");
+      state = state.copyWith(precisaCapturarFoto: false);
     }
   }
 
@@ -443,6 +478,11 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
   Map<String, dynamic>? processReceivedData(List<int> rawData) {
     return _bluetoothManager.processReceivedData(rawData);
   }
+
+  // Garante que o método está público
+  void resetarPrecisaCapturarFoto() {
+    state = state.copyWith(precisaCapturarFoto: false);
+  }
 }
 
 /// 🔹 Criamos um provider global para o Bluetooth
@@ -467,6 +507,10 @@ class BluetoothScanNotifier extends StateNotifier<List<BluetoothDevice>> {
 
   Future<void> stopScan() async {
     await _scanService.stopScan();
+  }
+
+  void clearDevices() {
+    _scanService.clearDevices();
   }
 
   @override

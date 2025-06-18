@@ -2,11 +2,8 @@ import 'dart:async';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart' as ble;
 import 'package:flutter/material.dart';
 import 'package:Health_App/providers/configuracoes_provider.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../providers/funcionario_provider.dart';
-import '../../../models/funcionario_model.dart';
-import '../../../services/bluetooth_scan_service.dart';
 import '../../../providers/bluetooth_provider.dart';
 import '../../../providers/bluetooth_permission_helper.dart';
 import 'package:camera/camera.dart';
@@ -14,6 +11,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../../models/funcionario_model.dart';
 
 Map<String, String> commandTranslations = {
   "T01": "Contagem de uso após calibração",
@@ -48,6 +46,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   bool isFlashOn = false;
   bool isFrontCamera = true;
   int soproProgress = 0;
+  bool _isCapturingPhotoInternal = false;
+  bool isCameraLoading = false; // <- novo
 
   @override
   void initState() {
@@ -104,20 +104,38 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     });
   }
 
-  void _setupCamera() {
-    if (cameras != null && cameras!.isNotEmpty) {
-      // Dispose do controller anterior antes de criar o novo
-      cameraController?.dispose();
+  void toggleCamera() async {
+    setState(() {
+      isFrontCamera = !isFrontCamera;
+      isCameraLoading = true;
+    });
+    await _setupCamera(force: true);
+  }
 
+  Future<void> _setupCamera({bool force = false}) async {
+    if (cameras != null && cameras!.isNotEmpty) {
+      if (cameraController != null) {
+        await cameraController!.dispose();
+        cameraController = null;
+      }
       cameraController = CameraController(
         isFrontCamera ? cameras!.first : cameras!.last,
         ResolutionPreset.medium,
         enableAudio: false,
       );
-
-      cameraController!.initialize().then((_) {
-        if (mounted) setState(() {});
-      });
+      try {
+        await cameraController!.initialize();
+        if (mounted)
+          setState(() {
+            isCameraLoading = false;
+          });
+      } catch (e) {
+        print('Erro ao inicializar câmera: $e');
+        if (mounted)
+          setState(() {
+            isCameraLoading = false;
+          });
+      }
     }
   }
 
@@ -131,8 +149,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final isScanning = ref.read(bluetoothScanProvider).isNotEmpty;
     if (isScanning) {
       await scanProvider.stopScan();
+      scanProvider.clearDevices(); // Limpa a lista imediatamente ao parar
+      setState(() {}); // Força atualização do UI
     } else {
+      scanProvider.clearDevices(); // Limpa antes de iniciar novo scan
       await scanProvider.startScan();
+      setState(() {}); // Força atualização do UI
     }
   }
 
@@ -177,101 +199,104 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       });
     } else {
       setState(() {
-        isCapturingPhoto = true;
         soproProgress = 0;
+        isCapturingPhoto = true; // <- Abre a câmera para ajuste
       });
     }
   }
 
   Future<void> _tirarFoto() async {
-    if (cameraController != null && cameraController!.value.isInitialized) {
+    if (_isCapturingPhotoInternal) {
+      print(
+        '[UI] _tirarFoto: Já está capturando, ignorando chamada duplicada.',
+      );
+      return;
+    }
+    if (!mounted) return;
+    if (cameraController == null || !cameraController!.value.isInitialized) {
+      print('❌ CameraController não inicializado!');
+      ref.read(bluetoothProvider.notifier).salvarTesteComFoto("");
+      setState(() {
+        isCapturingPhoto = false;
+      });
+      return;
+    }
+    if (cameraController!.value.isTakingPicture) {
+      print('[UI] _tirarFoto: Camera já está tirando foto, ignorando chamada.');
+      return;
+    }
+    _isCapturingPhotoInternal = true;
+    try {
+      print('[UI] _tirarFoto: Camera pronta, capturando...');
       final XFile foto = await cameraController!.takePicture();
       final Directory directory = await getApplicationDocumentsDirectory();
       final String caminhoFoto =
           "${directory.path}/foto_teste_${DateTime.now().millisecondsSinceEpoch}.jpg";
       await File(foto.path).copy(caminhoFoto);
-      ref.read(bluetoothProvider.notifier).capturarFoto(caminhoFoto);
-      setState(() {
-        isCapturingPhoto = false;
-      });
+      print("📸 Foto capturada e salva em: $caminhoFoto");
+      if (!mounted) return;
+      ref.read(bluetoothProvider.notifier).salvarTesteComFoto(caminhoFoto);
+    } catch (e) {
+      print("❌ Erro ao tirar foto: $e");
+      if (mounted) ref.read(bluetoothProvider.notifier).salvarTesteComFoto("");
+    } finally {
+      if (mounted) {
+        setState(() {
+          isCapturingPhoto = false;
+        });
+      }
+      _isCapturingPhotoInternal = false;
+      // Libera a câmera após tirar a foto
+      await cameraController?.dispose();
+      cameraController = null;
+      if (mounted) await _initCamera();
     }
   }
 
-  void toggleCamera() {
-    setState(() {
-      isFrontCamera = !isFrontCamera;
-      _setupCamera();
-    });
-  }
-
-  void toggleFlash() {
-    setState(() {
-      isFlashOn = !isFlashOn;
-      cameraController?.setFlashMode(
-        isFlashOn ? FlashMode.torch : FlashMode.off,
-      );
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final bluetoothState = ref.watch(bluetoothProvider);
-    final bluetoothNotifier = ref.watch(bluetoothProvider.notifier);
-    final scanDevices = ref.watch(bluetoothScanProvider);
-    final isConnected = bluetoothState.isConnected;
-    final podeIniciarTeste =
-        true; // O provider pode expor esse estado se necessário
-    final command = bluetoothNotifier.lastCommand;
-    final data = bluetoothNotifier.lastData;
-    final batteryLevel = bluetoothNotifier.lastBatteryLevel;
-    final soproProgressProvider = bluetoothNotifier.soproProgress;
-    final statusTeste = bluetoothNotifier.statusTeste;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Health App"),
-        actions: [
-          IconButton(
-            icon: Icon(
-              Icons.bluetooth,
-              color: permissoesOk ? Colors.green : Colors.red,
-            ),
-            tooltip: "Status do Bluetooth",
-            onPressed: () {
-              _verificarPermissaoBluetooth();
-            },
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child:
-            isConnected
-                ? isCapturingPhoto
-                    ? _buildCameraView(soproProgressProvider)
-                    : _buildConnectedUI(
-                      command,
-                      data,
-                      batteryLevel,
-                      podeIniciarTeste,
-                      statusTeste,
-                    )
-                : _buildScanUI(scanDevices),
-      ),
-    );
-  }
+  // Chama _tirarFoto automaticamente quando a camera estiver pronta e isCapturingPhoto for true
+  // void _onCameraReady() {
+  //   if (isCapturingPhoto && !_isCapturingPhotoInternal && cameraController != null && cameraController!.value.isInitialized && !cameraController!.value.isTakingPicture) {
+  //     print('[UI] _onCameraReady: Chamando _tirarFoto automaticamente!');
+  //     _tirarFoto();
+  //   }
+  // }
 
   Widget _buildCameraView([int? soproProgressProvider]) {
     final progress = soproProgressProvider ?? soproProgress;
+    final isCameraReady =
+        cameraController != null &&
+        cameraController!.value.isInitialized &&
+        !isCameraLoading;
     return Column(
       children: [
         Expanded(
           child: Stack(
             alignment: Alignment.center,
             children: [
-              if (cameraController != null &&
-                  cameraController!.value.isInitialized)
-                CameraPreview(cameraController!),
+              if (isCameraLoading)
+                const Center(child: CircularProgressIndicator()),
+              if (!isCameraLoading && isCameraReady)
+                CameraPreview(cameraController!)
+              else
+                const Center(child: CircularProgressIndicator()),
+
+              // Botão para fechar a câmera manualmente
+              Positioned(
+                top: 40,
+                left: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.red),
+                  tooltip: 'Fechar Câmera',
+                  onPressed: () async {
+                    setState(() {
+                      isCapturingPhoto = false;
+                    });
+                    await cameraController?.dispose();
+                    cameraController = null;
+                    await _initCamera();
+                  },
+                ),
+              ),
 
               Positioned(
                 top: 40,
@@ -488,8 +513,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         funcionarios
             .firstWhere(
               (funcionario) => funcionario.id == selectedFuncionarioId,
-              orElse:
-                  () => FuncionarioModel(id: "visitante", nome: "Visitante"),
+              orElse: () {
+                return FuncionarioModel(id: "visitante", nome: "Visitante");
+              },
             )
             .nome;
 
@@ -518,7 +544,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       builder: (context) {
         TextEditingController filtroController = TextEditingController();
         List funcionariosFiltrados = funcionarios;
-
         return Padding(
           padding: EdgeInsets.only(
             bottom:
@@ -588,6 +613,75 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ),
         );
       },
+    );
+  }
+
+  void toggleFlash() {
+    setState(() {
+      isFlashOn = !isFlashOn;
+      cameraController?.setFlashMode(
+        isFlashOn ? FlashMode.torch : FlashMode.off,
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bluetoothState = ref.watch(bluetoothProvider);
+    final bluetoothNotifier = ref.watch(bluetoothProvider.notifier);
+    final scanDevices = ref.watch(bluetoothScanProvider);
+    final isConnected = bluetoothState.isConnected;
+    final podeIniciarTeste = true;
+
+    print(
+      '[UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=$isCapturingPhoto',
+    );
+
+    // Se a câmera está aberta para ajuste e chegou o sinal para capturar foto, tira a foto
+    if (isCapturingPhoto &&
+        bluetoothState.precisaCapturarFoto &&
+        bluetoothNotifier.testePendente != null) {
+      print('[UI] Chamando _tirarFoto() por precisaCapturarFoto...');
+      Future.microtask(() async {
+        await _tirarFoto();
+        ref.read(bluetoothProvider.notifier).resetarPrecisaCapturarFoto();
+        setState(() {
+          isCapturingPhoto = false;
+        }); // Fecha a câmera após foto
+      });
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Health App"),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.bluetooth,
+              color: permissoesOk ? Colors.green : Colors.red,
+            ),
+            tooltip: "Status do Bluetooth",
+            onPressed: () {
+              _verificarPermissaoBluetooth();
+            },
+          ),
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20),
+        child:
+            isConnected
+                ? isCapturingPhoto
+                    ? _buildCameraView(bluetoothNotifier.soproProgress)
+                    : _buildConnectedUI(
+                      bluetoothNotifier.lastCommand,
+                      bluetoothNotifier.lastData,
+                      bluetoothNotifier.lastBatteryLevel,
+                      podeIniciarTeste,
+                      bluetoothNotifier.statusTeste,
+                    )
+                : _buildScanUI(scanDevices),
+      ),
     );
   }
 }
