@@ -505,6 +505,24 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     final current = state.deviceInfo ?? DeviceInfo();
     DeviceInfo updated = current;
 
+    // --- AL88/iBlow: parse info commands ---
+    final command = parsed['command']?.toString();
+    final data = parsed['data']?.toString();
+    final deviceName = state.connectedDevice?.name.toLowerCase() ?? "";
+    if (deviceName.contains("iblow") || deviceName.contains("al88")) {
+      if (command == "B01" && data != null && data.isNotEmpty) {
+        // Firmware info: string como "iBlow v1.23" ou similar
+        updated = updated.copyWith(firmware: data);
+      } else if (command == "B03" && data != null && data.isNotEmpty) {
+        // Usage counter: número como string
+        final usage = int.tryParse(data.replaceAll(RegExp(r'[^0-9]'), ''));
+        if (usage != null) updated = updated.copyWith(usageCounter: usage);
+      } else if (command == "B04" && data != null && data.isNotEmpty) {
+        // Calibration date: formato YYYY.MM.DD
+        updated = updated.copyWith(lastCalibrationDate: data);
+      }
+    }
+
     if (parsed.containsKey('battery')) {
       updated = updated.copyWith(battery: parsed['battery']);
     }

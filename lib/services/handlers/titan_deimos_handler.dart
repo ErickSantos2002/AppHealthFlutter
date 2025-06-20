@@ -374,7 +374,11 @@ class TitanDeimosHandler implements BluetoothHandler {
       // --- RESPOSTAS DE DADOS ---
       if (cmdHex == 'FF00') {
         // Versão do firmware
-        return {'firmware': utf8.decode(realPayload), 'command': cmdHex};
+        return {
+          'firmware': utf8.decode(realPayload),
+          'data': utf8.decode(realPayload),
+          'command': cmdHex,
+        };
       } else if (cmdHex == 'FF02') {
         // Endereço do dispositivo
         if (realPayload.length == 6) {

@@ -283,7 +283,8 @@ class _InformacoesDispositivoScreenState
 
   Widget _buildDeviceInfo() {
     final deviceInfo = ref.watch(bluetoothProvider).deviceInfo;
-    // Exibe sempre as três informações principais para todos os dispositivos
+    final deviceName =
+        ref.watch(bluetoothProvider).connectedDevice?.name.toLowerCase() ?? "";
     final versao = deviceInfo?.firmware ?? "Carregando...";
     final uso =
         deviceInfo?.usageCounter != null
@@ -302,11 +303,12 @@ class _InformacoesDispositivoScreenState
             "Contagem de Uso",
             _formatarQuantidadeTestes(uso),
           ),
-          _buildInfoCard(
-            Icons.date_range,
-            "Última Calibração",
-            _formatarData(calibracao),
-          ),
+          if (!deviceName.contains("al88"))
+            _buildInfoCard(
+              Icons.date_range,
+              "Última Calibração",
+              _formatarData(calibracao),
+            ),
           const SizedBox(height: 20),
           Center(
             child: ElevatedButton.icon(

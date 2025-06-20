@@ -145,11 +145,24 @@ class Al88IblowHandler implements BluetoothHandler {
   Map<String, dynamic>? processReceivedData(List<int> rawData) {
     if (rawData.length < 5) return null;
 
+    print(
+      '[AL88/Iblow Handler] Pacote recebido (bytes): ' +
+          rawData.map((b) => b.toRadixString(16).padLeft(2, '0')).join(' '),
+    );
+    print(
+      '[AL88/Iblow Handler] Pacote recebido (ascii): ' +
+          String.fromCharCodes(rawData),
+    );
+
     String commandCode = String.fromCharCodes(rawData.sublist(1, 4)).trim();
     String receivedData =
         String.fromCharCodes(
           rawData.sublist(4, rawData.length - 2),
         ).replaceAll("#", "").trim();
+    // Remove o último caractere (ex: '4') se presente
+    if (receivedData.isNotEmpty) {
+      receivedData = receivedData.substring(0, receivedData.length - 1);
+    }
     final hasBattery = rawData.length == 20;
     int? battery = hasBattery ? rawData[rawData.length - 2] : null;
 
