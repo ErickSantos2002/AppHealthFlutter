@@ -1,13 +1,13 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'package:file_picker/file_picker.dart';
-import 'package:csv/csv.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:cpf_cnpj_validator/cpf_validator.dart';
+import 'package:csv/csv.dart';
 import '../models/funcionario_model.dart';
 
 class PerfilScreen extends StatefulWidget {
@@ -40,80 +40,192 @@ class _PerfilScreenState extends State<PerfilScreen> {
     }
 
     final List<List<dynamic>> rows = [
-      ["nome", "cargo", "cpf", "matricula", "informacao1", "informacao2"],
-      ...funcionarios.map((f) => [
-        f.nome,
-        f.cargo,
-        f.cpf ?? '',
-        f.matricula ?? '',
-        f.informacao1 ?? '',
-        f.informacao2 ?? '',
-      ])
+      ['id', 'nome', 'cargo', 'cpf', 'matricula', 'informacao1', 'informacao2'],
+      ...funcionarios.map(
+        (f) => [
+          f.id,
+          f.nome,
+          f.cargo,
+          f.cpf ?? '',
+          f.matricula ?? '',
+          f.informacao1 ?? '',
+          f.informacao2 ?? '',
+        ],
+      ),
     ];
-
     final csv = const ListToCsvConverter().convert(rows);
-
     final directory = await getTemporaryDirectory();
     final filePath = '${directory.path}/funcionarios_exportados.csv';
     final file = File(filePath);
     await file.writeAsString(csv);
-
     await Share.shareXFiles([XFile(filePath)], text: 'Funcionários exportados');
   }
 
   Future<void> _importarFuncionariosCSV() async {
+    print('[DEBUG] Iniciando importação de funcionários via CSV...');
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['csv'],
     );
 
-    if (result == null || result.files.single.bytes == null) return;
+    if (result == null || result.files.isEmpty) {
+      print('[DEBUG] Nenhum arquivo selecionado ou arquivo vazio.');
+      return;
+    }
 
-    try {
-      final Uint8List fileBytes = result.files.single.bytes!;
-      final csvData = const Utf8Decoder().convert(fileBytes);
-      final rows = const CsvToListConverter().convert(csvData, eol: '\n');
+    final file = result.files.first;
+    print(
+      '[DEBUG] Arquivo selecionado: ${file.name}, path: ${file.path}, size: ${file.size}',
+    );
 
-      for (int i = 1; i < rows.length; i++) {
-        final row = rows[i];
-        final nome = row[0]?.toString() ?? "";
-        final cargo = row[1]?.toString() ?? "";
-        final cpf = row[2]?.toString() ?? "";
-        final matricula = row[3]?.toString() ?? "";
-        final info1 = row[4]?.toString() ?? "";
-        final info2 = row[5]?.toString() ?? "";
+    Uint8List? bytes = file.bytes;
+    if (bytes == null && file.path != null) {
+      print('[DEBUG] Lendo arquivo a partir do path...');
+      try {
+        bytes = await File(file.path!).readAsBytes();
+        print(
+          '[DEBUG] Bytes lidos do path com sucesso. Tamanho: ${bytes.length}',
+        );
+      } catch (e) {
+        print('[DEBUG] Falha ao ler bytes do arquivo pelo path: $e');
+      }
+    }
 
-        if (nome.isEmpty) continue;
+    if (bytes == null || bytes.isEmpty) {
+      print('[DEBUG] Falha ao carregar bytes do arquivo.');
+      return;
+    }
 
-        final funcionario = FuncionarioModel.novoFuncionario(
+    print('[DEBUG] Iniciando leitura do conteúdo CSV...');
+    final csv = utf8.decode(bytes);
+    print(
+      '[DEBUG] CSV lido com sucesso. Primeiros 100 caracteres:\n' +
+          (csv.length > 100 ? csv.substring(0, 100) : csv),
+    );
+
+    // Parser robusto para diferentes EOLs
+    final linhas = csv.trim().split(RegExp(r'\r?\n'));
+    if (linhas.length <= 1) {
+      print('[DEBUG] Nenhuma linha de dados encontrada.');
+      return;
+    }
+
+    int ignorados = 0;
+    int importados = 0;
+    List<String> erros = [];
+    final box = Hive.box<FuncionarioModel>('funcionarios');
+    for (int i = 1; i < linhas.length; i++) {
+      try {
+        final linha = linhas[i].split(',');
+        if (linha.length < 2) {
+          print('[DEBUG] Linha $i com dados insuficientes: ${linhas[i]}');
+          ignorados++;
+          continue;
+        }
+        final id = linha[0].trim();
+        final nome = linha[1].trim();
+        final cargo = linha.length > 2 ? linha[2].trim() : '';
+        final cpf = linha.length > 3 ? linha[3].trim() : '';
+        final matricula = linha.length > 4 ? linha[4].trim() : '';
+        final info1 = linha.length > 5 ? linha[5].trim() : '';
+        final info2 = linha.length > 6 ? linha[6].trim() : '';
+        print('[DEBUG] Lendo linha $i: id="$id", nome="$nome"');
+        if (id.isEmpty && nome.isEmpty) {
+          print('[DEBUG] Linha $i ignorada: id e nome vazios');
+          ignorados++;
+          continue;
+        }
+        // Verifica duplicidade de id, cpf ou matricula
+        final existeId = box.values.any((f) => f.id == id && id.isNotEmpty);
+        final existeCpf = box.values.any((f) => f.cpf == cpf && cpf.isNotEmpty);
+        final existeMatricula = box.values.any(
+          (f) => f.matricula == matricula && matricula.isNotEmpty,
+        );
+        if (existeId || existeCpf || existeMatricula) {
+          ignorados++;
+          print(
+            '[DEBUG] Ignorado por duplicidade: id=$id, cpf=$cpf, matricula=$matricula',
+          );
+          continue;
+        }
+        final funcionario = FuncionarioModel(
+          id:
+              id.isNotEmpty
+                  ? id
+                  : DateTime.now().millisecondsSinceEpoch.toString(),
           nome: nome,
           cargo: cargo,
-          cpf: cpf,
-          matricula: matricula,
-          informacao1: info1,
-          informacao2: info2,
+          cpf: cpf.isNotEmpty ? cpf : null,
+          matricula: matricula.isNotEmpty ? matricula : null,
+          informacao1: info1.isNotEmpty ? info1 : null,
+          informacao2: info2.isNotEmpty ? info2 : null,
         );
-
-        Hive.box<FuncionarioModel>('funcionarios').put(funcionario.id, funcionario);
+        box.put(funcionario.id, funcionario);
+        importados++;
+        print('[DEBUG] Importado: $nome');
+      } catch (e) {
+        erros.add('Linha ${i + 1}: $e');
+        print('[DEBUG] Erro ao importar linha $i: $e');
       }
-
-      setState(() {});
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Funcionários importados com sucesso!")),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Erro ao importar: $e")),
-      );
     }
+    setState(() {});
+    print(
+      '[DEBUG] Importação finalizada. Importados: $importados, Ignorados: $ignorados, Erros: ${erros.length}',
+    );
+    String msg = "Importação finalizada.\n";
+    msg += "$importados importados com sucesso.";
+    if (ignorados > 0) {
+      msg += "\n$ignorados ignorados por duplicidade ou dados insuficientes.";
+    }
+    if (erros.isNotEmpty) {
+      msg += "\n${erros.length} linhas com erro.";
+    }
+    showDialog(
+      context: context,
+      builder:
+          (context) => AlertDialog(
+            title: const Text('Importação de Funcionários'),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(msg),
+                  if (erros.isNotEmpty) ...[
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Erros:',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    ...erros.map(
+                      (e) => Text(
+                        e,
+                        style: const TextStyle(fontSize: 12, color: Colors.red),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+    );
   }
 
   void _adicionarFuncionario({FuncionarioModel? funcionario, int? index}) {
     showDialog(
       context: context,
       builder: (context) {
-        bool mostrarInfo1 = funcionario?.informacao1 != null && funcionario!.informacao1!.isNotEmpty;
-        bool mostrarInfo2 = funcionario?.informacao2 != null && funcionario!.informacao2!.isNotEmpty;
+        bool mostrarInfo1 =
+            funcionario?.informacao1 != null &&
+            funcionario!.informacao1!.isNotEmpty;
+        bool mostrarInfo2 =
+            funcionario?.informacao2 != null &&
+            funcionario!.informacao2!.isNotEmpty;
         String nome = funcionario?.nome ?? "";
         String cargo = funcionario?.cargo ?? "";
         String cpf = funcionario?.cpf ?? "";
@@ -121,15 +233,23 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
         final cpfController = TextEditingController(text: cpf);
         final matriculaController = TextEditingController(text: matricula);
-        final info1Controller = TextEditingController(text: funcionario?.informacao1 ?? "");
-        final info2Controller = TextEditingController(text: funcionario?.informacao2 ?? "");
+        final info1Controller = TextEditingController(
+          text: funcionario?.informacao1 ?? "",
+        );
+        final info2Controller = TextEditingController(
+          text: funcionario?.informacao2 ?? "",
+        );
         final nomeController = TextEditingController(text: nome);
         final cargoController = TextEditingController(text: cargo);
 
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text(funcionario == null ? "Adicionar Funcionário" : "Editar Funcionário"),
+              title: Text(
+                funcionario == null
+                    ? "Adicionar Funcionário"
+                    : "Editar Funcionário",
+              ),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -141,7 +261,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     ),
                     TextField(
                       controller: cargoController,
-                      decoration: const InputDecoration(labelText: "Cargo (Opcional)"),
+                      decoration: const InputDecoration(
+                        labelText: "Cargo (Opcional)",
+                      ),
                       onChanged: (value) => cargo = value,
                     ),
                     TextField(
@@ -152,7 +274,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
                         String formattedCpf = CPFValidator.format(value);
                         cpfController.value = TextEditingValue(
                           text: formattedCpf,
-                          selection: TextSelection.collapsed(offset: formattedCpf.length),
+                          selection: TextSelection.collapsed(
+                            offset: formattedCpf.length,
+                          ),
                         );
                         cpf = formattedCpf;
                       },
@@ -168,12 +292,16 @@ class _PerfilScreenState extends State<PerfilScreen> {
                     if (mostrarInfo1)
                       TextField(
                         controller: info1Controller,
-                        decoration: const InputDecoration(labelText: "Informação Adicional 1"),
+                        decoration: const InputDecoration(
+                          labelText: "Informação Adicional 1",
+                        ),
                       ),
                     if (mostrarInfo2)
                       TextField(
                         controller: info2Controller,
-                        decoration: const InputDecoration(labelText: "Informação Adicional 2"),
+                        decoration: const InputDecoration(
+                          labelText: "Informação Adicional 2",
+                        ),
                       ),
                     if (!mostrarInfo1 || !mostrarInfo2)
                       Align(
@@ -226,9 +354,13 @@ class _PerfilScreenState extends State<PerfilScreen> {
                         );
                         return;
                       }
-                      if (f.matricula == matricula && matricula.isNotEmpty && f != funcionario) {
+                      if (f.matricula == matricula &&
+                          matricula.isNotEmpty &&
+                          f != funcionario) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("Matrícula já cadastrada!")),
+                          const SnackBar(
+                            content: Text("Matrícula já cadastrada!"),
+                          ),
                         );
                         return;
                       }
@@ -240,10 +372,11 @@ class _PerfilScreenState extends State<PerfilScreen> {
                       cargo: cargo,
                       cpf: cpf,
                       matricula: matricula,
-                      informacao1: mostrarInfo1 ? info1Controller.text.trim() : null,
-                      informacao2: mostrarInfo2 ? info2Controller.text.trim() : null,
+                      informacao1:
+                          mostrarInfo1 ? info1Controller.text.trim() : null,
+                      informacao2:
+                          mostrarInfo2 ? info2Controller.text.trim() : null,
                     );
-
 
                     if (funcionario == null) {
                       funcionariosBox.add(novoFuncionario);
@@ -267,36 +400,45 @@ class _PerfilScreenState extends State<PerfilScreen> {
   void _removerFuncionario(String id) {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Confirmar Exclusão"),
-        content: const Text("Tem certeza que deseja excluir este funcionário?"),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancelar"),
-          ),
-          TextButton(
-            onPressed: () {
-              // 🔹 Buscar pelo ID e remover corretamente
-              final funcionarioParaRemover = funcionariosBox.values.firstWhere(
-                (f) => f.id == id,
-                orElse: () => FuncionarioModel(id: "", nome: ""),
-              );
+      builder:
+          (context) => AlertDialog(
+            title: const Text("Confirmar Exclusão"),
+            content: const Text(
+              "Tem certeza que deseja excluir este funcionário?",
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Cancelar"),
+              ),
+              TextButton(
+                onPressed: () {
+                  // 🔹 Buscar pelo ID e remover corretamente
+                  final funcionarioParaRemover = funcionariosBox.values
+                      .firstWhere(
+                        (f) => f.id == id,
+                        orElse: () => FuncionarioModel(id: "", nome: ""),
+                      );
 
-              if (funcionarioParaRemover.id.isNotEmpty) {
-                funcionariosBox.delete(funcionarioParaRemover.key);
-                setState(() {});
-                print("🗑️ Funcionário removido com sucesso: ${funcionarioParaRemover.nome}");
-              } else {
-                print("⚠️ Erro ao tentar remover funcionário!");
-              }
+                  if (funcionarioParaRemover.id.isNotEmpty) {
+                    funcionariosBox.delete(funcionarioParaRemover.key);
+                    setState(() {});
+                    print(
+                      "🗑️ Funcionário removido com sucesso: ${funcionarioParaRemover.nome}",
+                    );
+                  } else {
+                    print("⚠️ Erro ao tentar remover funcionário!");
+                  }
 
-              Navigator.pop(context);
-            },
-            child: const Text("Excluir", style: TextStyle(color: Colors.red)),
+                  Navigator.pop(context);
+                },
+                child: const Text(
+                  "Excluir",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -327,15 +469,15 @@ class _PerfilScreenState extends State<PerfilScreen> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               controller: searchController,
-                decoration: InputDecoration(
-                  hintText: "Buscar funcionário...",
-                  prefixIcon: const Icon(Icons.search),
-                  filled: true, // ✅ necessário para que fillColor funcione
-                  fillColor: Colors.grey[200], // ✅ cor de fundo desejada
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide.none,
-                  ),
+              decoration: InputDecoration(
+                hintText: "Buscar funcionário...",
+                prefixIcon: const Icon(Icons.search),
+                filled: true, // ✅ necessário para que fillColor funcione
+                fillColor: Colors.grey[200], // ✅ cor de fundo desejada
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
               ),
               onChanged: (value) {
                 setState(() {
@@ -349,35 +491,48 @@ class _PerfilScreenState extends State<PerfilScreen> {
       body: ValueListenableBuilder(
         valueListenable: funcionariosBox.listenable(),
         builder: (context, Box<FuncionarioModel> box, _) {
-          List<FuncionarioModel> funcionarios = box.values.toList(); // ✅ Agora é uma lista válida
+          List<FuncionarioModel> funcionarios =
+              box.values.toList(); // ✅ Agora é uma lista válida
 
-          funcionarios.sort((a, b) => a.nome.compareTo(b.nome)); // Ordenando por nome
+          funcionarios.sort(
+            (a, b) => a.nome.compareTo(b.nome),
+          ); // Ordenando por nome
           return funcionarios.isEmpty
               ? const Center(child: Text("Nenhum funcionário cadastrado."))
               : ListView.builder(
-                  itemCount: funcionarios.length,
-                  itemBuilder: (context, index) {
-                    List<FuncionarioModel> funcionariosList = funcionarios.toList();
-                    final funcionario = funcionariosList[index];
-                    return ListTile(
-                      title: Text(funcionario.nome),
-                      subtitle: Text("Cargo: ${funcionario.cargo.isNotEmpty ? funcionario.cargo : 'Não informado'} | CPF: ${funcionario.cpf} | Matrícula: ${funcionario.matricula}"),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () => _adicionarFuncionario(funcionario: funcionario, index: index),
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.delete, color: Colors.red),
-                            onPressed: () => _removerFuncionario(funcionario.id), // 🔹 Agora passamos o ID
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
+                itemCount: funcionarios.length,
+                itemBuilder: (context, index) {
+                  List<FuncionarioModel> funcionariosList =
+                      funcionarios.toList();
+                  final funcionario = funcionariosList[index];
+                  return ListTile(
+                    title: Text(funcionario.nome),
+                    subtitle: Text(
+                      "Cargo: ${funcionario.cargo.isNotEmpty ? funcionario.cargo : 'Não informado'} | CPF: ${funcionario.cpf} | Matrícula: ${funcionario.matricula}",
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.edit),
+                          onPressed:
+                              () => _adicionarFuncionario(
+                                funcionario: funcionario,
+                                index: index,
+                              ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete, color: Colors.red),
+                          onPressed:
+                              () => _removerFuncionario(
+                                funcionario.id,
+                              ), // 🔹 Agora passamos o ID
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
         },
       ),
     );

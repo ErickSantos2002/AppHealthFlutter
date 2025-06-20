@@ -1,0 +1,218 @@
+I/flutter (12843): [UI] build: precisaCapturarFoto={bluetoothState.precisaCapturarFoto}, testePendente={bluetoothNotifier.testePendente != null}, isCapturingPhoto=false
+Performing hot reload...                                                
+Reloaded 3 of 2707 libraries in 1.224ms (compile: 88 ms, reload: 389 ms, reassemble: 402 ms).
+I/flutter (12843): [DEBUG] Iniciando importação de funcionários via CSV...
+D/DecorView[](12843): onWindowFocusChanged hasWindowFocus false
+W/Looper  (12843): PerfMonitor doFrame : time=443ms vsyncFrame=0 latency=4ms procState=-1
+W/ScreenFlashWrapper(12843): completePendingScreenFlashClear: none pending!
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Use cases [androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123, androidx.camera.core.ImageCapture-bbe29f7a-47a6-4479-a519-3c55a4af1c1363088281, androidx.camera.core.ImageAnalysis-081a4af4-6052-4f7b-af7b-fe10cfd66b4a96236863] now DETACHED for camera
+D/UseCaseAttachState(12843): All use case: [] for camera: 0
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Resetting Capture Session
+D/SyncCaptureSessionImpl(12843): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@6374b99] Session call close()
+W/Looper  (12843): PerfMonitor looperActivity : package=com.healthsafety.app/.MainActivity time=7ms latency=455ms running=4ms  procState=-1  historyMsgCount=1
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Releasing session in state OPENED
+D/Camera2CameraControlImp(12843): setActive: isActive = false
+D/UseCaseAttachState(12843): Active and attached use case: [] for camera: 0
+D/UseCaseAttachState(12843): Active and attached use case: [] for camera: 0
+D/VideoUsageControl(12843): resetDirectly: mVideoUsage reset!
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Closing camera.
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Transitioning camera internal state: OPENED --> CLOSING
+D/CameraStateRegistry(12843): Recalculating open cameras:
+D/CameraStateRegistry(12843): Camera                                       State
+D/CameraStateRegistry(12843): -------------------------------------------------------------------
+D/CameraStateRegistry(12843): Camera@41763b4[id=1]                         UNKNOWN
+D/CameraStateRegistry(12843): Camera@4c47cab[id=0]                         CLOSING
+D/CameraStateRegistry(12843): -------------------------------------------------------------------
+D/CameraStateRegistry(12843): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine(12843): New public camera state CameraState{type=CLOSING, error=null} from CLOSING and null
+D/CameraStateMachine(12843): Publishing new public camera state CameraState{type=CLOSING, error=null}
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Resetting Capture Session
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Skipping Capture Session state check due to current camera state: CLOSING and previous session status: false
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Releasing session in state CLOSING
+D/SyncCaptureSessionImpl(12843): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@6374b99] Session call super.close()
+D/UseCaseAttachState(12843): Active and attached use case: [] for camera: 0
+D/CaptureSession(12843): onSessionFinished()
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} closing camera
+D/CameraExtImplXiaoMi(12843): releaseCameraDevice: 0
+D/CameraDevice-JV-0(12843): close: E. id = 0
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult: 
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+D/CameraDevice-JV-0(12843): close: X
+D/DeferrableSurface(12843): use count-1,  useCount=1 closed=false androidx.camera.core.SurfaceRequest$2@b62eb96
+D/DeferrableSurface(12843): use count-1,  useCount=0 closed=false androidx.camera.core.impl.ImmediateSurface@20b9ee9
+D/DeferrableSurface(12843): Surface no longer in use[total_surfaces=4, used_surfaces=2](androidx.camera.core.impl.ImmediateSurface@20b9ee9}
+D/DeferrableSurface(12843): use count-1,  useCount=0 closed=false androidx.camera.core.impl.ImmediateSurface@9b39e9c
+D/DeferrableSurface(12843): Surface no longer in use[total_surfaces=4, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@9b39e9c}
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} CameraDevice.onClosed()
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Transitioning camera internal state: CLOSING --> INITIALIZED
+D/CameraStateRegistry(12843): Recalculating open cameras:
+D/CameraStateRegistry(12843): Camera                                       State
+D/CameraStateRegistry(12843): -------------------------------------------------------------------
+D/CameraStateRegistry(12843): Camera@41763b4[id=1]                         UNKNOWN
+D/CameraStateRegistry(12843): Camera@4c47cab[id=0]                         CLOSED
+D/CameraStateRegistry(12843): -------------------------------------------------------------------
+D/CameraStateRegistry(12843): Open count: 0 (Max allowed: 1)
+D/CameraStateMachine(12843): New public camera state CameraState{type=CLOSED, error=null} from CLOSED and null
+D/CameraStateMachine(12843): Publishing new public camera state CameraState{type=CLOSED, error=null}
+D/SyncCaptureSessionImpl(12843): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@6374b99] onClosed()
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 2
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult:
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 3
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult:
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 4
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult:
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 5
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult:
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 6
+E/CameraManagerGlobal(12843): Camera 4 is not available. Ignore physical camera status change
+E/CameraManagerGlobal(12843): Camera 5 is not available. Ignore physical camera status change
+W/CameraDevice-JV-0(12843): Device error received, code 4, frame number 10919, request ID 0, subseq ID 0
+W/CameraDevice-JV-0(12843): Device error received, code 4, frame number 10921, request ID 0, subseq ID 0
+W/CameraDevice-JV-0(12843): Device error received, code 4, frame number 10920, request ID 0, subseq ID 0
+W/CameraDevice-JV-0(12843): Device error received, code 5, frame number 10919, request ID 0, subseq ID 0
+W/CameraDevice-JV-0(12843): Device error received, code 4, frame number 10922, request ID 0, subseq ID 0
+W/CameraDevice-JV-0(12843): Device error received, code 4, frame number 10923, request ID 0, subseq ID 0
+W/CameraDevice-JV-0(12843): Device error received, code 5, frame number 10920, request ID 0, subseq ID 0
+W/CameraDevice-JV-0(12843): Device error received, code 5, frame number 10921, request ID 0, subseq ID 0
+W/CameraDevice-JV-0(12843): Device error received, code 5, frame number 10922, request ID 0, subseq ID 0
+W/CameraDevice-JV-0(12843): Device error received, code 5, frame number 10923, request ID 0, subseq ID 0
+I/ForceDarkHelperStubImpl(12843): setViewRootImplForceDark: false for com.healthsafety.app.MainActivity@e40adbf, reason: AppDarkModeEnable
+D/AppScoutStateMachine(12843): 12843-ScoutStateMachinecreated
+D/ImageCapture(12843): onCameraControlReady
+D/Camera2CameraControlImp(12843): setFlashMode: mFlashMode = 2
+D/UseCaseAttachState(12843): Active and attached use case: [] for camera: 0
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Use cases [androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123, androidx.camera.core.ImageCapture-bbe29f7a-47a6-4479-a519-3c55a4af1c1363088281, androidx.camera.core.ImageAnalysis-081a4af4-6052-4f7b-af7b-fe10cfd66b4a96236863] now ATTACHED
+D/Camera2CameraControlImp(12843): setActive: isActive = true
+D/UseCaseAttachState(12843): All use case: [androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123, androidx.camera.core.ImageCapture-bbe29f7a-47a6-4479-a519-3c55a4af1c1363088281, androidx.camera.core.ImageAnalysis-081a4af4-6052-4f7b-af7b-fe10cfd66b4a96236863] for camera: 0
+D/UseCaseAttachState(12843): Active and attached use case: [] for camera: 0
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Resetting Capture Session
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Skipping Capture Session state check due to current camera state: INITIALIZED and previous session status: false
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Releasing session in state INITIALIZED
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Attempting to force open the camera.
+D/CameraStateRegistry(12843): tryOpenCamera(Camera@4c47cab[id=0]) [Available Cameras: 1, Already Open: false (Previous state: CLOSED)] --> SUCCESS
+D/CameraStateRegistry(12843): Recalculating open cameras:
+D/CameraStateRegistry(12843): Camera                                       State
+D/CameraStateRegistry(12843): -------------------------------------------------------------------
+D/CameraStateRegistry(12843): Camera@41763b4[id=1]                         UNKNOWN
+D/CameraStateRegistry(12843): Camera@4c47cab[id=0]                         OPENING
+D/CameraStateRegistry(12843): -------------------------------------------------------------------
+D/CameraStateRegistry(12843): Open count: 1 (Max allowed: 1)
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Opening camera.
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Transitioning camera internal state: INITIALIZED --> OPENING
+D/CameraStateMachine(12843): New public camera state CameraState{type=OPENING, error=null} from OPENING and null
+D/CameraStateMachine(12843): Publishing new public camera state CameraState{type=OPENING, error=null}
+D/UseCaseAttachState(12843): All use case: [androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123, androidx.camera.core.ImageCapture-bbe29f7a-47a6-4479-a519-3c55a4af1c1363088281, androidx.camera.core.ImageAnalysis-081a4af4-6052-4f7b-af7b-fe10cfd66b4a96236863] for camera: 0
+W/libc    (12843): Access denied finding property "persist.vendor.camera.privapp.list"
+D/CameraExtImplXiaoMi(12843): initCameraDevice: 0
+E/ActivityThread(12843):  fail in deliverResultsIfNeeded java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String android.os.Bundle.getString(java.lang.String)' on a null object reference
+I/CameraManager(12843): Open camera top activityName is com.healthsafety.app.MainActivity
+E/CameraManagerGlobal(12843): Camera 4 is not available. Ignore physical camera status change
+E/CameraManagerGlobal(12843): Camera 5 is not available. Ignore physical camera status change
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult:
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 2
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult:
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 3
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult:
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 4
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult:
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 5
+D/CameraInjector(12843): updateCloudCameraControllerInfoAsync: has aleardy start update task.
+D/CameraInjector(12843): waitForResult:
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelist"
+W/libc    (12843): Access denied finding property "vendor.camera.aux.packagelistext"
+W/CameraManagerGlobal(12843): ignore the torch status update of camera: 6
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Use case androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123 ACTIVE
+D/UseCaseAttachState(12843): Active and attached use case: [androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123] for camera: 0
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Use case androidx.camera.core.ImageCapture-bbe29f7a-47a6-4479-a519-3c55a4af1c1363088281 ACTIVE
+D/UseCaseAttachState(12843): Active and attached use case: [androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123, androidx.camera.core.ImageCapture-bbe29f7a-47a6-4479-a519-3c55a4af1c1363088281] for camera: 0
+E/qdgralloc(12843): GetGpuPixelFormat: No map for format: 0x38
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Use case androidx.camera.core.ImageAnalysis-081a4af4-6052-4f7b-af7b-fe10cfd66b4a96236863 INACTIVE
+D/UseCaseAttachState(12843): Active and attached use case: [androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123, androidx.camera.core.ImageCapture-bbe29f7a-47a6-4479-a519-3c55a4af1c1363088281] for camera: 0
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} CameraDevice.onOpened()
+D/Camera2CameraImpl(12843): {Camera@4c47cab[id=0]} Transitioning camera internal state: OPENING --> OPENED
+D/CameraStateRegistry(12843): Recalculating open cameras:
+D/CameraStateRegistry(12843): Camera                                       State
+D/CameraStateRegistry(12843): -------------------------------------------------------------------
+D/CameraStateRegistry(12843): Camera@41763b4[id=1]                         UNKNOWN
+D/CameraStateRegistry(12843): Camera@4c47cab[id=0]                         OPEN
+D/CameraStateRegistry(12843): -------------------------------------------------------------------
+D/CameraStateRegistry(12843): Open count: 1 (Max allowed: 1)
+D/CameraStateMachine(12843): New public camera state CameraState{type=OPEN, error=null} from OPEN and null
+D/CameraStateMachine(12843): Publishing new public camera state CameraState{type=OPEN, error=null}
+D/UseCaseAttachState(12843): All use case: [androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123, androidx.camera.core.ImageCapture-bbe29f7a-47a6-4479-a519-3c55a4af1c1363088281, androidx.camera.core.ImageAnalysis-081a4af4-6052-4f7b-af7b-fe10cfd66b4a96236863] for camera: 0
+E/AdrenoUtils(12843): <validate_memory_layout_input_parmas:1984>: Unknown Format 0
+E/AdrenoUtils(12843): <adreno_init_memory_layout:4723>: Memory Layout input parameter validation failed!
+E/qdgralloc(12843): GetGpuResourceSizeAndDimensions Graphics metadata init failed
+E/Gralloc4(12843): isSupported(1, 1, 56, 1, ...) failed with 1
+E/GraphicBufferAllocator(12843): Failed to allocate (4 x 4) layerCount 1 format 56 usage b00: 1
+E/AHardwareBuffer(12843): GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -1), handle=0x0
+D/UseCaseAttachState(12843): Active and attached use case: [androidx.camera.core.Preview-9e539e18-d3a0-4439-b2d1-4c3c9de737ba196337123, androidx.camera.core.ImageCapture-bbe29f7a-47a6-4479-a519-3c55a4af1c1363088281] for camera: 0
+E/qdgralloc(12843): GetGpuPixelFormat: No map for format: 0x38
+E/AdrenoUtils(12843): <validate_memory_layout_input_parmas:1984>: Unknown Format 0
+E/AdrenoUtils(12843): <adreno_init_memory_layout:4723>: Memory Layout input parameter validation failed!
+E/qdgralloc(12843): GetGpuResourceSizeAndDimensions Graphics metadata init failed
+E/Gralloc4(12843): isSupported(1, 1, 56, 1, ...) failed with 1
+E/GraphicBufferAllocator(12843): Failed to allocate (4 x 4) layerCount 1 format 56 usage b00: 1
+E/AHardwareBuffer(12843): GraphicBuffer(w=4, h=4, lc=1) failed (Unknown error -1), handle=0x0
+D/SyncCaptureSessionBase(12843): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@674391e] getSurface done with results: [Surface(name=null)/@0xceba5a3, Surface(name=null)/@0x7af00, Surface(name=null)/@0x497b339]
+D/CaptureSession(12843): Opening capture session.
+D/Camera2CaptureRequestBuilder(12843): template type = 1
+D/SyncCaptureSessionImpl(12843): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@674391e] start openCaptureSession
+D/DeferrableSurface(12843): use count+1, useCount=2 androidx.camera.core.SurfaceRequest$2@b62eb96
+D/DeferrableSurface(12843): New surface in use[total_surfaces=4, used_surfaces=2](androidx.camera.core.impl.ImmediateSurface@20b9ee9}
+D/DeferrableSurface(12843): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@20b9ee9
+D/DeferrableSurface(12843): New surface in use[total_surfaces=4, used_surfaces=3](androidx.camera.core.impl.ImmediateSurface@9b39e9c}
+D/DeferrableSurface(12843): use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@9b39e9c
+D/CameraDevice-JV-0(12843): waitUntilIdle: E. id = 0
+D/CameraDevice-JV-0(12843): waitUntilIdle: X
+D/VRI[MainActivity](12843): vri.reportNextDraw android.view.ViewRootImpl.performTraversals:4013 android.view.ViewRootImpl.doTraversal:2725 android.view.ViewRootImpl$TraversalRunnable.run:9812 android.view.Choreographer$CallbackRecord.run:1505 android.view.Choreographer$CallbackRecord.run:1513
+D/SurfaceView(12843): UPDATE Surface(name=SurfaceView[com.healthsafety.app/com.healthsafety.app.MainActivity])/@0xd4aa31b, mIsProjectionMode = false
+D/VRI[MainActivity](12843): vri.Setup new sync id=11 syncSeqId=0
+D/VRI[MainActivity](12843): vri.reportDrawFinished syncSeqId=0 android.view.ViewRootImpl.lambda$createSyncIfNeeded$4$android-view-ViewRootImpl:4081 android.view.ViewRootImpl$$ExternalSyntheticLambda2.run:6 android.os.Handler.handleCallback:942 android.os.Handler.dispatchMessage:99 android.os.Looper.loopOnce:211
+D/DecorView[](12843): onWindowFocusChanged hasWindowFocus true
+I/HandWritingStubImpl(12843): refreshLastKeyboardType: 1
+I/HandWritingStubImpl(12843): getCurrentKeyboardType: 1
+I/flutter (12843): [DEBUG] Arquivo selecionado: \funcionarios_exportados.csv, path: \/data/user/0/com.healthsafety.app/cache/file_picker/1750433499150/funcionarios_exportados.csv, size: \91
+I/flutter (12843): [DEBUG] Lendo arquivo a partir do path...
+I/flutter (12843): [DEBUG] Bytes lidos do path com sucesso. Tamanho: \91
+I/flutter (12843): [DEBUG] Iniciando leitura do conteúdo CSV...
+I/flutter (12843): [DEBUG] CSV lido com sucesso. Primeiros 100 caracteres:
+I/flutter (12843): id,nome,cargo,cpf,matricula,informacao1,informacao2
+I/flutter (12843): 1750431562066,Teste,,,,,
+I/flutter (12843): ,teste2,,,,,
+I/flutter (12843): [DEBUG] Linhas encontradas no CSV: \1
+I/flutter (12843): [DEBUG] Importação finalizada. Importados: 0, Ignorados: 0, Erros: \0
+D/SyncCaptureSessionImpl(12843): [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@674391e] Session onConfigured()
+D/CaptureSession(12843): Attempting to send capture request onConfigured
+D/CaptureSession(12843): Issuing request for session.
+D/Camera2CaptureRequestBuilder(12843): createCaptureRequest
+D/CaptureSession(12843): CameraCaptureSession.onConfigured() mState=OPENED
+D/CaptureSession(12843): CameraCaptureSession.onReady() OPENED
+W/OnBackInvokedCallback(12843): OnBackInvokedCallback is not enabled for the application.
+W/OnBackInvokedCallback(12843): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
