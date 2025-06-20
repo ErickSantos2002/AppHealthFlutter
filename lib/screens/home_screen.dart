@@ -483,19 +483,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     ?.name
                     .toLowerCase() ??
                 "";
-            if (deviceName.contains("iblow")) {
-              final device = ref.read(bluetoothProvider).connectedDevice;
-              if (device != null) {
-                await ref.read(bluetoothProvider.notifier).disconnect();
-                await Future.delayed(const Duration(seconds: 1));
-                await ref
-                    .read(bluetoothProvider.notifier)
-                    .connectToDevice(device);
-              }
-            } else {
+            if (deviceName.contains("al88")) {
+              // AL88: envia comando de reset
               ref
                   .read(bluetoothProvider.notifier)
                   .sendCommand("A22", "SOFT,RESET");
+            } else {
+              // Outros: desconecta e reconecta
+              await ref.read(bluetoothProvider.notifier).reiniciarIBlow();
             }
           },
           icon: const Icon(Icons.restart_alt),

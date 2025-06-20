@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import '../bluetooth_manager.dart';
 
 Map<String, String> unidadeMedida = {
   "0": "g/L",

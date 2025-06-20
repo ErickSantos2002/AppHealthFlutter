@@ -197,7 +197,7 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
     });
   }
 
-  Future<void> _reiniciarIBlow() async {
+  Future<void> reiniciarIBlow() async {
     final device = state.connectedDevice;
     if (device != null) {
       await disconnect();
