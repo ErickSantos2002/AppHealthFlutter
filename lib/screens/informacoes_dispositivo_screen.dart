@@ -90,7 +90,12 @@ class _InformacoesDispositivoScreenState
     await bluetoothNotifier.restoreCharacteristics();
     await Future.delayed(const Duration(seconds: 1));
 
-    if (bluetoothState.notifiableCharacteristic == null) {
+    // Relê o estado APÓS a restauração — o snapshot inicial ficou
+    // desatualizado (Riverpod é imutável; restoreCharacteristics criou
+    // um novo objeto de estado).
+    final estadoAtual = ref.read(bluetoothProvider);
+
+    if (estadoAtual.notifiableCharacteristic == null) {
       print(
         "❌ [InformacoesDispositivoScreen] Característica de notificação ainda não disponível!",
       );
@@ -98,10 +103,10 @@ class _InformacoesDispositivoScreenState
     }
 
     print(
-      "🔍 [InformacoesDispositivoScreen] Característica de notificação confirmada: ${bluetoothState.notifiableCharacteristic!.uuid}",
+      "🔍 [InformacoesDispositivoScreen] Característica de notificação confirmada: ${estadoAtual.notifiableCharacteristic!.uuid}",
     );
 
-    await bluetoothState.notifiableCharacteristic!.setNotifyValue(true);
+    await estadoAtual.notifiableCharacteristic!.setNotifyValue(true);
     print("✅ [InformacoesDispositivoScreen] Notificações BLE ativadas!");
 
     print("🔄 [InformacoesDispositivoScreen] Chamando _iniciarListener()...");
