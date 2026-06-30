@@ -101,12 +101,16 @@ class TitanDeimosHandler implements BluetoothHandler {
     print('[TitanDeimosHandler] Descobrindo serviços/características...');
     List<BluetoothService> services = await device.discoverServices();
     print('[TitanDeimosHandler] Serviços encontrados: ${services.length}');
+    BluetoothCharacteristic? writablePorPropriedade;
+    BluetoothCharacteristic? notifiablePorPropriedade;
     for (BluetoothService service in services) {
       print('[TitanDeimosHandler] Serviço: ${service.uuid}');
       if (service.uuid.toString().toLowerCase() == uartServiceUuid) {
         for (BluetoothCharacteristic c in service.characteristics) {
           final uuid = c.uuid.toString().toLowerCase();
+          final p = c.properties;
           print('[TitanDeimosHandler] Característica encontrada: ${uuid}');
+          // Preferencial: UUID exato
           if (uuid == txCharUuid) {
             _writableCharacteristic = c;
             print(
@@ -118,6 +122,42 @@ class TitanDeimosHandler implements BluetoothHandler {
               '[TitanDeimosHandler] Característica de notificação selecionada: ${c.uuid}',
             );
           }
+          // Fallback por propriedade (primeira que servir)
+          if (writablePorPropriedade == null &&
+              (p.write || p.writeWithoutResponse)) {
+            writablePorPropriedade = c;
+          }
+          if (notifiablePorPropriedade == null && p.notify) {
+            notifiablePorPropriedade = c;
+          }
+        }
+      }
+    }
+    // Usa o fallback se o UUID exato não apareceu
+    if (_writableCharacteristic == null && writablePorPropriedade != null) {
+      _writableCharacteristic = writablePorPropriedade;
+      print(
+        '[TitanDeimosHandler] Escrita via fallback por propriedade: ${_writableCharacteristic!.uuid}',
+      );
+    }
+    if (_notifiableCharacteristic == null && notifiablePorPropriedade != null) {
+      _notifiableCharacteristic = notifiablePorPropriedade;
+      print(
+        '[TitanDeimosHandler] Notificação via fallback por propriedade: ${_notifiableCharacteristic!.uuid}',
+      );
+    }
+    // Diagnóstico se ainda faltar a escrita
+    if (_writableCharacteristic == null) {
+      print(
+        '[TitanDeimosHandler] ⚠️ Característica de escrita NÃO encontrada. Disponíveis:',
+      );
+      for (final s in services) {
+        for (final c in s.characteristics) {
+          final p = c.properties;
+          print(
+            '   ${s.uuid}/${c.uuid} write=${p.write} '
+            'writeNoResp=${p.writeWithoutResponse} notify=${p.notify}',
+          );
         }
       }
     }
