@@ -448,7 +448,12 @@ class TitanDeimosHandler implements BluetoothHandler {
         if (realPayload.length >= 2) {
           int valL = realPayload[0];
           int valH = realPayload[1];
-          double result = (valH * 256 + valL) / 100.0;
+          // O aparelho envia álcool no sangue (mg/100mL); o visor mostra hálito
+          // (mg/L) na razão padrão 2100:1 -> divide por 210. Arredonda para 2
+          // casas para casar com o visor (ex.: bruto 76 -> 0,36 mg/L).
+          double result = double.parse(
+            ((valH * 256 + valL) / 210.0).toStringAsFixed(2),
+          );
           return {'testResult': result, 'data': dataStr, 'command': cmdHex};
         } else {
           // Payload inesperado, mas envie para debug
