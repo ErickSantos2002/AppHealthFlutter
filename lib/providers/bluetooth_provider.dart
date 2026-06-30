@@ -130,10 +130,14 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
       state = state.copyWith(isConnected: true, connectedDevice: device);
 
       // ✅ Agora usamos a função de callback para atualizar características BLE
-      _bluetoothManager.discoverCharacteristics(device, (writable, notifiable) {
+      await _bluetoothManager.discoverCharacteristics(device, (
+        writable,
+        notifiable,
+      ) {
         setCharacteristics(writable: writable, notifiable: notifiable);
         listenToNotifications();
       });
+      await _garantirCaracteristicaEscrita();
     }
     return success;
   }
@@ -473,6 +477,42 @@ class BluetoothNotifier extends StateNotifier<BluetoothState> {
         setCharacteristics(writable: writable, notifiable: notifiable);
         listenToNotifications();
       });
+      await _garantirCaracteristicaEscrita();
+    }
+  }
+
+  /// 🔹 Garante a característica de escrita no estado.
+  /// 1) Fallback: adota a do handler se o estado estiver sem.
+  /// 2) Retry único de descoberta se ainda faltar e o device estiver conectado.
+  Future<void> _garantirCaracteristicaEscrita() async {
+    if (state.writableCharacteristic == null &&
+        _bluetoothManager.writableCharacteristic != null) {
+      print(
+        "♻️ [bluetoothProvider] Adotando característica de escrita do handler (fallback).",
+      );
+      setCharacteristics(
+        writable: _bluetoothManager.writableCharacteristic,
+        notifiable: _bluetoothManager.notifiableCharacteristic,
+      );
+    }
+
+    if (state.writableCharacteristic == null && state.connectedDevice != null) {
+      print(
+        "🔁 [bluetoothProvider] Escrita ainda ausente — 1 retry de descoberta...",
+      );
+      await _bluetoothManager.discoverCharacteristics(state.connectedDevice!, (
+        writable,
+        notifiable,
+      ) {
+        setCharacteristics(writable: writable, notifiable: notifiable);
+      });
+      if (state.writableCharacteristic == null &&
+          _bluetoothManager.writableCharacteristic != null) {
+        setCharacteristics(
+          writable: _bluetoothManager.writableCharacteristic,
+          notifiable: _bluetoothManager.notifiableCharacteristic,
+        );
+      }
     }
   }
 
