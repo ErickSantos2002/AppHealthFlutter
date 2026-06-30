@@ -19,7 +19,7 @@ class ConfiguracoesScreen extends ConsumerStatefulWidget {
 class _ConfiguracoesScreenState extends ConsumerState<ConfiguracoesScreen> {
   bool notificacoesAtivadas = true;
   String idiomaSelecionado = "Português"; 
-  String versaoApp = "1.0.0"; 
+  String versaoApp = "1.3.1";
 
   @override
   void initState() {
